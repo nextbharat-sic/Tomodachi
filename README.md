@@ -1,2 +1,2 @@
 # ISP-01
-Third Project Repository (Information Sharing Platform)
+3rd Project Repository (Information Sharing Platform)
