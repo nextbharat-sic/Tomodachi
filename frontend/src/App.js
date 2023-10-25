@@ -17,6 +17,7 @@ function App() {
         >
           Learn React
         </a>
+        <div> {process.env.REACT_APP_STATE}</div>
       </header>
     </div>
   );
