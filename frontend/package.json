@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:st": "vite build -- --mode st",
-    "build:pr": "vite build -- --mode pr",
+    "build:st": "vite build --mode st",
+    "build:pr": "vite build --mode pr",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
