@@ -1,47 +1,28 @@
-
-
-function SignUp(){
-    return(
-        <>
-        <h3>Sign Up</h3>
-        <div className="body">
-          <div className="item">
-             <label>User Name</label>
-          </div>
-           <div className="item">
-             <input type="text"></input>
-          </div>
-          <div className="item">
-             <label>Phone Number</label>
-          </div>
-           <div className="item">
-             <input type="text"></input>
-          </div>
-          <div className="item">
-             <label>Password</label>
-          </div>
-           <div className="item">
-             <input type="text"></input>
-          </div>
-          <div className="item">
-             <label>Confirm Password</label>
-          </div>
-           <div className="item">
-             <input type="text"></input>
-          </div>
-        <div className="item">
-             <input type="radio" />I Accept Terms Conditions  Privacy Policy of the Service
-          </div>
-        <button className="button">Sign UP</button>
-        
-        
+const SignUp = () => {
+  return (
+    <>
+      <h2>Sign Up</h2>
+      <div>
+        <div>
+          <label>User Name</label>
         </div>
-        </>
-        
-        )
-}
+        <div>
+          <input type="text"></input>
+        </div>
+        <div>
+          <label>Phone Number</label>
+        </div>
+        <div>
+          <input type="text"></input>
+        </div>
+        <div>
+          <input type="radio" />I Accept Terms and Conditions, Privacy Policy of
+          the Service
+        </div>
+        <button>Sign Up</button>
+      </div>
+    </>
+  );
+};
 
-
-
-
-export default SignUp
+export default SignUp;
