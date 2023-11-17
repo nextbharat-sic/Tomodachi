@@ -4,14 +4,45 @@ import postUserInformation from "./clients/postuserinformation.js";
 const SignUp = () => {
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
 
   const createUser = async () => {
+    if (!isValidate()) {
+      return;
+    }
+
     const userInformation = {
-      userName: { userName },
-      phoneNumber: { phoneNumber },
+      userName: userName,
+      phoneNumber: phoneNumber,
+      privacyPolicyCheck: privacyPolicyCheck,
     };
-    // console.log({ userInformation });
-    await postUserInformation(userInformation);
+
+    const result = await postUserInformation(userInformation);
+    if (result == "Success") {
+      alert("User Registration is completed!");
+    } else {
+      alert("User Registration is Failed!");
+    }
+  };
+
+  const isValidate = () => {
+    const formatter = /[0-9]{10}/;
+
+    if (userName == "") {
+      alert("Input Username!");
+      return false;
+    }
+
+    if (!formatter.test(phoneNumber)) {
+      alert("Phone Number must be 10 digits!");
+      return false;
+    }
+
+    if (privacyPolicyCheck != true) {
+      alert("You need to check privacy policy!");
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -35,12 +66,17 @@ const SignUp = () => {
           <input
             type="text"
             value={phoneNumber}
+            placeholder="Number(10 digits)"
             onChange={(event) => setPhoneNumber(event.target.value)}
           ></input>
         </div>
         <div>
-          <input type="radio" />I Accept Terms and Conditions, Privacy Policy of
-          the Service
+          <label>
+            <input type="radio" onChange={() => setPrivacyPolicyCheck(true)} />
+            <span>
+              I Accept Terms and Conditions, Privacy Policy of the Service
+            </span>
+          </label>
         </div>
         <button onClick={createUser}>Sign Up</button>
       </div>
