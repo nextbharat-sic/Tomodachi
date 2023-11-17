@@ -1,0 +1,124 @@
+import boto3
+import json
+from datetime import datetime
+import os
+
+def lambda_handler(event, context):
+    dynamodb_client = boto3.client('dynamodb')
+    dynamodb = boto3.resource('dynamodb')
+    
+    print(event)
+    
+    time = datetime.now().isoformat()
+    
+    if 'body' in event:
+        body = json.loads(event['body'])
+    else:
+        body = event
+    
+    user_table_name = os.environ.get('USERTABLE')
+    counter_table_name = os.environ.get('COUNTERTABLE')
+    user_table = dynamodb.Table(user_table_name)
+    
+    print(body)
+    
+    if body['privacyPolicyCheck'] != 'true' and body['privacyPolicyCheck'] != 'false':
+        print('error')
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps('VALIDATION ERROR')
+        }
+    if (len(body['phoneNumber']) != 10) or (not(str.isdigit(body['phoneNumber']))):
+        print('error_num')
+        return {
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps('VALIDATION ERROR')
+        }
+    
+    counter_res = dynamodb_client.get_item(
+        TableName=counter_table_name,
+        Key={
+            'CTN': {'S': 'UserTable'}
+        },
+    )
+    
+    next_user_id = int(counter_res['Item']['CLI']['N']) + 1
+    
+    counter_table_operation = {
+        'Update' : {
+            'TableName' : counter_table_name,
+            'Key' : {
+                'CTN': {'S': 'UserTable'}
+            },
+            'UpdateExpression' : "ADD CLI :inc",
+            'ExpressionAttributeValues' : {":inc": {"N": "1"}},
+        },
+    }
+
+    user_info = {}
+    user_info['UID'] = 'U' + str(next_user_id).zfill(6)
+    user_info['UNM'] = body['userName']
+    user_info['UPN'] = int(body['phoneNumber'])
+    if body['privacyPolicyCheck'] == 'true':
+        user_info['UPC'] = True
+    elif body['privacyPolicyCheck'] == 'false':
+        user_info['UPC'] = False
+    user_info['UCT'] = time
+    user_info['UUT'] = time
+    
+    # テーブルにデータを書き込みます。
+    user_table_operation = {
+        'Put' : {
+            'TableName' : user_table_name,
+            'Item' : {
+                'UID' : {'S': user_info['UID']},
+                'UNM' : {'S': user_info['UNM']},
+                'UPN' : {'N': str(user_info['UPN'])},
+                'UPC' : {'BOOL': user_info['UPC']},
+                'UCT' : {'S': user_info['UCT']},
+                'UUT' : {'S': user_info['UUT']}
+            },
+        }
+    }
+    
+    try:
+        response = dynamodb_client.transact_write_items(
+            TransactItems=[
+                counter_table_operation,
+                user_table_operation
+            ]
+        )
+        return {
+            'statusCode': 200,
+            'body': "Transaction successful"
+        }
+    except Exception as e:
+        print(f"Transaction failed: {e}")
+        return {
+            'statusCode': 500,
+            'body': "Transaction failed"
+        }        
+    
+    # 応答を返す
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Headers" : "*",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+        },
+        'body': json.dumps('OK')
+    }
