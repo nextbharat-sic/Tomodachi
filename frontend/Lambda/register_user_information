@@ -19,7 +19,7 @@ def lambda_handler(event, context):
     print(body)
     
     # Validation check
-    if body['privacyPolicyCheck'] != 'true' and body['privacyPolicyCheck'] != 'false':
+    if not isinstance(body['privacyPolicyCheck'], bool):
         print('privacyPolicyCheckError')
         return {
             'statusCode': 500,
@@ -71,10 +71,7 @@ def lambda_handler(event, context):
     user_info['UID'] = 'U' + str(next_user_id).zfill(6)
     user_info['UNM'] = body['userName']
     user_info['UPN'] = int(body['phoneNumber'])
-    if body['privacyPolicyCheck'] == 'true':
-        user_info['UPC'] = True
-    elif body['privacyPolicyCheck'] == 'false':
-        user_info['UPC'] = False
+    user_info['UPC'] = body['privacyPolicyCheck']
     user_info['UCT'] = time
     user_info['UUT'] = time
     
