@@ -29,7 +29,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': json.dumps('VALIDATION ERROR')
+            'body': json.dumps('Failed')
         }
     if (len(body['phoneNumber']) != 10) or (not(str.isdigit(body['phoneNumber']))):
         print('phoneNumberError')
@@ -41,7 +41,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': json.dumps('VALIDATION ERROR')
+            'body': json.dumps('Failed')
         }
     
     # Get most recentry userId from CounterTable
@@ -106,7 +106,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': "Transaction successful"
+            'body': "Success"
         }
     except Exception as e:
         print(f"Transaction failed: {e}")
@@ -118,5 +118,5 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': "Transaction failed"
+            'body': "Failed"
         }        
