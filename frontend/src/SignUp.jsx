@@ -4,10 +4,13 @@ import postUserInformation from "./clients/postuserinformation.js";
 const SignUp = () => {
   const [userName, setUserName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
 
   const createUser = async () => {
+    setIsLoading(true);
     if (!isValidate()) {
+      setIsLoading(false);
       return;
     }
 
@@ -19,14 +22,16 @@ const SignUp = () => {
 
     const result = await postUserInformation(userInformation);
     if (result == "Success") {
+      setIsLoading(false);
       alert("User Registration is completed!");
     } else {
+      setIsLoading(false);
       alert("User Registration is Failed!");
     }
   };
 
   const isValidate = () => {
-    const formatter = /[0-9]{10}/;
+    const formatter = /^[0-9]{10}$/;
 
     if (userName == "") {
       alert("Input Username!");
@@ -78,7 +83,9 @@ const SignUp = () => {
             </span>
           </label>
         </div>
-        <button onClick={createUser}>Sign Up</button>
+        <button onClick={createUser} disabled={isLoading}>
+          {isLoading ? "Create now..." : "Sign Up"}
+        </button>
       </div>
     </>
   );
