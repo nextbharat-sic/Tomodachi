@@ -70,7 +70,7 @@ def lambda_handler(event, context):
     user_info = {}
     user_info['UID'] = 'U' + str(next_user_id).zfill(6)
     user_info['UNM'] = body['userName']
-    user_info['UPN'] = int(body['phoneNumber'])
+    user_info['UPN'] = body['phoneNumber']
     user_info['UPC'] = body['privacyPolicyCheck']
     user_info['UCT'] = time
     user_info['UUT'] = time
@@ -82,7 +82,7 @@ def lambda_handler(event, context):
             'Item' : {
                 'UID' : {'S': user_info['UID']},
                 'UNM' : {'S': user_info['UNM']},
-                'UPN' : {'N': str(user_info['UPN'])},
+                'UPN' : {'S': user_info['UPN']},
                 'UPC' : {'BOOL': user_info['UPC']},
                 'UCT' : {'S': user_info['UCT']},
                 'UUT' : {'S': user_info['UUT']}
