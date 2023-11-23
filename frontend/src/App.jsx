@@ -1,9 +1,22 @@
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
 import SignUp from './SignUp.jsx'
+import UploadJobInformation from './UploadJobInformation.jsx'
 import './App.css'
 
 function App() {
+  const [isSignUp, setIsSignUp] = useState(false);
+  const isSignInState = useSelector((state) => state.isSignIn);
+
+  useEffect(() => {
+    setIsSignUp(isSignInState);
+  }, [isSignInState]);
+  
   return (
-    <SignUp/>
+    <>
+      { !isSignUp ? <SignUp /> :"" }
+      { isSignUp ? <UploadJobInformation /> : "" }
+    </>
   )
 }
 

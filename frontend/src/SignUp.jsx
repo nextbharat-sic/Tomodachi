@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+
 import postUserInformation from "./clients/postuserinformation.js";
 
 const SignUp = () => {
@@ -6,6 +8,12 @@ const SignUp = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
+  const dispatch = useDispatch();
+  
+  const signUpStatus = () => {
+    const isSignInStatus = {type: "ISSIGNIN_STATE", payload: true}
+    dispatch(isSignInStatus);
+  };
 
   const createUser = async () => {
     setIsLoading(true);
@@ -24,6 +32,7 @@ const SignUp = () => {
     if (result == "Success") {
       setIsLoading(false);
       alert("User Registration is completed!");
+      signUpStatus()
     } else {
       setIsLoading(false);
       alert("User Registration is Failed!");
