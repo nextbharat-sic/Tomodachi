@@ -11,13 +11,13 @@ function App() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [displayPage, setDisplayPage] = useState("");
 
-  const signInState = useSelector((state) => state.isSignIn);
+  const signInStatus = useSelector((state) => state.isSignIn);
   const pageStatus = useSelector((state) => state.pageStatus);
 
   useEffect(() => {
-    setIsSignUp(signInState);
+    setIsSignUp(signInStatus);
     setDisplayPage(pageStatus);
-  }, [signInState, pageStatus]);
+  }, [signInStatus, pageStatus]);
 
   return (
     <>
