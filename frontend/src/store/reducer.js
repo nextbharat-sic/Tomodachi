@@ -1,6 +1,6 @@
 const initialState = {
   isSignIn: false,
-  pageStatus: "SignUp",
+  pageStatus: "HomePage",
 };
 
 const rootReducer = (state = initialState, action) => {

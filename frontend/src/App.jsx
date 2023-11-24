@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import Header from "./component/Header.jsx";
+import Footer from "./component/Footer.jsx";
+import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
 import UploadJobInformation from "./UploadJobInformation.jsx";
 import "./App.css";
@@ -18,8 +21,11 @@ function App() {
 
   return (
     <>
-      {!isSignUp ? <SignUp /> : ""}
+      <Header />
+      {pageStatus == "HomePage" ? <Home /> : ""}
+      {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
       {isSignUp && pageStatus == "PostJobPage" ? <UploadJobInformation /> : ""}
+      <Footer />
     </>
   );
 }
