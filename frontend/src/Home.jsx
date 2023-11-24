@@ -1,4 +1,9 @@
+import getUploadInformation from "./clients/getuploadinformation.js";
+
 const Home = () => {
+  const result = getUploadInformation();
+  console.log(result);
+
   return (
     <>
       <div style={{ border: "1px solid #333", margin: 3 }}>
