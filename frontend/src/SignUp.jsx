@@ -11,10 +11,10 @@ const SignUp = () => {
   const dispatch = useDispatch();
 
   const signUpStatus = () => {
-    const isSignInStatus = { type: "SIGNIN_STATE", payload: true };
-    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
-    dispatch(isSignInStatus);
-    dispatch(pageStatus);
+    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+    dispatch(storeIsSignIn);
+    dispatch(storePage);
   };
 
   const createUser = async () => {

@@ -2,16 +2,16 @@ import { useSelector, useDispatch } from "react-redux";
 
 const Home = () => {
   const dispatch = useDispatch();
-  let pageStatus = useSelector((state) => state.pageStatus);
-  const signInState = useSelector((state) => state.isSignIn);
+  const signInStatus = useSelector((state) => state.isSignIn);
 
   const movePostScreen = () => {
-    if (signInState) {
-      pageStatus = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+    let storePage = "";
+    if (signInStatus) {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
     } else {
-      pageStatus = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
     }
-    dispatch(pageStatus);
+    dispatch(storePage);
   };
 
   return (
