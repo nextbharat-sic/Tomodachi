@@ -1,8 +1,12 @@
 import getUploadInformation from "./clients/getuploadinformation.js";
 
 const Home = () => {
-  const result = getUploadInformation();
-  console.log(result);
+  const openHomeScreen = async () => {
+    const result = await getUploadInformation();
+    console.log(result);
+  };
+
+  openHomeScreen();
 
   return (
     <>
