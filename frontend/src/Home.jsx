@@ -1,4 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
+import getUploadInformation from "./clients/getuploadinformation.js";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,6 +14,13 @@ const Home = () => {
     }
     dispatch(storePage);
   };
+
+  const openHomeScreen = async () => {
+    const getInformationResult = await getUploadInformation();
+    console.log(getInformationResult);
+  };
+
+  openHomeScreen();
 
   return (
     <>
