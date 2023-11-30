@@ -5,13 +5,13 @@ import os
 def lambda_handler(event, context):
 
     dynamodb_client = boto3.client('dynamodb')
-    post_informat_table_name = os.environ.get('POSTINFORMATIONTABLE')
+    post_information_table_name = os.environ.get('POSTINFORMATIONTABLE')
 
     query_params = {
-        'TableName': post_informat_table_name,
+        'TableName': post_information_table_name,
         'IndexName': 'PTP-PCT-index',
-        'KeyConditionExpression': 'PTP = :post',
-        'ExpressionAttributeValues': {':post': {'S': 'post'}},
+        'KeyConditionExpression': 'PTP = :type',
+        'ExpressionAttributeValues': {':type': {'S': 'post'}},
         'ScanIndexForward': False,
         }
 
@@ -36,7 +36,7 @@ def lambda_handler(event, context):
             'PDD':item['PDD']['S'],
             'PST':item['PST']['BOOL'],
             'PUID':item['PUID']['S'],
-            'PJT':item['PUT']['S'],
+            'PJT':item['PJT']['S'],
             'PIT':item['PIT']['S'],
         })
 
