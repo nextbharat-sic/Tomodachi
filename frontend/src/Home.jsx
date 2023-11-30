@@ -1,4 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { S3 } from "aws-sdk";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -13,6 +15,32 @@ const Home = () => {
     }
     dispatch(storePage);
   };
+
+  const fetchS3Data = async () => {
+    const s3 = new S3({
+      region: import.meta.env.VITE_APP_S3_REGION, // バケットのリージョン
+      accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY, // アクセスキー
+      secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY, // シークレットアクセスキー
+    });
+
+    const params = {
+      Bucket: "tomodachijobinformationimage", // バケット名
+      Key: "sample.png", // ファイル名（パスも含める）
+      Expires: 60, // URL の有効期限（秒）
+    };
+
+    try {
+      const data = await s3.getSignedUrlPromise("getObject", params);
+      // const data = await s3.getObject(params).promise();
+      console.log(data);
+    } catch (error) {
+      console.error("Error in fetching data from S3: ", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchS3Data();
+  }, []);
 
   return (
     <>
