@@ -2,7 +2,6 @@ import { useDispatch } from "react-redux";
 
 const Header = (props) => {
   const dispatch = useDispatch();
-  console.log(props.isSignIn);
 
   const confirmSignOut = () => {
     const isConfirm = confirm("Are you sure you want to sign out?");
