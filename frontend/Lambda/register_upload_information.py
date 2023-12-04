@@ -14,7 +14,7 @@ def lambda_handler(event, context):
     if 'body' in event:
         body = json.loads(event['body'])
     else:
-        body =event
+        body = event
 
     postinformation_table_name = os.environ.get('POSTINFORMATIONTABLE')
     counter_table_name = os.environ.get('COUNTERTABLE')
