@@ -19,10 +19,16 @@ const Header = () => {
     alert("Sign Out");
   };
 
+  const moveHomeScreen = () => {
+    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(pageStatus);
+  };
+
   return (
     <>
       <div style={{ position: "absolute", top: 0, background: "blue" }}>
         Header
+        <button onClick={moveHomeScreen}>Home</button>
         {signInStatus ? (
           <button onClick={confirmSignOut}>Sign out</button>
         ) : (
