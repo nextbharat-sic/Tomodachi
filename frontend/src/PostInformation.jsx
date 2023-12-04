@@ -70,7 +70,7 @@ const PostJob = () => {
             border: "none",
             borderRadius: "4px",
             cursor: "pointer",
-            width: "20vw",
+            width: "30vw",
           }}
         >
           Upload
