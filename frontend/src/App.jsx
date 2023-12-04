@@ -21,7 +21,7 @@ function App() {
 
   return (
     <>
-      <Header isSignIn={isSignUp} />
+      <Header />
       {pageStatus == "HomePage" ? <Home /> : ""}
       {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
       {isSignUp && pageStatus == "PostJobPage" ? <UploadJobInformation /> : ""}

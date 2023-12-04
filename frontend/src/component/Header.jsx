@@ -1,7 +1,8 @@
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
-const Header = (props) => {
+const Header = () => {
   const dispatch = useDispatch();
+  const signInStatus = useSelector((state) => state.isSignIn);
 
   const confirmSignOut = () => {
     const isConfirm = confirm("Are you sure you want to sign out?");
@@ -22,7 +23,7 @@ const Header = (props) => {
     <>
       <div style={{ position: "absolute", top: 0, background: "blue" }}>
         Header
-        {props.isSignIn ? (
+        {signInStatus ? (
           <button onClick={confirmSignOut}>Sign out</button>
         ) : (
           <button>Sign In</button>
