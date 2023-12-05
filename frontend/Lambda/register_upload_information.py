@@ -33,7 +33,7 @@ def lambda_handler(event, context):
             'body': json.dumps('Failed')
         }
 
-    # Get most recentry userId from CounterTable
+    # Get most recentry postId from CounterTable
     counter_res = dynamodb_client.get_item(
         TableName=counter_table_name,
         Key={
@@ -66,7 +66,7 @@ def lambda_handler(event, context):
     upload_info['PMJ'] = body['modeOfJob']
     upload_info['PST'] = True
     upload_info['PTP'] = 'Post'
-    upload_info['PUID'] = str(body['userId']).replace('U','P')
+    upload_info['PUID'] = str(body['userId'])
     upload_info['PUT'] = time
 
     # Upload data into Post Job Information Table
