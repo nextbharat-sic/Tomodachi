@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-const PostJob = () => {
+const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
 
-  const showPhoto = (event) => {
+  const showImage = (event) => {
     setImageFile(URL.createObjectURL(event.target.files[0]));
   };
 
@@ -50,7 +50,7 @@ const PostJob = () => {
           type="file"
           accept="image/*"
           style={{ width: "61vw", marginBottom: "10px" }}
-          onChange={showPhoto}
+          onChange={showImage}
         />
         <img src={imageFile} style={{ width: "61vw", marginBottom: "10px" }} />
         <button
@@ -72,4 +72,4 @@ const PostJob = () => {
   );
 };
 
-export default PostJob;
+export default PostJobInformation;
