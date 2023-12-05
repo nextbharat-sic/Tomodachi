@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 const PostJob = () => {
-  const [file, setFile] = useState();
+  const [imageFile, setImageFile] = useState();
 
-  const showPhoto = (e) => {
-    setFile(URL.createObjectURL(e.target.files[0]));
+  const showPhoto = (event) => {
+    setImageFile(URL.createObjectURL(event.target.files[0]));
   };
 
   return (
@@ -18,34 +18,28 @@ const PostJob = () => {
       >
         <h2 style={{ textAlign: "center" }}>Information Details</h2>
         <label htmlFor="infoTitle">Information Title</label>
-        <select
-          id="infoTitle"
-          name="infoTitle"
-          style={{ width: "61.5vw", marginBottom: "10px" }}
-        >
+        <select style={{ width: "61.5vw", marginBottom: "10px" }}>
           <option value="jobRelated">Job Related</option>
         </select>
         <label htmlFor="jobTitle">Job Title</label>
         <input
           type="text"
-          id="jobTitle"
-          name="jobTitle"
+          style={{ width: "61vw", marginBottom: "10px" }}
+          required
+        />
+        <label htmlFor="EndingDate">Ending Date</label>
+        <input
+          type="date"
           style={{ width: "61vw", marginBottom: "10px" }}
           required
         />
         <label htmlFor="modeOfJob">Mode of Job</label>
-        <select
-          id="modeOfJob"
-          name="modeOfJob"
-          style={{ width: "61.5vw", marginBottom: "10px" }}
-        >
+        <select style={{ width: "61.5vw", marginBottom: "10px" }}>
           <option value="indoor">Indoor Work</option>
           <option value="outdoor">Outdoor Work</option>
         </select>
         <label htmlFor="jobDescription">Job Description</label>
         <textarea
-          id="jobDescription"
-          name="jobDescription"
           rows="4"
           style={{ width: "61vw", marginBottom: "10px" }}
           required
@@ -54,13 +48,11 @@ const PostJob = () => {
 
         <input
           type="file"
-          id="picture"
-          name="picture"
           accept="image/*"
           style={{ width: "61vw", marginBottom: "10px" }}
           onChange={showPhoto}
         />
-        <img src={file} style={{ width: "61vw", marginBottom: "10px" }} />
+        <img src={imageFile} style={{ width: "61vw", marginBottom: "10px" }} />
         <button
           type="submit"
           style={{
