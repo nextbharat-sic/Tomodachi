@@ -36,7 +36,8 @@ const PostJobInformation = () => {
     });
   };
 
-  const confirmUpload = () => {
+  const confirmUpload = (event) => {
+    event.preventDefault();
     const isConfirm = confirm("Are you sure you want to upload?");
     if (isConfirm) {
       uploadJobInfo();
@@ -69,8 +70,15 @@ const PostJobInformation = () => {
 
   return (
     <div style={{ maxWidth: "75vw", margin: "auto" }}>
-      <h2 style={{ textAlign: "center" }}>Information Details</h2>
-      <div>
+      <form
+        onSubmit={confirmUpload}
+        style={{
+          padding: "7vw",
+          border: "1px solid #ccc",
+          borderRadius: "8px",
+        }}
+      >
+        <h2 style={{ textAlign: "center" }}>Information Details</h2>
         <label>Information Title</label>
         <select
           name="informationTitle"
@@ -80,8 +88,6 @@ const PostJobInformation = () => {
         >
           <option value="jobRelated">Job Related</option>
         </select>
-      </div>
-      <div>
         <label>Job Title</label>
         <input
           type="text"
@@ -91,8 +97,6 @@ const PostJobInformation = () => {
           style={{ width: "61vw", marginBottom: "10px" }}
           required
         />
-      </div>
-      <div>
         <label>Deadline Date</label>
         <input
           type="date"
@@ -102,8 +106,6 @@ const PostJobInformation = () => {
           style={{ width: "61vw", marginBottom: "10px" }}
           required
         />
-      </div>
-      <div>
         <label>Mode of Job</label>
         <select
           name="modeOfJob"
@@ -114,8 +116,6 @@ const PostJobInformation = () => {
           <option value="indoor">Indoor Work</option>
           <option value="outdoor">Outdoor Work</option>
         </select>
-      </div>
-      <div>
         <label>Job Description</label>
         <textarea
           rows="4"
@@ -125,8 +125,6 @@ const PostJobInformation = () => {
           style={{ width: "61vw", marginBottom: "10px" }}
           required
         ></textarea>
-      </div>
-      <div>
         <label>Photos</label>
         <input
           type="file"
@@ -135,21 +133,21 @@ const PostJobInformation = () => {
           onChange={showImage}
         />
         <img src={imageFile} style={{ width: "61vw", marginBottom: "10px" }} />
-      </div>
-      <button
-        onClick={confirmUpload}
-        style={{
-          backgroundColor: "#2F69F6",
-          color: "white",
-          padding: "10px 15px",
-          border: "none",
-          borderRadius: "4px",
-          cursor: "pointer",
-          width: "30vw",
-        }}
-      >
-        Upload
-      </button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#2F69F6",
+            color: "white",
+            padding: "10px 15px",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            width: "30vw",
+          }}
+        >
+          Upload
+        </button>
+      </form>
     </div>
   );
 };
