@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch } from "react-redux";
+import S3 from "aws-sdk/clients/s3";
 import postJobInformation from "./clients/postjobinformation.js";
 
 const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
+  // const [uploadImageFile, setUploadImageFile] = useState();
+  const inputImageFile = useRef();
   const [jobData, setJobData] = useState({
     userId: "U123456",
     informationTitle: "jobRelated",
@@ -56,16 +59,39 @@ const PostJobInformation = () => {
         image: jobData.image,
       };
 
-      const response = await postJobInformation(jobInformation);
-      if (response.status === "Success") {
-        alert("Upload information is completed!");
-        pageStatus();
-      } else {
-        alert("Upload information is failed!");
-      }
+      // const response = await postJobInformation(jobInformation);
+      uploadFile();
+      // if (response.status === "Success") {
+      //   alert("Upload information is completed!");
+      //   pageStatus();
+      // } else {
+      //   alert("Upload information is failed!");
+      // }
     } catch (error) {
       console.error("Error uploading information:", error);
     }
+  };
+
+  const s3 = new S3({
+    accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
+    secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
+    region: import.meta.env.VITE_APP_S3_REGION,
+  });
+
+  const uploadFile = () => {
+    const uploadImageFile = inputImageFile.current.files[0];
+    console.log(uploadImageFile);
+    s3.upload(
+      {
+        Bucket: import.meta.env.VITE_APP_S3_BUCKET_NAME,
+        Key: uploadImageFile.name,
+        Body: uploadImageFile,
+      },
+      (err) => {
+        if (err) console.log(err);
+        else console.log("File uploaded successfully");
+      },
+    );
   };
 
   return (
@@ -128,6 +154,7 @@ const PostJobInformation = () => {
         <label>Photos</label>
         <input
           type="file"
+          ref={inputImageFile}
           accept="image/*"
           style={{ width: "61vw", marginBottom: "10px" }}
           onChange={showImage}
