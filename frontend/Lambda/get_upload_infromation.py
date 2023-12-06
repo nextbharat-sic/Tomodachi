@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         'TableName': post_information_table_name,
         'IndexName': 'PTP-PCT-index',
         'KeyConditionExpression': 'PTP = :type',
-        'ExpressionAttributeValues': {':type': {'S': 'post'}},
+        'ExpressionAttributeValues': {':type': {'S': 'Post'}},
         'ScanIndexForward': False,
         }
 
