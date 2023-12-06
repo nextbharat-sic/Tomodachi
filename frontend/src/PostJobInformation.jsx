@@ -5,6 +5,7 @@ const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
 
   const [jobData, setJobData] = useState({
+    userId: "U123456",
     informationTitle: "jobRelated",
     jobTitle: "",
     deadlineDate: "",
@@ -29,14 +30,17 @@ const PostJobInformation = () => {
     });
   };
 
-  const uploadJobInfo = async () => {
-    const isConfirmed = confirm("Are you sure you want to upload?");
-    if (!isConfirmed) {
-      return;
+  const confirmUpload = () => {
+    const isConfirm = confirm("Are you sure you want to upload?");
+    if (isConfirm) {
+      uploadJobInfo();
     }
+  };
 
+  const uploadJobInfo = async () => {
     try {
       const jobInformation = {
+        userId: jobData.userId,
         informationTitle: jobData.informationTitle,
         jobTitle: jobData.jobTitle,
         deadlineDate: jobData.deadlineDate,
@@ -44,6 +48,7 @@ const PostJobInformation = () => {
         jobDescription: jobData.jobDescription,
         image: jobData.image,
       };
+      console.log(jobInformation);
 
       await postJobInformation(jobInformation);
     } catch (error) {
@@ -116,7 +121,7 @@ const PostJobInformation = () => {
         />
         <img src={imageFile} style={{ width: "61vw", marginBottom: "10px" }} />
         <button
-          onClick={uploadJobInfo}
+          onClick={confirmUpload}
           style={{
             backgroundColor: "#2F69F6",
             color: "white",

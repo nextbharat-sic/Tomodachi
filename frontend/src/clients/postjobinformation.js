@@ -10,6 +10,6 @@ export default async function postJobInformation(jobInformation) {
     });
     return response.data;
   } catch (error) {
-    throw new Error("失敗");
+    return error;
   }
 }
