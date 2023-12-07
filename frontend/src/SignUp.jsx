@@ -33,8 +33,6 @@ const SignUp = () => {
     };
 
     const result = await postUserInformation(userInformation);
-    console.log(result);
-    console.log(result.status);
     if (result.status == "Success") {
       setIsLoading(false);
       alert("User Registration is completed!");
