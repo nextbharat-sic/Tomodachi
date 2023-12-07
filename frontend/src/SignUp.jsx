@@ -10,11 +10,13 @@ const SignUp = () => {
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
 
-  const signUpStatus = () => {
+  const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+    const storeUserID = { type: "SET_USER_ID", payload: userID };
     dispatch(storeIsSignIn);
     dispatch(storePage);
+    dispatch(storeUserID);
   };
 
   const createUser = async () => {
@@ -31,10 +33,10 @@ const SignUp = () => {
     };
 
     const result = await postUserInformation(userInformation);
-    if (result == "Success") {
+    if (result.status == "Success") {
       setIsLoading(false);
       alert("User Registration is completed!");
-      signUpStatus();
+      signUpStatus(result.userID);
     } else {
       setIsLoading(false);
       alert("User Registration is Failed!");
