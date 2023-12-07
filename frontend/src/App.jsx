@@ -5,7 +5,6 @@ import Footer from "./component/Footer.jsx";
 import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
 import PostJobInformation from "./PostJobInformation.jsx";
-import "./App.css";
 import Box from "@mui/material/Grid";
 
 function App() {
@@ -22,7 +21,7 @@ function App() {
 
   return (
     <>
-      <Header />
+      {pageStatus == "HomePage" ? <Header /> : ""}
       <Box
         display="flex"
         justifyContent="center"
