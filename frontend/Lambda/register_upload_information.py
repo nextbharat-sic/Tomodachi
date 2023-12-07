@@ -7,6 +7,7 @@ from datetime import datetime
 def lambda_handler(event, context):
 
     dynamodb_client = boto3.client('dynamodb')
+    s3_client = boto3.client('s3')
 
     time = datetime.now().isoformat()
     date = time.rsplit('T')[0]
@@ -15,6 +16,17 @@ def lambda_handler(event, context):
         body = json.loads(event['body'])
     else:
         body = event
+
+    print(event)
+    print(body)
+
+    # TODO We need to format file name. 'userId_time_fileName'
+    #s3_client.upload_file(body['image'], 'tomodachijobinformationimage', 'test.png')
+    bucket_name = os.environ.get('BUCKETNAME')
+    key_name = 'logo192.png'
+    # image_url = s3_client.generate_presigned_url('get_object', Params={'Bucket': bucket_name,'Key':key_name})
+
+    # print(image_url.split('?')[0])
 
     postinformation_table_name = os.environ.get('POSTINFORMATIONTABLE')
     counter_table_name = os.environ.get('COUNTERTABLE')
@@ -30,7 +42,9 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': json.dumps('Failed')
+            'body': json.dumps({
+                "status": "Failed",
+            })
         }
 
     # Get most recentry postId from CounterTable
@@ -55,7 +69,7 @@ def lambda_handler(event, context):
         },
     }
 
-   # Data formatting
+   # Data formatting.
     upload_info = {}
     upload_info['PID'] = 'P'+ str(next_upload_info_id).zfill(8)
     upload_info['PIT'] = body['informationTitle']
@@ -68,6 +82,14 @@ def lambda_handler(event, context):
     upload_info['PTP'] = 'Post'
     upload_info['PUID'] = str(body['userId'])
     upload_info['PUT'] = time
+    upload_info['PMD'] = body['image']
+
+    # Create pmd formatting
+    def create_upload_pmd(upload_media_list):
+        upload_info['PMD'] = []
+        for media in upload_media_list:
+            upload_info['PMD'].append({'S': media})
+        return upload_info['PMD']
 
     # Upload data into Post Job Information Table
     upload_table_operation = {
@@ -85,6 +107,7 @@ def lambda_handler(event, context):
                'PTP' : {'S': upload_info['PTP']},
                'PUID': {'S': upload_info['PUID']},
                'PUT' : {'S': upload_info['PUT']},
+               'PMD' : {'L': [{'S': upload_info['PMD']}]}
            },
        }
     }
@@ -104,7 +127,9 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': "Success"
+            'body': json.dumps({
+                "status": "Success",
+            })
         }
     except Exception as e:
         print(f"Transaction failed: {e}")
@@ -116,5 +141,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
-            'body': "Failed"
+            'body': json.dumps({
+                "status": "Failed",
+            })
         }

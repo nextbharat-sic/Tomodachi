@@ -1,14 +1,18 @@
 import { useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import S3 from "aws-sdk/clients/s3";
 import postJobInformation from "./clients/postjobinformation.js";
 
 const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
-  // const [uploadImageFile, setUploadImageFile] = useState();
+  const userID = useSelector((state) => state.userID);
+  let date = new Date();
+  let localDate = date.toLocaleDateString().replace(/\//g, "");
+  let localTime = date.toLocaleTimeString();
   const inputImageFile = useRef();
+
   const [jobData, setJobData] = useState({
-    userId: "U123456",
+    userId: userID,
     informationTitle: "jobRelated",
     jobTitle: "",
     deadlineDate: "",
@@ -47,8 +51,21 @@ const PostJobInformation = () => {
     }
   };
 
+  const main = async () => {
+    try {
+      const location = await uploadFile();
+      console.log("SAILESH", location);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   const uploadJobInfo = async () => {
     try {
+      const File = inputImageFile.current.files[0];
+      if (File && File.size > 0) {
+        uploadFile();
+      }
       const jobInformation = {
         userId: jobData.userId,
         informationTitle: jobData.informationTitle,
@@ -58,7 +75,7 @@ const PostJobInformation = () => {
         jobDescription: jobData.jobDescription,
         image: jobData.image,
       };
-
+      console.log(jobInformation.image);
       const response = await postJobInformation(jobInformation);
       if (response.status === "Success") {
         alert("Upload information is completed!");
@@ -66,7 +83,6 @@ const PostJobInformation = () => {
       } else {
         alert("Upload information is failed!");
       }
-      uploadFile();
     } catch (error) {
       console.error("Error uploading information:", error);
     }
@@ -80,16 +96,21 @@ const PostJobInformation = () => {
 
   const uploadFile = () => {
     const uploadImageFile = inputImageFile.current.files[0];
-    console.log(uploadImageFile);
+    const uploadFileName =
+      userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
+
     s3.upload(
       {
         Bucket: import.meta.env.VITE_APP_S3_BUCKET_NAME,
-        Key: uploadImageFile.name,
+        Key: uploadFileName,
         Body: uploadImageFile,
       },
-      (err) => {
-        if (err) console.log(err);
-        else console.log("File uploaded successfully");
+      (err, data) => {
+        if (!err) {
+          jobData.image = data.Location;
+        } else {
+          console.log(err);
+        }
       },
     );
   };
@@ -121,7 +142,7 @@ const PostJobInformation = () => {
           value={jobData.jobTitle}
           onChange={handleInputDataChange}
           style={{ width: "61vw", marginBottom: "10px" }}
-          required
+          // required
         />
         <label>Deadline Date</label>
         <input
@@ -130,7 +151,7 @@ const PostJobInformation = () => {
           value={jobData.deadlineDate}
           onChange={handleInputDataChange}
           style={{ width: "61vw", marginBottom: "10px" }}
-          required
+          // required
         />
         <label>Mode of Job</label>
         <select
@@ -149,7 +170,7 @@ const PostJobInformation = () => {
           value={jobData.jobDescription}
           onChange={handleInputDataChange}
           style={{ width: "61vw", marginBottom: "10px" }}
-          required
+          // required
         ></textarea>
         <label>Photos</label>
         <input
