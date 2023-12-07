@@ -18,7 +18,7 @@ const PostJobInformation = () => {
   });
   const dispatch = useDispatch();
 
-  const pageStatus = () => {
+  const homePageStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storePage);
   };
@@ -59,14 +59,14 @@ const PostJobInformation = () => {
         image: jobData.image,
       };
 
-      // const response = await postJobInformation(jobInformation);
+      const response = await postJobInformation(jobInformation);
+      if (response.status === "Success") {
+        alert("Upload information is completed!");
+        homePageStatus();
+      } else {
+        alert("Upload information is failed!");
+      }
       uploadFile();
-      // if (response.status === "Success") {
-      //   alert("Upload information is completed!");
-      //   pageStatus();
-      // } else {
-      //   alert("Upload information is failed!");
-      // }
     } catch (error) {
       console.error("Error uploading information:", error);
     }
