@@ -63,9 +63,9 @@ const SignUp = () => {
 
   return (
     <>
-      <h2>Sign Up</h2>
       <div>
-        <div>
+        <h2>Sign Up</h2>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>User Name</label>
         </div>
         <div>
@@ -73,28 +73,42 @@ const SignUp = () => {
             type="text"
             value={userName}
             onChange={(event) => setUserName(event.target.value)}
+            style={{
+              width: "78vw",
+              margin: "10px",
+              height: "5vh",
+              borderRadius: "10px",
+            }}
           ></input>
         </div>
-        <div>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>Phone Number</label>
         </div>
         <div>
           <input
             type="text"
             value={phoneNumber}
-            placeholder="Number(10 digits)"
             onChange={(event) => setPhoneNumber(event.target.value)}
+            style={{
+              width: "78vw",
+              margin: "10px",
+              height: "5vh",
+              borderRadius: "10px",
+            }}
           ></input>
         </div>
-        <div>
+        <div style={{ margin: "10px" }}>
           <label>
             <input type="radio" onChange={() => setPrivacyPolicyCheck(true)} />
-            <span>
-              I Accept Terms and Conditions, Privacy Policy of the Service
-            </span>
+            <span>I hereby Accept Terms and Conditions &</span>
+            <span> Privacy Policy of the Service</span>
           </label>
         </div>
-        <button onClick={createUser} disabled={isLoading}>
+        <button
+          onClick={createUser}
+          disabled={isLoading}
+          style={{ margin: "10px" }}
+        >
           {isLoading ? "Create now..." : "Sign Up"}
         </button>
       </div>
