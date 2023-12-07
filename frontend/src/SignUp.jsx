@@ -107,7 +107,7 @@ const SignUp = () => {
         <button
           onClick={createUser}
           disabled={isLoading}
-          style={{ margin: "10px" }}
+          style={{ margin: "10px", backgroundColor: "#2F69F6" }}
         >
           {isLoading ? "Create now..." : "Sign Up"}
         </button>
