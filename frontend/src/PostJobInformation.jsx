@@ -15,7 +15,7 @@ const PostJobInformation = () => {
   });
   const dispatch = useDispatch();
 
-  const pageStatus = () => {
+  const homePageStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storePage);
   };
@@ -59,7 +59,7 @@ const PostJobInformation = () => {
       const response = await postJobInformation(jobInformation);
       if (response.status === "Success") {
         alert("Upload information is completed!");
-        pageStatus();
+        homePageStatus();
       } else {
         alert("Upload information is failed!");
       }
