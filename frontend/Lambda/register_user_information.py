@@ -5,19 +5,21 @@ import os
 
 def lambda_handler(event, context):
     dynamodb_client = boto3.client('dynamodb')
-
+    
     time = datetime.now().isoformat()
-
+    
     if 'body' in event:
         body = json.loads(event['body'])
     else:
         body = event
-
+    
     user_table_name = os.environ.get('USERTABLE')
     counter_table_name = os.environ.get('COUNTERTABLE')
-
+    access_key_id = os.environ.get('ACCESSKEY')
+    secret_access_key = os.environ.get('SECRETACCESSKEY')
+    
     print(body)
-
+    
     # Validation check
     if not isinstance(body['privacyPolicyCheck'], bool):
         print('privacyPolicyCheckError')
@@ -47,7 +49,26 @@ def lambda_handler(event, context):
                 "status": json.dumps('Failed'),
             })
         }
-
+        
+    session = boto3.Session(region_name='ap-south-1',aws_access_key_id = access_key_id, aws_secret_access_key = secret_access_key)
+    dynamodb_session = session.resource('dynamodb')
+    table = dynamodb_session.Table(user_table_name)
+    response = table.scan()
+    data = [item['UPN'] for item in response['Items']]
+    if body['phoneNumber'] in data:
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps({
+                "status": "Existed",
+            })
+        }
+        
     # Get most recentry userId from CounterTable
     counter_res = dynamodb_client.get_item(
         TableName=counter_table_name,
@@ -55,9 +76,9 @@ def lambda_handler(event, context):
             'CTN': {'S': 'UserTable'}
         },
     )
-
+    
     next_user_id = int(counter_res['Item']['CLI']['N']) + 1
-
+    
     # Update number of user counter
     counter_table_operation = {
         'Update' : {
@@ -78,7 +99,7 @@ def lambda_handler(event, context):
     user_info['UPC'] = body['privacyPolicyCheck']
     user_info['UCT'] = time
     user_info['UUT'] = time
-
+    
     # Put data to UserTable
     user_table_operation = {
         'Put' : {
@@ -93,7 +114,7 @@ def lambda_handler(event, context):
             },
         }
     }
-
+    
     # Transaction processing
     try:
         response = dynamodb_client.transact_write_items(
@@ -112,7 +133,7 @@ def lambda_handler(event, context):
             },
             'body': json.dumps({
                 "status": "Success",
-                "userID": user_info["UID"]
+                "userID": user_info["UID"] 
             })
         }
     except Exception as e:
@@ -128,4 +149,4 @@ def lambda_handler(event, context):
             'body': json.dumps({
                 "status": "Failed",
             })
-        }
+        }        

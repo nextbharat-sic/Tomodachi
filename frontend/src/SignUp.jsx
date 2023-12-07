@@ -33,10 +33,15 @@ const SignUp = () => {
     };
 
     const result = await postUserInformation(userInformation);
+    console.log(result);
+    console.log(result.status);
     if (result.status == "Success") {
       setIsLoading(false);
       alert("User Registration is completed!");
       signUpStatus(result.userID);
+    } else if (result.status == "Existed") {
+      setIsLoading(false);
+      alert("Phone Number already Exists!");
     } else {
       setIsLoading(false);
       alert("User Registration is Failed!");
