@@ -6,6 +6,8 @@ import getUploadInformation from "./clients/getuploadinformation.js";
 const Home = () => {
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
+  const [getInformationResult, setGetInformationResult] = useState([]);
+  const [visibleItemCount, setVisibleItemCount] = useState(5);
 
   const movePostScreen = () => {
     let storePage = "";
@@ -17,13 +19,36 @@ const Home = () => {
     dispatch(storePage);
   };
 
-  const openHomeScreen = async () => {
-    const getInformationResult = await getUploadInformation();
-    console.log(getInformationResult);
+  const displayJobInformationList = (dataList) => {
+    return dataList.slice(0, visibleItemCount).map((jobData, index) => (
+      <div key={index}>
+        <h2>Job Information</h2>
+        <p>PCT: {jobData.PCT}</p>
+        <p>PTP: {jobData.PTP}</p>
+        <p>PID: {jobData.PID}</p>
+
+        {/* Add more details as needed */}
+        <hr />
+      </div>
+    ));
   };
 
-  openHomeScreen();
+  const fetchAndDisplayJobInformation = async () => {
+    try {
+      const informationResult = await getUploadInformation();
+      setGetInformationResult(informationResult);
+    } catch (error) {
+      console.error("Error fetching upload information:", error);
+    }
+  };
 
+  const handleShowMore = () => {
+    setVisibleItemCount((prevCount) => prevCount + 5);
+  };
+
+  useEffect(() => {
+    fetchAndDisplayJobInformation();
+  }, []);
   const [dataFromS3, setDataFromS3] = useState(null);
 
   const fetchS3Data = async () => {
@@ -65,7 +90,15 @@ const Home = () => {
       <p>recent post</p>
       <div style={{ border: "1px solid #333", margin: 3 }}>
         <div>Posted information area</div>
-        <button>Show more</button>
+
+        {/* Call displayJobInformationList directly in the JSX */}
+        {getInformationResult.length > 0 &&
+          displayJobInformationList(getInformationResult)}
+
+        {/* Show more button */}
+        {getInformationResult.length > visibleItemCount && (
+          <button onClick={handleShowMore}>Show more</button>
+        )}
       </div>
       <div>
         {dataFromS3 ? (
