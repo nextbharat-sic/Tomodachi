@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 const Footer = () => {
   const dispatch = useDispatch();
@@ -43,13 +44,9 @@ const Footer = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <div
-                style={{
-                  color: "#e0f2f1",
-                }}
-              >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
                 Privacy policy
-              </div>
+              </Typography>
             </Grid>
             <Grid
               item
@@ -59,13 +56,9 @@ const Footer = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <div
-                style={{
-                  color: "#e0f2f1",
-                }}
-              >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
                 Ⓒ 2023 Job App
-              </div>
+              </Typography>
             </Grid>
           </Grid>
         </Toolbar>
