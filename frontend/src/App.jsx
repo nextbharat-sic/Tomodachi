@@ -26,7 +26,7 @@ function App() {
       <Box
         justifyContent="center"
         alignItems="center"
-        text-align=""
+        text-align="center"
         height="100%"
       >
         {pageStatus == "HomePage" ? <Home /> : ""}
