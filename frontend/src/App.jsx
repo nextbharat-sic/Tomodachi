@@ -7,6 +7,7 @@ import SignUp from "./SignUp.jsx";
 import LogIn from "./LogIn.jsx";
 import PostJobInformation from "./PostJobInformation.jsx";
 import "./App.css";
+import Box from "@mui/material/Grid";
 
 function App() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -23,10 +24,17 @@ function App() {
   return (
     <>
       <Header />
-      {pageStatus == "HomePage" ? <Home /> : ""}
-      {pageStatus == "LogIn" ? <LogIn /> : ""}
-      {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
-      {isSignUp && pageStatus == "PostJobPage" ? <PostJobInformation /> : ""}
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        height="100%"
+      >
+        {pageStatus == "HomePage" ? <Home /> : ""}
+        {pageStatus == "LogIn" ? <LogIn /> : ""}
+        {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
+        {isSignUp && pageStatus == "PostJobPage" ? <PostJobInformation /> : ""}
+      </Box>
       <Footer />
     </>
   );

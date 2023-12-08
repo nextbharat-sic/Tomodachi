@@ -1,4 +1,8 @@
 import { useSelector, useDispatch } from "react-redux";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -19,11 +23,6 @@ const Header = () => {
     alert("Sign Out");
   };
 
-  const moveHomeScreen = () => {
-    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
-    dispatch(pageStatus);
-  };
-
   const moveLogInScreen = () => {
     const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
     dispatch(pageStatus);
@@ -31,15 +30,40 @@ const Header = () => {
 
   return (
     <>
-      <div style={{ position: "absolute", top: 0, background: "blue" }}>
-        Header
-        <button onClick={moveHomeScreen}>Home</button>
-        {signInStatus ? (
-          <button onClick={confirmSignOut}>Sign out</button>
-        ) : (
-          <button onClick={moveLogInScreen}>Log In</button>
-        )}
-      </div>
+      <Box sx={{ flexGrow: 5 }}>
+        <AppBar position="static">
+          <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Logo
+            </Typography>
+            {signInStatus ? (
+              <button
+                onClick={confirmSignOut}
+                variant="outline"
+                style={{
+                  color: "#e0f2f1",
+                  backgroundColor: "#631ACF",
+                  border: "1px solid",
+                }}
+              >
+                Log Out
+              </button>
+            ) : (
+              <button
+                variant="outline"
+                style={{
+                  color: "#e0f2f1",
+                  backgroundColor: "#631ACF",
+                  border: "1px solid",
+                }}
+                onClick={moveLogInScreen}
+              >
+                Log In
+              </button>
+            )}
+          </Toolbar>
+        </AppBar>
+      </Box>
     </>
   );
 };
