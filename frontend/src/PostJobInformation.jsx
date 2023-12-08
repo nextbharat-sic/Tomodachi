@@ -19,6 +19,8 @@ const PostJobInformation = () => {
     modeOfJob: "indoor",
     jobDescription: "",
     image: "",
+    createTime: localTime,
+    createDate: localDate,
   });
 
   const dispatch = useDispatch();
@@ -70,6 +72,8 @@ const PostJobInformation = () => {
         modeOfJob: jobData.modeOfJob,
         jobDescription: jobData.jobDescription,
         image: jobData.image,
+        createTime: jobData.createTime,
+        createDate: jobData.createDate,
       };
 
       const response = await postJobInformation(jobInformation);
