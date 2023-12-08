@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
+import Box from "@mui/material/Grid";
 
 import postUserInformation from "./clients/postuserinformation.js";
 
@@ -10,11 +11,13 @@ const SignUp = () => {
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
 
-  const signUpStatus = () => {
+  const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+    const storeUserID = { type: "SET_USER_ID", payload: userID };
     dispatch(storeIsSignIn);
     dispatch(storePage);
+    dispatch(storeUserID);
   };
 
   const createUser = async () => {
@@ -31,10 +34,13 @@ const SignUp = () => {
     };
 
     const result = await postUserInformation(userInformation);
-    if (result == "Success") {
+    if (result.status == "Success") {
       setIsLoading(false);
       alert("User Registration is completed!");
-      signUpStatus();
+      signUpStatus(result.userID);
+    } else if (result.status == "Existed") {
+      setIsLoading(false);
+      alert("Phone Number already Exists!");
     } else {
       setIsLoading(false);
       alert("User Registration is Failed!");
@@ -63,40 +69,66 @@ const SignUp = () => {
 
   return (
     <>
-      <h2>Sign Up</h2>
       <div>
-        <div>
+        <h2 style={{ textAlign: "center" }}>Sign Up</h2>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>User Name</label>
         </div>
-        <div>
-          <input
-            type="text"
-            value={userName}
-            onChange={(event) => setUserName(event.target.value)}
-          ></input>
-        </div>
-        <div>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <div>
+            <input
+              type="text"
+              value={userName}
+              className="input"
+              onChange={(event) => setUserName(event.target.value)}
+              style={{
+                width: "86vw",
+                margin: "10px",
+                height: "5vh",
+                borderRadius: "10px",
+              }}
+            ></input>
+          </div>
+        </Box>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>Phone Number</label>
         </div>
-        <div>
-          <input
-            type="text"
-            value={phoneNumber}
-            placeholder="Number(10 digits)"
-            onChange={(event) => setPhoneNumber(event.target.value)}
-          ></input>
-        </div>
-        <div>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <div>
+            <input
+              type="text"
+              value={phoneNumber}
+              className="input"
+              onChange={(event) => setPhoneNumber(event.target.value)}
+              style={{
+                width: "86vw",
+                margin: "10px",
+                height: "5vh",
+                borderRadius: "10px",
+              }}
+            ></input>
+          </div>
+        </Box>
+        <div style={{ margin: "10px" }}>
           <label>
             <input type="radio" onChange={() => setPrivacyPolicyCheck(true)} />
-            <span>
-              I Accept Terms and Conditions, Privacy Policy of the Service
-            </span>
+            <span>I hereby Accept Terms and Conditions &</span>
+            <span> Privacy Policy of the Service</span>
           </label>
         </div>
-        <button onClick={createUser} disabled={isLoading}>
-          {isLoading ? "Create now..." : "Sign Up"}
-        </button>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <button
+            onClick={createUser}
+            disabled={isLoading}
+            style={{
+              margin: "10px",
+              backgroundColor: "#2F69F6",
+              color: "#e0f2f1",
+            }}
+          >
+            {isLoading ? "Create now..." : "Sign Up"}
+          </button>
+        </Box>
       </div>
     </>
   );
