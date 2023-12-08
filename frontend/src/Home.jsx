@@ -26,7 +26,6 @@ const Home = () => {
         <p>PCT: {jobData.PCT}</p>
         <p>PTP: {jobData.PTP}</p>
         <p>PID: {jobData.PID}</p>
-
         {/* Add more details as needed */}
         <hr />
       </div>
@@ -102,7 +101,11 @@ const Home = () => {
       </div>
       <div>
         {dataFromS3 ? (
-          <img src={dataFromS3} alt="S3から取得した画像" />
+          <img
+            src={dataFromS3}
+            alt="S3から取得した画像"
+            style={{ width: "10vw", height: "10vh" }}
+          />
         ) : (
           <p>Loading...</p>
         )}
