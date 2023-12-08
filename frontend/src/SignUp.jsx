@@ -116,6 +116,7 @@ const SignUp = () => {
             style={{
               margin: "10px",
               backgroundColor: "#2F69F6",
+              color: "#e0f2f1",
             }}
           >
             {isLoading ? "Create now..." : "Sign Up"}
