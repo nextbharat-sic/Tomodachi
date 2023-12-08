@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import Typography from "@mui/material/Typography";
 
 import postUserInformation from "./clients/postuserinformation.js";
 
@@ -104,16 +103,23 @@ const SignUp = () => {
           </div>
         </Box>
         <div style={{ margin: "10px" }}>
-          <label>
-            <Typography style={{ fontSize: "3.5vw" }}>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div>
               <input
                 type="radio"
                 onChange={() => setPrivacyPolicyCheck(true)}
               />
+            </div>
+            <div
+              style={{
+                marginLeft: "10px",
+                fontSize: "90%",
+              }}
+            >
               I hereby accept terms and conditions & privacy policy of the
               service
-            </Typography>
-          </label>
+            </div>
+          </div>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <button
