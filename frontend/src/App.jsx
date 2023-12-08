@@ -4,6 +4,7 @@ import Header from "./component/Header.jsx";
 import Footer from "./component/Footer.jsx";
 import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
+import LogIn from "./LogIn.jsx";
 import PostJobInformation from "./PostJobInformation.jsx";
 import "./App.css";
 
@@ -23,6 +24,7 @@ function App() {
     <>
       <Header />
       {pageStatus == "HomePage" ? <Home /> : ""}
+      {pageStatus == "LogIn" ? <LogIn /> : ""}
       {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
       {isSignUp && pageStatus == "PostJobPage" ? <PostJobInformation /> : ""}
       <Footer />

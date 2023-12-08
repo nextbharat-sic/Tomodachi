@@ -24,6 +24,11 @@ const Header = () => {
     dispatch(pageStatus);
   };
 
+  const moveLogInScreen = () => {
+    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(pageStatus);
+  };
+
   return (
     <>
       <div style={{ position: "absolute", top: 0, background: "blue" }}>
@@ -32,7 +37,7 @@ const Header = () => {
         {signInStatus ? (
           <button onClick={confirmSignOut}>Sign out</button>
         ) : (
-          <button>Sign In</button>
+          <button onClick={moveLogInScreen}>Log In</button>
         )}
       </div>
     </>
