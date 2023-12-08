@@ -18,10 +18,10 @@ const PostJobInformation = () => {
     deadlineDate: "",
     modeOfJob: "indoor",
     jobDescription: "",
-    image: null,
+    image: "",
   });
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const homePageStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storePage);
@@ -47,25 +47,21 @@ const PostJobInformation = () => {
     event.preventDefault();
     const isConfirm = confirm("Are you sure you want to upload?");
     if (isConfirm) {
-      uploadJobInfo();
+      checkImageFile();
     }
   };
 
-  const main = async () => {
-    try {
-      const location = await uploadFile();
-      console.log("SAILESH", location);
-    } catch (e) {
-      console.error(e);
+  const checkImageFile = () => {
+    const File = inputImageFile.current.files[0];
+    if (File && File.size > 0) {
+      uploadFile();
+    } else {
+      uploadJobInfo();
     }
   };
 
   const uploadJobInfo = async () => {
     try {
-      const File = inputImageFile.current.files[0];
-      if (File && File.size > 0) {
-        uploadFile();
-      }
       const jobInformation = {
         userId: jobData.userId,
         informationTitle: jobData.informationTitle,
@@ -75,7 +71,7 @@ const PostJobInformation = () => {
         jobDescription: jobData.jobDescription,
         image: jobData.image,
       };
-      console.log(jobInformation.image);
+
       const response = await postJobInformation(jobInformation);
       if (response.status === "Success") {
         alert("Upload information is completed!");
@@ -88,17 +84,16 @@ const PostJobInformation = () => {
     }
   };
 
-  const s3 = new S3({
-    accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
-    secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
-    region: import.meta.env.VITE_APP_S3_REGION,
-  });
-
-  const uploadFile = () => {
+  const uploadFile = async () => {
     const uploadImageFile = inputImageFile.current.files[0];
     const uploadFileName =
       userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
 
+    const s3 = new S3({
+      accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
+      secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
+      region: import.meta.env.VITE_APP_S3_REGION,
+    });
     s3.upload(
       {
         Bucket: import.meta.env.VITE_APP_S3_BUCKET_NAME,
@@ -106,10 +101,12 @@ const PostJobInformation = () => {
         Body: uploadImageFile,
       },
       (err, data) => {
-        if (!err) {
-          jobData.image = data.Location;
-        } else {
+        if (err) {
           console.log(err);
+          alert("Upload information is failed!");
+        } else {
+          jobData.image = data.Location;
+          uploadJobInfo();
         }
       },
     );
@@ -142,7 +139,7 @@ const PostJobInformation = () => {
           value={jobData.jobTitle}
           onChange={handleInputDataChange}
           style={{ width: "61vw", marginBottom: "10px" }}
-          // required
+          required
         />
         <label>Deadline Date</label>
         <input
@@ -151,7 +148,7 @@ const PostJobInformation = () => {
           value={jobData.deadlineDate}
           onChange={handleInputDataChange}
           style={{ width: "61vw", marginBottom: "10px" }}
-          // required
+          required
         />
         <label>Mode of Job</label>
         <select
@@ -170,7 +167,7 @@ const PostJobInformation = () => {
           value={jobData.jobDescription}
           onChange={handleInputDataChange}
           style={{ width: "61vw", marginBottom: "10px" }}
-          // required
+          required
         ></textarea>
         <label>Photos</label>
         <input
