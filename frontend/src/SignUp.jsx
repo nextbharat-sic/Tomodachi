@@ -74,6 +74,7 @@ const SignUp = () => {
             <input
               type="text"
               value={userName}
+              className="input"
               onChange={(event) => setUserName(event.target.value)}
               style={{
                 width: "86vw",
@@ -92,6 +93,7 @@ const SignUp = () => {
             <input
               type="text"
               value={phoneNumber}
+              className="input"
               onChange={(event) => setPhoneNumber(event.target.value)}
               style={{
                 width: "86vw",
