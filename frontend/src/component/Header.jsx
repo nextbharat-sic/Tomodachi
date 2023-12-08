@@ -23,6 +23,11 @@ const Header = () => {
     alert("Sign Out");
   };
 
+  const moveLogInScreen = () => {
+    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(pageStatus);
+  };
+
   return (
     <>
       <Box sx={{ flexGrow: 5 }}>
@@ -51,6 +56,7 @@ const Header = () => {
                   backgroundColor: "#631ACF",
                   border: "1px solid",
                 }}
+                onClick={moveLogInScreen}
               >
                 Log In
               </button>
