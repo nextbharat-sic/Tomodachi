@@ -2,6 +2,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { S3 } from "aws-sdk";
 import getUploadInformation from "./clients/getuploadinformation.js";
+import Box from "@mui/material/Grid";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -22,7 +23,18 @@ const Home = () => {
 
   const displayJobInformationList = (dataList) => {
     return dataList.slice(0, visibleItemCount).map((jobData, index) => (
-      <div key={index}>
+      <div
+        key={index}
+        style={{
+          width: "90vw",
+          margin: "10px",
+          height: "20vh",
+          borderRadius: "10px",
+          border: "1px solid #333",
+          boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
+          background: "linear-gradient(to right, #87CEEB, #87CEEB)",
+        }}
+      >
         <h2>Job Information</h2>
         <p>PCT: {jobData.PCT}</p>
         <p>PTP: {jobData.PTP}</p>
@@ -75,37 +87,97 @@ const Home = () => {
 
   return (
     <>
-      <div style={{ border: "1px solid #333", margin: 3 }}>
-        Find your job Here! area
-      </div>
-      <div style={{ border: "1px solid #333", margin: 3 }}>
-        <div>Share career information</div>
-        <button onClick={movePostScreen}>Share details</button>
-      </div>
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <div
+          style={{
+            width: "100vw",
+            margin: "10px",
+            height: "25vh",
+            borderRadius: "10px",
+            border: "1px solid #333",
+            boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
+            background: "linear-gradient(to right,  #800080, #87CEEB)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "150%",
+              fontWeight: "bold",
+              position: "absolute",
+              left: "10%",
+              top: "20%",
+              margin: "0px",
+            }}
+          >
+            Find your job <br></br> here!
+          </p>
+        </div>
+      </Box>
+
+      <Box display="flex" justifyContent="center" alignItems="center">
+        <div
+          style={{
+            width: "100vw",
+            margin: "10px",
+            height: "25vh",
+            borderRadius: "10px",
+            border: "1px solid #333",
+            boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
+            background: "linear-gradient(to right, #800080, #87CEEB)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: "120%",
+              fontWeight: "bold",
+              position: "absolute",
+              left: "10%",
+              top: "45%",
+              margin: "0px",
+            }}
+          >
+            Share career <br></br> information
+          </p>
+          <div
+            style={{
+              position: "absolute",
+              top: "55%",
+              right: "10%",
+              margin: 3,
+            }}
+          >
+            <button onClick={movePostScreen}>Share details</button>
+          </div>
+        </div>
+      </Box>
       <p>recent post</p>
-      <div style={{ border: "1px solid #333", margin: 3 }}>
-        <div>Posted information area</div>
+      <Box display="flex" justifyContent="" alignItems="">
+        <div>
+          <div>
+            <div>Posted information area</div>
 
-        {/* Call displayJobInformationList directly in the JSX */}
-        {informationResult.length > 0 &&
-          displayJobInformationList(informationResult)}
+            {/* Call displayJobInformationList directly in the JSX */}
+            {informationResult.length > 0 &&
+              displayJobInformationList(informationResult)}
 
-        {/* Show more button */}
-        {informationResult.length > visibleItemCount && (
-          <button onClick={handleShowMore}>Show more</button>
-        )}
-      </div>
-      <div>
-        {dataFromS3 ? (
-          <img
-            src={dataFromS3}
-            alt="S3から取得した画像"
-            style={{ width: "10vw", height: "10vh" }}
-          />
-        ) : (
-          <p>Loading...</p>
-        )}
-      </div>
+            {/* Show more button */}
+            {informationResult.length > visibleItemCount && (
+              <button onClick={handleShowMore}>Show more</button>
+            )}
+          </div>
+          <div>
+            {dataFromS3 ? (
+              <img
+                src={dataFromS3}
+                alt="S3から取得した画像"
+                style={{ width: "10vw", height: "10vh" }}
+              />
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+        </div>
+      </Box>
     </>
   );
 };
