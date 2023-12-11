@@ -3,25 +3,46 @@ import json
 import os
 
 def lambda_handler(event, context):
-
+    dynamodb_client = boto3.client('dynamodb')
     if 'body' in event:
         body = json.loads(event['body'])
     else:
         body = event
-
+    
     user_table_name = os.environ.get('USERTABLE')
     access_key_id = os.environ.get('ACCESSKEY')
     secret_access_key = os.environ.get('SECRETACCESSKEY')
-
+    
     print(body)
-
-    session = boto3.Session(region_name='ap-south-1',aws_access_key_id = access_key_id, aws_secret_access_key = secret_access_key)
-    dynamodb_session = session.resource('dynamodb')
-    table = dynamodb_session.Table(user_table_name)
-    response = table.scan()
-    data_userName = [item['UNM'] for item in response['Items']]
-    data_phoneNumber = [item['UPN'] for item in response['Items']]
-    if body['userName'] in data_userName and body['phoneNumber'] in data_phoneNumber:
+    
+    query_params = {
+        'TableName': user_table_name,
+        'IndexName': 'UPN-index',
+        'KeyConditionExpression': 'UPN = :phoneNumber',
+        'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
+        }
+    response = dynamodb_client.query(**query_params)    
+    print(response['Items'])
+    
+    if len(response['Items']) == 1:
+        data_userName = response['Items'][0]['UNM']['S']
+        data_phoneNumber = response['Items'][0]['UPN']['S']
+        print(data_userName,data_phoneNumber)
+    else:
+        return { 
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps({
+                "status": "phone number unmatch",
+            })
+        }
+    
+    if body['userName'] == data_userName and body['phoneNumber'] == data_phoneNumber:
         return {
             'statusCode': 200,
             'headers': {
@@ -31,6 +52,19 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
             'body': json.dumps({
-                "status": "Match",
+                "status": "User match",
+            })
+        }
+    else:
+        return { 
+            'statusCode': 500,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps({
+                "status": "User name unmatch",
             })
         }
