@@ -26,9 +26,9 @@ function App() {
     <>
       {pageStatus == "HomePage" ? <Header /> : ""}
       <Box
-        display="flex"
         justifyContent="center"
         alignItems="center"
+        text-align="center"
         height="100%"
       >
         {pageStatus == "HomePage" ? <Home /> : ""}
