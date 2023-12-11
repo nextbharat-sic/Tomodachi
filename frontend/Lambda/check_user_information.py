@@ -22,12 +22,10 @@ def lambda_handler(event, context):
         'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
         }
     response = dynamodb_client.query(**query_params)    
-    print(response['Items'])
     
     if len(response['Items']) == 1:
         data_userName = response['Items'][0]['UNM']['S']
         data_phoneNumber = response['Items'][0]['UPN']['S']
-        print(data_userName,data_phoneNumber)
     else:
         return { 
             'statusCode': 500,
