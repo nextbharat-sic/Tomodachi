@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import S3 from "aws-sdk/clients/s3";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import postJobInformation from "./clients/postjobinformation.js";
 
 const PostJobInformation = () => {
@@ -92,28 +92,29 @@ const PostJobInformation = () => {
     const uploadImageFile = inputImageFile.current.files[0];
     const uploadFileName =
       userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
+    jobData.image = uploadFileName;
 
-    const s3 = new S3({
-      accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
-      secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
+    const s3Client = new S3Client({
       region: import.meta.env.VITE_APP_S3_REGION,
+      credentials: {
+        accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
+        secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
+      },
     });
-    s3.upload(
-      {
-        Bucket: import.meta.env.VITE_APP_S3_BUCKET_NAME,
-        Key: uploadFileName,
-        Body: uploadImageFile,
-      },
-      (err, data) => {
-        if (err) {
-          console.log(err);
-          alert("Upload information is failed!");
-        } else {
-          jobData.image = data.Location;
-          uploadJobInfo();
-        }
-      },
-    );
+
+    const S3Params = {
+      Bucket: import.meta.env.VITE_APP_S3_BUCKET_NAME,
+      Key: uploadFileName,
+      Body: uploadImageFile,
+    };
+
+    try {
+      const result = await s3Client.send(new PutObjectCommand(S3Params));
+      console.log("Success", result);
+      uploadJobInfo();
+    } catch (err) {
+      console.log("Error", err);
+    }
   };
 
   return (
