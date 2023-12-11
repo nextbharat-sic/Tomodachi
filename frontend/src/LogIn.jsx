@@ -18,8 +18,8 @@ const LogIn = () => {
   };
 
   const moveSignUpScreen = () => {
-    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
-    dispatch(pageStatus);
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
+    dispatch(storePage);
   };
 
   const checkLogin = async () => {
