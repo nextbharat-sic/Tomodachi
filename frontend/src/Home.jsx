@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { S3 } from "aws-sdk";
+import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import getUploadInformation from "./clients/getuploadinformation.js";
 
 const Home = () => {
@@ -47,22 +47,27 @@ const Home = () => {
   };
 
   const fetchS3Data = async () => {
-    const s3 = new S3({
-      region: import.meta.env.VITE_APP_S3_REGION, // バケットのリージョン
-      accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY, // アクセスキー
-      secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY, // シークレットアクセスキー
+    const s3Client = new S3Client({
+      region: import.meta.env.VITE_APP_S3_REGION,
+      credentials: {
+        accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
+        secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
+      },
     });
 
-    const params = {
-      Bucket: "tomodachijobinformationimage", // バケット名
-      Key: "sample.png", // ファイル名（パスも含める）
-      Expires: 60, // URL の有効期限（秒）
+    const getObjectParams = {
+      Bucket: "tomodachijobinformationimage",
+      Key: "sample.png",
     };
 
     try {
-      const data = await s3.getSignedUrlPromise("getObject", params);
-      console.log(data);
-      setDataFromS3(data);
+      const response = await s3Client.send(
+        new GetObjectCommand(getObjectParams),
+      );
+      const arrayBuffer = await new Response(response.Body).arrayBuffer();
+      const blob = new Blob([arrayBuffer]);
+      const imageUrl = URL.createObjectURL(blob);
+      setDataFromS3(imageUrl);
     } catch (error) {
       console.error("Error in fetching data from S3: ", error);
     }
