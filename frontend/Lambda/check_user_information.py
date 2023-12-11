@@ -10,9 +10,7 @@ def lambda_handler(event, context):
         body = event
     
     user_table_name = os.environ.get('USERTABLE')
-    access_key_id = os.environ.get('ACCESSKEY')
-    secret_access_key = os.environ.get('SECRETACCESSKEY')
-    
+
     print(body)
     
     query_params = {
@@ -22,10 +20,11 @@ def lambda_handler(event, context):
         'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
         }
     response = dynamodb_client.query(**query_params)    
-    
+
     if len(response['Items']) == 1:
         data_userName = response['Items'][0]['UNM']['S']
         data_phoneNumber = response['Items'][0]['UPN']['S']
+        
     else:
         return { 
             'statusCode': 500,
@@ -36,7 +35,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
             'body': json.dumps({
-                "status": "phone number unmatch",
+                "status": "PhoneNumber unmatch",
             })
         }
     
@@ -50,7 +49,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
             'body': json.dumps({
-                "status": "User match",
+                "status": "Match",
             })
         }
     else:
@@ -63,6 +62,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
             'body': json.dumps({
-                "status": "User name unmatch",
+                "status": "UserName unmatch",
             })
         }
+          
