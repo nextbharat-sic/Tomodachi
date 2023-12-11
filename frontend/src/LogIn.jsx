@@ -29,8 +29,6 @@ const LogIn = () => {
     };
 
     const result = await checkLoginInformation(logInInformation);
-    console.log(result.status);
-    console.log(result.userID);
     if (result.status == "Match") {
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
