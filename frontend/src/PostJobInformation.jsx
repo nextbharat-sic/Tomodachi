@@ -110,7 +110,6 @@ const PostJobInformation = () => {
 
     try {
       const result = await s3Client.send(new PutObjectCommand(S3Params));
-      console.log("Success", result);
       uploadJobInfo();
     } catch (err) {
       console.log("Error", err);
