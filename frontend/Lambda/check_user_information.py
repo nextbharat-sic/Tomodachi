@@ -24,10 +24,11 @@ def lambda_handler(event, context):
     if len(response['Items']) == 1:
         data_userName = response['Items'][0]['UNM']['S']
         data_phoneNumber = response['Items'][0]['UPN']['S']
-        
+        data_userID = response['Items'][0]['UID']['S']
+
     else:
         return { 
-            'statusCode': 500,
+            'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Headers" : "*",
@@ -50,11 +51,12 @@ def lambda_handler(event, context):
             },
             'body': json.dumps({
                 "status": "Match",
+                "userID": data_userID,
             })
         }
     else:
         return { 
-            'statusCode': 500,
+            'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
                 "Access-Control-Allow-Headers" : "*",
