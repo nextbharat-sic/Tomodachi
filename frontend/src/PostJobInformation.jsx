@@ -7,7 +7,7 @@ const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
   const userID = useSelector((state) => state.userID);
   let date = new Date();
-  let localDate = date.toLocaleDateString().replace(/\//g, "");
+  let localDate = date.toLocaleDateString().replace(/\//g, "-");
   let localTime = date.toLocaleTimeString();
   const inputImageFile = useRef();
 

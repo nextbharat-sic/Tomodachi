@@ -5,7 +5,7 @@ from datetime import datetime
 
 
 def lambda_handler(event, context):
-
+    
     dynamodb_client = boto3.client('dynamodb')
     s3_client = boto3.client('s3')
 
@@ -14,29 +14,18 @@ def lambda_handler(event, context):
     else:
         body = event
 
-    print(event)
     print(body)
-
-    # TODO We need to format file name. 'userId_time_fileName'
-    #s3_client.upload_file(body['image'], 'tomodachijobinformationimage', 'test.png')
-    bucket_name = os.environ.get('BUCKETNAME')
-    key_name = 'logo192.png'
-    # image_url = s3_client.generate_presigned_url('get_object', Params={'Bucket': bucket_name,'Key':key_name})
-
-    # print(image_url.split('?')[0])
-
+   
     postinformation_table_name = os.environ.get('POSTINFORMATIONTABLE')
     counter_table_name = os.environ.get('COUNTERTABLE')
-
+    
     parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
-    formatted_deadline_date = parsed_deadline_date.strftime('%d%m%Y')
-
-    date_format = '%d%m%Y'
-    deadline_date = datetime.strptime(formatted_deadline_date, date_format)
-    create_date = datetime.strptime(body['createDate'], date_format)
-
+    deadline_date = parsed_deadline_date.strftime('%d-%m-%Y')
+    parsed_create_date = datetime.strptime(body['createDate'], '%Y-%m-%d')
+    create_date = parsed_create_date.strftime('%d-%m-%Y')
+    
     # Validation check
-    if deadline_date < create_date:
+    if deadline_date < create_date: 
         print('deadlineDateError')
         return {
             'statusCode': 500,
@@ -50,7 +39,7 @@ def lambda_handler(event, context):
                 "status": "Failed",
             })
         }
-
+       
     # Get most recentry postId from CounterTable
     counter_res = dynamodb_client.get_item(
         TableName=counter_table_name,
@@ -60,7 +49,7 @@ def lambda_handler(event, context):
     )
 
     next_upload_info_id = int(counter_res['Item']['CLI']['N']) + 1
-
+    
     # Update number of user counter
     counter_table_operation = {
         'Update' : {
@@ -72,24 +61,24 @@ def lambda_handler(event, context):
             'ExpressionAttributeValues' : {":inc": {"N": "1"}},
         },
     }
-
-  # Data formatting.
+    
+  # Data formatting. 
     upload_info = {}
     upload_info['PID'] = 'P'+ str(next_upload_info_id).zfill(8)
     upload_info['PIT'] = body['informationTitle']
-    upload_info['PCT'] = body['createDate']+"_"+body['createTime']
-    upload_info['PDD'] = body['deadlineDate']
+    upload_info['PCT'] = create_date+"_"+body['createTime']
+    upload_info['PDD'] = deadline_date
     upload_info['PJD'] = body['jobDescription']
     upload_info['PJT'] = body['jobTitle']
     upload_info['PMJ'] = body['modeOfJob']
     upload_info['PST'] = True
     upload_info['PTP'] = 'Post'
     upload_info['PUID'] = str(body['userId'])
-    upload_info['PUT'] = body['createDate']+"_"+body['createTime']
+    upload_info['PUT'] = create_date+"_"+body['createTime']
 
     upload_media_list = []
     upload_media_list.append(body['image'])
-
+    
     # Create pmd formatting
     def create_upload_pmd(upload_media_list):
         upload_info['PMD'] = []
@@ -97,13 +86,13 @@ def lambda_handler(event, context):
             upload_info['PMD'].append({'S': media})
         return upload_info['PMD']
 
-
+    
     # Upload data into Post Job Information Table
     upload_table_operation = {
       'Put': {
           'TableName' : postinformation_table_name,
           'Item' : {
-              'PID' : {'S': upload_info['PID']},
+              'PID' : {'S': upload_info['PID']}, 
               'PIT' : {'S': upload_info['PIT']},
               'PCT' : {'S': upload_info['PCT']},
               'PDD' : {'S': upload_info['PDD']},
@@ -151,5 +140,4 @@ def lambda_handler(event, context):
             'body': json.dumps({
                 "status": "Failed",
             })
-        }
-
+        } 
