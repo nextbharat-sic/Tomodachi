@@ -6,8 +6,9 @@ import getUploadInformation from "./clients/getuploadinformation.js";
 const Home = () => {
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
-  const [getInformationResult, setGetInformationResult] = useState([]);
+  const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
+  const [dataFromS3, setDataFromS3] = useState(null);
 
   const movePostScreen = () => {
     let storePage = "";
@@ -34,8 +35,8 @@ const Home = () => {
 
   const fetchAndDisplayJobInformation = async () => {
     try {
-      const informationResult = await getUploadInformation();
-      setGetInformationResult(informationResult);
+      const uploadInformationResult = await getUploadInformation();
+      setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error("Error fetching upload information:", error);
     }
@@ -44,11 +45,6 @@ const Home = () => {
   const handleShowMore = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
   };
-
-  useEffect(() => {
-    fetchAndDisplayJobInformation();
-  }, []);
-  const [dataFromS3, setDataFromS3] = useState(null);
 
   const fetchS3Data = async () => {
     const s3 = new S3({
@@ -65,7 +61,6 @@ const Home = () => {
 
     try {
       const data = await s3.getSignedUrlPromise("getObject", params);
-      // const data = await s3.getObject(params).promise();
       console.log(data);
       setDataFromS3(data);
     } catch (error) {
@@ -74,6 +69,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    fetchAndDisplayJobInformation();
     fetchS3Data();
   }, []);
 
@@ -91,11 +87,11 @@ const Home = () => {
         <div>Posted information area</div>
 
         {/* Call displayJobInformationList directly in the JSX */}
-        {getInformationResult.length > 0 &&
-          displayJobInformationList(getInformationResult)}
+        {informationResult.length > 0 &&
+          displayJobInformationList(informationResult)}
 
         {/* Show more button */}
-        {getInformationResult.length > visibleItemCount && (
+        {informationResult.length > visibleItemCount && (
           <button onClick={handleShowMore}>Show more</button>
         )}
       </div>
