@@ -24,8 +24,8 @@ const Header = () => {
   };
 
   const moveLogInScreen = () => {
-    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
-    dispatch(pageStatus);
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(storePage);
   };
 
   return (
