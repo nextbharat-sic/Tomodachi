@@ -15,7 +15,7 @@ const Home = () => {
     if (signInStatus) {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
     } else {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
     }
     dispatch(storePage);
   };
