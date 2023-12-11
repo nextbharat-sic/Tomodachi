@@ -48,6 +48,28 @@ def lambda_handler(event, context):
             })
         }
 
+    query_params = {
+        'TableName': user_table_name,
+        'IndexName': 'UPN-index',
+        'KeyConditionExpression': 'UPN = :phoneNumber',
+        'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
+        }
+
+    response = dynamodb_client.query(**query_params)
+    if response['Items']:
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps({
+                "status": "Existed",
+            })
+        }
+
     # Get most recentry userId from CounterTable
     counter_res = dynamodb_client.get_item(
         TableName=counter_table_name,
