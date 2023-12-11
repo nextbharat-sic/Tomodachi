@@ -110,11 +110,23 @@ const SignUp = () => {
           </div>
         </Box>
         <div style={{ margin: "10px" }}>
-          <label>
-            <input type="radio" onChange={() => setPrivacyPolicyCheck(true)} />
-            <span>I hereby Accept Terms and Conditions &</span>
-            <span> Privacy Policy of the Service</span>
-          </label>
+          <div style={{ display: "flex", alignItems: "center" }}>
+            <div>
+              <input
+                type="radio"
+                onChange={() => setPrivacyPolicyCheck(true)}
+              />
+            </div>
+            <div
+              style={{
+                marginLeft: "10px",
+                fontSize: "90%",
+              }}
+            >
+              I hereby accept terms and conditions & privacy policy of the
+              service
+            </div>
+          </div>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <button
