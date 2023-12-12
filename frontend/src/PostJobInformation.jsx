@@ -6,6 +6,8 @@ import postJobInformation from "./clients/postjobinformation.js";
 const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
   const userID = useSelector((state) => state.userID);
+  const postAccountName = useSelector((state) => state.postAccountName);
+  const postPhoneNumber = useSelector((state) => state.postPhoneNumber);
   let date = new Date();
   let localDate = date.toLocaleDateString().replace(/\//g, "-");
   let localTime = date.toLocaleTimeString();
@@ -21,6 +23,8 @@ const PostJobInformation = () => {
     image: "",
     createTime: localTime,
     createDate: localDate,
+    postAccountName: postAccountName,
+    postPhoneNumber: postPhoneNumber,
   });
 
   const dispatch = useDispatch();
@@ -74,6 +78,8 @@ const PostJobInformation = () => {
         image: jobData.image,
         createTime: jobData.createTime,
         createDate: jobData.createDate,
+        postAccountName: jobData.postAccountName,
+        postPhoneNumber: jobData.postPhoneNumber,
       };
 
       const response = await postJobInformation(jobInformation);
