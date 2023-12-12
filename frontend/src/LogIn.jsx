@@ -4,7 +4,7 @@ import Link from "@mui/material/Link";
 import checkLoginInformation from "./clients/checklogininformation.js";
 
 const LogIn = () => {
-  const [userName, setUserName] = useState("");
+  const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const dispatch = useDispatch();
 
@@ -20,7 +20,7 @@ const LogIn = () => {
   const pendingForPost = () => {
     const storeAccountName = {
       type: "SET_POST_ACCOUNT_NAME",
-      payload: userName,
+      payload: accountName,
     };
     const storePhoneNumber = {
       type: "SET_POST_PHONE_NUMBER",
@@ -37,7 +37,7 @@ const LogIn = () => {
 
   const checkLogin = async () => {
     const logInInformation = {
-      userName: userName,
+      accountName: accountName,
       phoneNumber: phoneNumber,
     };
 
@@ -46,7 +46,7 @@ const LogIn = () => {
       pendingForPost();
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
-      alert("User name or phone number is incorrect!");
+      alert("Account name or phone number is incorrect!");
     } else {
       alert("Please Try Again!");
     }
@@ -57,13 +57,13 @@ const LogIn = () => {
       <h2>Log In</h2>
       <div>
         <div>
-          <label>User Name</label>
+          <label>Account Name</label>
         </div>
         <div>
           <input
             type="text"
-            value={userName}
-            onChange={(event) => setUserName(event.target.value)}
+            value={accountName}
+            onChange={(event) => setAccountName(event.target.value)}
           ></input>
         </div>
         <div>
