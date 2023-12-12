@@ -1,20 +1,29 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import postJobInformation from "./clients/postjobinformation.js";
 
 const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
+  const userID = useSelector((state) => state.userID);
+  let date = new Date();
+  let localDate = date.toLocaleDateString().replace(/\//g, "-");
+  let localTime = date.toLocaleTimeString();
+  const inputImageFile = useRef();
+
   const [jobData, setJobData] = useState({
-    userId: "U123456",
+    userId: userID,
     informationTitle: "jobRelated",
     jobTitle: "",
     deadlineDate: "",
     modeOfJob: "indoor",
     jobDescription: "",
-    image: null,
+    image: "",
+    createTime: localTime,
+    createDate: localDate,
   });
-  const dispatch = useDispatch();
 
+  const dispatch = useDispatch();
   const homePageStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storePage);
@@ -40,6 +49,15 @@ const PostJobInformation = () => {
     event.preventDefault();
     const isConfirm = confirm("Are you sure you want to upload?");
     if (isConfirm) {
+      checkImageFile();
+    }
+  };
+
+  const checkImageFile = () => {
+    const File = inputImageFile.current.files[0];
+    if (File && File.size > 0) {
+      uploadFile();
+    } else {
       uploadJobInfo();
     }
   };
@@ -54,6 +72,8 @@ const PostJobInformation = () => {
         modeOfJob: jobData.modeOfJob,
         jobDescription: jobData.jobDescription,
         image: jobData.image,
+        createTime: jobData.createTime,
+        createDate: jobData.createDate,
       };
 
       const response = await postJobInformation(jobInformation);
@@ -65,6 +85,34 @@ const PostJobInformation = () => {
       }
     } catch (error) {
       console.error("Error uploading information:", error);
+    }
+  };
+
+  const uploadFile = async () => {
+    const uploadImageFile = inputImageFile.current.files[0];
+    const uploadFileName =
+      userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
+    jobData.image = uploadFileName;
+
+    const s3Client = new S3Client({
+      region: import.meta.env.VITE_APP_S3_REGION,
+      credentials: {
+        accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY,
+        secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY,
+      },
+    });
+
+    const S3Params = {
+      Bucket: import.meta.env.VITE_APP_S3_BUCKET_NAME,
+      Key: uploadFileName,
+      Body: uploadImageFile,
+    };
+
+    try {
+      const result = await s3Client.send(new PutObjectCommand(S3Params));
+      uploadJobInfo();
+    } catch (err) {
+      console.log("Error", err);
     }
   };
 
@@ -128,6 +176,7 @@ const PostJobInformation = () => {
         <label>Photos</label>
         <input
           type="file"
+          ref={inputImageFile}
           accept="image/*"
           style={{ width: "61vw", marginBottom: "10px" }}
           onChange={showImage}
