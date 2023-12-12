@@ -26,13 +26,14 @@ const Home = () => {
       <div
         key={index}
         style={{
-          width: "90vw",
-          margin: "10px",
-          height: "20vh",
+          width: "92vw",
+          margin: "1.5em",
+          height: "30vh",
           borderRadius: "10px",
-          border: "1px solid #333",
-          boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
-          background: "linear-gradient(to right, #87CEEB, #87CEEB)",
+          boxShadow:
+            "0.2em 0.2em 0em rgba(0, 0, 0, 0.1),-0.05em -0.2em 0.2em rgba(0, 0, 0, 0.1)",
+          backgroundColor: "#ffffff",
+          color: "#000000",
         }}
       >
         <h2>Job Information</h2>
@@ -40,7 +41,6 @@ const Home = () => {
         <p>PTP: {jobData.PTP}</p>
         <p>PID: {jobData.PID}</p>
         {/* Add more details as needed */}
-        <hr />
       </div>
     ));
   };
@@ -91,12 +91,12 @@ const Home = () => {
         <div
           style={{
             width: "100vw",
-            margin: "10px",
             height: "25vh",
-            borderRadius: "10px",
-            border: "1px solid #333",
-            boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
-            background: "linear-gradient(to right,  #800080, #87CEEB)",
+            marginBottom: "0.5em",
+            boxShadow: "0em 0.55em 0.1em rgba(99, 26, 207, 1)",
+            borderBottomRightRadius: "0.8em",
+            borderBottomLeftRadius: "0.8em",
+            background: "linear-gradient(to right,  #631ACF, #87CEEB)",
           }}
         >
           <p
@@ -106,7 +106,7 @@ const Home = () => {
               position: "absolute",
               left: "10%",
               top: "20%",
-              margin: "0px",
+              margin: "0%",
             }}
           >
             Find your job <br></br> here!
@@ -114,16 +114,23 @@ const Home = () => {
         </div>
       </Box>
 
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        style={{
+          boxShadow: "0em 0.3em 0em rgba(0, 0, 0, 0.1)",
+          borderBottomRightRadius: "0.8em",
+          borderBottomLeftRadius: "0.8em",
+        }}
+      >
         <div
           style={{
             width: "100vw",
-            margin: "10px",
+            margin: "0.8em",
             height: "25vh",
             borderRadius: "10px",
-            border: "1px solid #333",
-            boxShadow: "5px 5px 10px rgba(0, 0, 0, 0.3)",
-            background: "linear-gradient(to right, #800080, #87CEEB)",
+            background: "linear-gradient(to right, #631ACF, #631ACF)",
           }}
         >
           <p
@@ -141,41 +148,54 @@ const Home = () => {
           <div
             style={{
               position: "absolute",
-              top: "55%",
-              right: "10%",
+              top: "52%",
+              right: "6%",
               margin: 3,
             }}
           >
-            <button onClick={movePostScreen}>Share details</button>
+            <button
+              onClick={movePostScreen}
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#631ACF",
+              }}
+            >
+              Share details
+            </button>
           </div>
         </div>
       </Box>
-      <p>recent post</p>
-      <Box display="flex" justifyContent="" alignItems="">
+      <p
+        style={{
+          color: "#000000",
+          margin: "1em",
+          fontWeight: "bold",
+          fontSize: "1.2em",
+        }}
+      >
+        Recent post
+      </p>
+      <Box display="flex" justifyContent="center" alignItems="center">
         <div>
-          <div>
-            <div>Posted information area</div>
+          {/* Call displayJobInformationList directly in the JSX */}
+          {informationResult.length > 0 &&
+            displayJobInformationList(informationResult)}
 
-            {/* Call displayJobInformationList directly in the JSX */}
-            {informationResult.length > 0 &&
-              displayJobInformationList(informationResult)}
-
-            {/* Show more button */}
-            {informationResult.length > visibleItemCount && (
-              <button onClick={handleShowMore}>Show more</button>
-            )}
-          </div>
-          <div>
-            {dataFromS3 ? (
-              <img
-                src={dataFromS3}
-                alt="S3から取得した画像"
-                style={{ width: "10vw", height: "10vh" }}
-              />
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>
+          {/* Show more button */}
+          {informationResult.length > visibleItemCount && (
+            <button onClick={handleShowMore}>Show more</button>
+          )}
+        </div>
+        <div>
+          {dataFromS3 ? (
+            <img
+            // src={dataFromS3}
+            // alt="S3から取得した画像"
+            // style={{ width: "10vw", height: "10vh" }}
+            />
+          ) : (
+            <p>Loading...</p>
+          )}
         </div>
       </Box>
     </>

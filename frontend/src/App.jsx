@@ -30,6 +30,7 @@ function App() {
         alignItems="center"
         text-align="center"
         height="100%"
+        backgroundColor="#ffffff"
       >
         {pageStatus == "HomePage" ? <Home /> : ""}
         {pageStatus == "LogIn" ? <LogIn /> : ""}
