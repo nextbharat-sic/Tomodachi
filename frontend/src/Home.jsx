@@ -37,6 +37,8 @@ const Home = () => {
     try {
       const uploadInformationResult = await getUploadInformation();
       setInformationResult(uploadInformationResult);
+      // check getting data array
+      console.log(uploadInformationResult);
     } catch (error) {
       console.error("Error fetching upload information:", error);
     }

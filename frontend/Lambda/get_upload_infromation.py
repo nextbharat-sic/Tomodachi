@@ -37,6 +37,8 @@ def lambda_handler(event, context):
             'PUID':item['PUID']['S'],
             'PJT':item['PJT']['S'],
             'PIT':item['PIT']['S'],
+            'PAN':item['PAN']['S'],
+            'PPN':item['PPN']['S'],
         })
         
     print(post_list)
