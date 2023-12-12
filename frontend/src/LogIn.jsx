@@ -17,6 +17,19 @@ const LogIn = () => {
     dispatch(storeUserID);
   };
 
+  const pendingForPost = () => {
+    const storeAccountName = {
+      type: "SET_POST_ACCOUNT_NAME",
+      payload: userName,
+    };
+    const storePhoneNumber = {
+      type: "SET_POST_PHONE_NUMBER",
+      payload: phoneNumber,
+    };
+    dispatch(storeAccountName);
+    dispatch(storePhoneNumber);
+  };
+
   const moveSignUpScreen = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
     dispatch(storePage);
@@ -30,6 +43,7 @@ const LogIn = () => {
 
     const result = await checkLoginInformation(logInInformation);
     if (result.status == "Match") {
+      pendingForPost();
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
       alert("User name or phone number is incorrect!");

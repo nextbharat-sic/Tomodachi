@@ -20,6 +20,19 @@ const SignUp = () => {
     dispatch(storeUserID);
   };
 
+  const pendingForPost = () => {
+    const storeAccountName = {
+      type: "SET_POST_ACCOUNT_NAME",
+      payload: userName,
+    };
+    const storePhoneNumber = {
+      type: "SET_POST_PHONE_NUMBER",
+      payload: phoneNumber,
+    };
+    dispatch(storeAccountName);
+    dispatch(storePhoneNumber);
+  };
+
   const createUser = async () => {
     setIsLoading(true);
     if (!isValidate()) {
@@ -35,6 +48,7 @@ const SignUp = () => {
 
     const result = await postUserInformation(userInformation);
     if (result.status == "Success") {
+      pendingForPost();
       setIsLoading(false);
       alert("User Registration is completed!");
       signUpStatus(result.userID);
