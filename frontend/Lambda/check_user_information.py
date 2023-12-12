@@ -23,6 +23,7 @@ def lambda_handler(event, context):
 
     if len(response['Items']) == 1:
         data_userName = response['Items'][0]['UNM']['S']
+        data_accountName = response['Items'][0]['UAN']['S']
         data_phoneNumber = response['Items'][0]['UPN']['S']
         data_userID = response['Items'][0]['UID']['S']
 
@@ -40,7 +41,7 @@ def lambda_handler(event, context):
             })
         }
     
-    if body['userName'] == data_userName and body['phoneNumber'] == data_phoneNumber:
+    if body['accountName'] == data_accountName and body['phoneNumber'] == data_phoneNumber:
         return {
             'statusCode': 200,
             'headers': {
