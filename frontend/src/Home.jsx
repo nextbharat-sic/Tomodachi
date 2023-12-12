@@ -27,8 +27,9 @@ const Home = () => {
         key={index}
         style={{
           width: "92vw",
-          margin: "1.5em",
-          height: "30vh",
+          marginBottom: "1em",
+          // margin: "1.5em",
+          // height: "30vh",
           borderRadius: "10px",
           boxShadow:
             "0.2em 0.2em 0em rgba(0, 0, 0, 0.1),-0.05em -0.2em 0.2em rgba(0, 0, 0, 0.1)",
@@ -36,11 +37,58 @@ const Home = () => {
           color: "#000000",
         }}
       >
-        <h2>Job Information</h2>
-        <p>PCT: {jobData.PCT}</p>
-        <p>PTP: {jobData.PTP}</p>
-        <p>PID: {jobData.PID}</p>
-        {/* Add more details as needed */}
+        <div style={{ position: "relative", width: "85vw", margin: "1em" }}>
+          <div
+            style={{
+              position: "relative",
+              top: "0.5em",
+              margin: "0.5em",
+              fontSize: "0.8em",
+              overflowWrap: "break-word",
+            }}
+          >
+            Account Name
+          </div>
+          <div style={{ position: "relative", overflowWrap: "break-word" }}>
+            {jobData.PJT}
+          </div>
+          <div>
+            <span
+              style={{
+                backgroundColor: "#f5f5f5",
+                fontSize: "0.8em",
+                border: "0.2em solid #f5f5f5",
+                borderRadius: "0.5em",
+                paddingRight: "0.3em",
+                paddingLeft: "0.3em",
+              }}
+            >
+              {jobData.PMJ}
+            </span>
+          </div>
+          <div
+            style={{
+              position: "relative",
+              overflowWrap: "break-word",
+              margin: "0.5em",
+            }}
+          >
+            {jobData.PJD}
+          </div>
+          <div>
+            {dataFromS3 ? (
+              <img
+                src={dataFromS3}
+                alt="S3から取得した画像"
+                style={{ width: "10vw", height: "10vh" }}
+              />
+            ) : (
+              <p>Loading...</p>
+            )}
+          </div>
+          <div style={{ fontSize: "0.5em" }}>posted at:{jobData.PCT}</div>
+          {/* Add more details as needed */}
+        </div>
       </div>
     ));
   };
@@ -48,6 +96,7 @@ const Home = () => {
   const fetchAndDisplayJobInformation = async () => {
     try {
       const uploadInformationResult = await getUploadInformation();
+      console.log(uploadInformationResult);
       setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error("Error fetching upload information:", error);
@@ -87,7 +136,12 @@ const Home = () => {
 
   return (
     <>
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        style={{ marginTop: "3.5em" }}
+      >
         <div
           style={{
             width: "100vw",
@@ -101,6 +155,7 @@ const Home = () => {
         >
           <p
             style={{
+              color: "#ffffff",
               fontSize: "150%",
               fontWeight: "bold",
               position: "absolute",
@@ -122,6 +177,7 @@ const Home = () => {
           boxShadow: "0em 0.3em 0em rgba(0, 0, 0, 0.1)",
           borderBottomRightRadius: "0.8em",
           borderBottomLeftRadius: "0.8em",
+          margin: "0.5em",
         }}
       >
         <div
@@ -135,6 +191,7 @@ const Home = () => {
         >
           <p
             style={{
+              color: "#ffffff",
               fontSize: "120%",
               fontWeight: "bold",
               position: "absolute",
@@ -165,17 +222,23 @@ const Home = () => {
           </div>
         </div>
       </Box>
-      <p
+      <div
         style={{
           color: "#000000",
-          margin: "1em",
           fontWeight: "bold",
           fontSize: "1.2em",
+          position: "relative",
+          left: "1em",
         }}
       >
         Recent post
-      </p>
-      <Box display="flex" justifyContent="center" alignItems="center">
+      </div>
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        style={{ marginBottom: "4em" }}
+      >
         <div>
           {/* Call displayJobInformationList directly in the JSX */}
           {informationResult.length > 0 &&
@@ -183,18 +246,12 @@ const Home = () => {
 
           {/* Show more button */}
           {informationResult.length > visibleItemCount && (
-            <button onClick={handleShowMore}>Show more</button>
-          )}
-        </div>
-        <div>
-          {dataFromS3 ? (
-            <img
-            // src={dataFromS3}
-            // alt="S3から取得した画像"
-            // style={{ width: "10vw", height: "10vh" }}
-            />
-          ) : (
-            <p>Loading...</p>
+            <button
+              onClick={handleShowMore}
+              style={{ display: "block", margin: "auto" }}
+            >
+              Show more
+            </button>
           )}
         </div>
       </Box>
