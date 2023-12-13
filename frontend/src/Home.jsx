@@ -37,45 +37,76 @@ const Home = () => {
           color: "#000000",
         }}
       >
-        <div style={{ position: "relative", width: "85vw", margin: "1em" }}>
+        <div
+          style={{
+            position: "relative",
+            width: "85vw",
+            marginLeft: "5vw",
+          }}
+        >
           <div
             style={{
-              position: "relative",
-              top: "0.5em",
-              margin: "0.5em",
-              fontSize: "0.8em",
               overflowWrap: "break-word",
+              display: "flex",
             }}
           >
-            Account Name
-          </div>
-          <div style={{ position: "relative", overflowWrap: "break-word" }}>
-            {jobData.PJT}
-          </div>
-          <div>
-            <span
+            <img
+              width="48"
+              height="48"
+              src="https://img.icons8.com/fluency/48/test-account--v1.png"
+              alt="test-account--v1"
+            />
+            <div
               style={{
-                backgroundColor: "#f5f5f5",
-                fontSize: "0.8em",
-                border: "0.2em solid #f5f5f5",
-                borderRadius: "0.5em",
-                paddingRight: "0.3em",
-                paddingLeft: "0.3em",
+                fontFamily: "DM sans",
+                textAlign: "center",
+                fontWeight: "Bold",
+                marginTop: "1.5vh",
+                marginLeft: "3vw",
               }}
             >
-              {jobData.PMJ}
-            </span>
+              {jobData.PAN}
+            </div>
+          </div>
+          <div style={{ display: "flex" }}>
+            <div
+              style={{
+                overflowWrap: "break-word",
+                fontFamily: "DM sans-serif",
+                fontSize: "120%",
+                fontWeight: "Bold",
+                marginLeft: "0.5em",
+              }}
+            >
+              {jobData.PJT}
+            </div>
+            <div>
+              <span
+                style={{
+                  backgroundColor: "#f5f5f5",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "5vw",
+                  fontSize: "0.9em",
+                }}
+              >
+                {jobData.PMJ}
+              </span>
+            </div>
           </div>
           <div
             style={{
               position: "relative",
               overflowWrap: "break-word",
               margin: "0.5em",
+              fontSize: "0.7em",
             }}
           >
             {jobData.PJD}
           </div>
-          <div>
+          {/* <div>
             {dataFromS3 ? (
               <img
                 src={dataFromS3}
@@ -85,8 +116,10 @@ const Home = () => {
             ) : (
               <p>Loading...</p>
             )}
+          </div>*/}
+          <div style={{ fontSize: "0.8em", margin: "0.5em" }}>
+            posted at:{jobData.PCT}
           </div>
-          <div style={{ fontSize: "0.5em" }}>posted at:{jobData.PCT}</div>
           {/* Add more details as needed */}
         </div>
       </div>
@@ -156,15 +189,14 @@ const Home = () => {
           <p
             style={{
               color: "#ffffff",
-              fontSize: "150%",
+              fontSize: "180%",
               fontWeight: "bold",
-              position: "absolute",
-              left: "10%",
-              top: "20%",
-              margin: "0%",
+              marginLeft: "5vw",
+              fontFamily: "DM sans-serif",
             }}
           >
-            Find your job <br></br> here!
+            Find your job <br></br>
+            <span style={{ fontSize: "150%" }}> here!</span>
           </p>
         </div>
       </Box>
@@ -192,12 +224,11 @@ const Home = () => {
           <p
             style={{
               color: "#ffffff",
-              fontSize: "120%",
+              fontSize: "150%",
               fontWeight: "bold",
-              position: "absolute",
-              left: "10%",
-              top: "45%",
-              margin: "0px",
+              marginLeft: "5vw",
+              marginTop: "7vh",
+              fontFamily: "DM sans-serif",
             }}
           >
             Share career <br></br> information
@@ -215,6 +246,7 @@ const Home = () => {
               style={{
                 backgroundColor: "#ffffff",
                 color: "#631ACF",
+                fontWeight: "bold",
               }}
             >
               Share details
