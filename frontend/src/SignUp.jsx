@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-
 import postUserInformation from "./clients/postuserinformation.js";
 
 const SignUp = () => {
@@ -115,13 +114,19 @@ const SignUp = () => {
             ></input>
           </div>
         </Box>
-        <div style={{ marginLeft: "8vw", marginTop: "2vh" }}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          marginTop="2vh"
+        >
           <div
             style={{
-              margin: "4px",
-              padding: "4px",
+              marginBottom: "2vh",
+              paddingLeft: "4vw",
+              paddingRight: "4vw",
               width: "80vw",
-              height: "40vh",
+              height: "30vh",
               overflowX: "hidden",
               overflowY: "auto",
               textAlign: "justify",
@@ -142,7 +147,7 @@ const SignUp = () => {
             are close to them. In case you are a beginner, you may refer
             Guidelines to write an Article
           </div>
-        </div>
+        </Box>
 
         <div style={{ margin: "10px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
