@@ -1,19 +1,13 @@
-// インストール時の処理
+// Processing during installation
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open("your-cache-name").then((cache) => {
-      return cache.addAll([
-        "/",
-        "/index.html",
-        // "/src/index.css",
-        // "/src/App.jsx",
-        // 他にキャッシュしたい静的ファイル
-      ]);
+      return cache.addAll(["/", "/index.html"]);
     }),
   );
 });
 
-// Fetch時のキャッシュロード処理
+// Cache load processing during Fetch
 self.addEventListener("fetch", (event) => {
   event.respondWith(
     caches.match(event.request).then((response) => {
