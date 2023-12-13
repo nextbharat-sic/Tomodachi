@@ -227,8 +227,7 @@ const Home = () => {
           color: "#000000",
           fontWeight: "bold",
           fontSize: "1.2em",
-          position: "relative",
-          left: "1em",
+          marginLeft: "5vw",
         }}
       >
         Recent post

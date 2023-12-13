@@ -14,7 +14,7 @@ const Footer = () => {
 
   return (
     <>
-      <Box position="fixed" bottom=" 0" width="100%">
+      <Box position="fixed" bottom="0" width="100%">
         <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
           <Grid container>
             <Grid
