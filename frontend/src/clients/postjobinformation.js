@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default async function postJobInformation(jobInformation) {
-  console.log(jobInformation);
   const postJobInfoURL = import.meta.env.VITE_APP_POST_JOB_INFO;
   const header = { "Content-Type": "application/json" };
   try {
