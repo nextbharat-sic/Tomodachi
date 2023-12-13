@@ -5,7 +5,8 @@ import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
 
 const SignUp = () => {
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState("tentative");
+  const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
@@ -15,9 +16,13 @@ const SignUp = () => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
+    const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
+    const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
     dispatch(storeIsSignIn);
     dispatch(storePage);
     dispatch(storeUserID);
+    dispatch(storeAccountName);
+    dispatch(storePhoneNumber);
   };
 
   const createUser = async () => {
@@ -29,6 +34,7 @@ const SignUp = () => {
 
     const userInformation = {
       userName: userName,
+      accountName: accountName,
       phoneNumber: phoneNumber,
       privacyPolicyCheck: privacyPolicyCheck,
     };
@@ -36,8 +42,8 @@ const SignUp = () => {
     const result = await postUserInformation(userInformation);
     if (result.status == "Success") {
       setIsLoading(false);
-      alert("User Registration is completed!");
       signUpStatus(result.userID);
+      alert("User Registration is completed!");
     } else if (result.status == "Existed") {
       setIsLoading(false);
       alert("Phone Number already Exists!");
@@ -50,8 +56,8 @@ const SignUp = () => {
   const isValidate = () => {
     const formatter = /^[0-9]{10}$/;
 
-    if (userName == "") {
-      alert("Input Username!");
+    if (accountName == "") {
+      alert("Input Account name!");
       return false;
     }
 
@@ -72,15 +78,15 @@ const SignUp = () => {
       <div>
         <h2 style={{ textAlign: "center" }}>Sign Up</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>User Name</label>
+          <label>Account Name</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
             <input
               type="text"
-              value={userName}
+              value={accountName}
               className="input"
-              onChange={(event) => setUserName(event.target.value)}
+              onChange={(event) => setAccountName(event.target.value)}
               style={{
                 width: "86vw",
                 margin: "10px",

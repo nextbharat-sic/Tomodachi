@@ -8,26 +8,26 @@ def lambda_handler(event, context):
         body = json.loads(event['body'])
     else:
         body = event
-    
+
     user_table_name = os.environ.get('USERTABLE')
 
     print(body)
-    
+
     query_params = {
         'TableName': user_table_name,
         'IndexName': 'UPN-index',
         'KeyConditionExpression': 'UPN = :phoneNumber',
         'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
         }
-    response = dynamodb_client.query(**query_params)    
+    response = dynamodb_client.query(**query_params)
 
     if len(response['Items']) == 1:
-        data_userName = response['Items'][0]['UNM']['S']
-        data_phoneNumber = response['Items'][0]['UPN']['S']
+        data_account_name = response['Items'][0]['UAN']['S']
+        data_phone_number = response['Items'][0]['UPN']['S']
         data_userID = response['Items'][0]['UID']['S']
 
     else:
-        return { 
+        return {
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
@@ -39,8 +39,8 @@ def lambda_handler(event, context):
                 "status": "Unmatch",
             })
         }
-    
-    if body['userName'] == data_userName and body['phoneNumber'] == data_phoneNumber:
+
+    if body['accountName'] == data_account_name and body['phoneNumber'] == data_phone_number:
         return {
             'statusCode': 200,
             'headers': {
@@ -55,7 +55,7 @@ def lambda_handler(event, context):
             })
         }
     else:
-        return { 
+        return {
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
@@ -67,4 +67,3 @@ def lambda_handler(event, context):
                 "status": "Unmatch",
             })
         }
-          

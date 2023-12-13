@@ -5,7 +5,7 @@ import checkLoginInformation from "./clients/checklogininformation.js";
 import Box from "@mui/material/Grid";
 
 const LogIn = () => {
-  const [userName, setUserName] = useState("");
+  const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const dispatch = useDispatch();
 
@@ -13,9 +13,13 @@ const LogIn = () => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
+    const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
+    const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
     dispatch(storeIsSignIn);
     dispatch(storePage);
     dispatch(storeUserID);
+    dispatch(storeAccountName);
+    dispatch(storePhoneNumber);
   };
 
   const moveSignUpScreen = () => {
@@ -25,7 +29,7 @@ const LogIn = () => {
 
   const checkLogin = async () => {
     const logInInformation = {
-      userName: userName,
+      accountName: accountName,
       phoneNumber: phoneNumber,
     };
 
@@ -33,7 +37,7 @@ const LogIn = () => {
     if (result.status == "Match") {
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
-      alert("User name or phone number is incorrect!");
+      alert("Account name or phone number is incorrect!");
     } else {
       alert("Please Try Again!");
     }
@@ -44,15 +48,15 @@ const LogIn = () => {
       <div>
         <h2 style={{ textAlign: "center" }}>Log In</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>User Name</label>
+          <label>Account Name</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
             <input
               type="text"
-              value={userName}
+              value={accountName}
               className="input"
-              onChange={(event) => setUserName(event.target.value)}
+              onChange={(event) => setAccountName(event.target.value)}
               style={{
                 width: "86vw",
                 margin: "10px",

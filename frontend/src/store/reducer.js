@@ -2,6 +2,8 @@ const initialState = {
   isSignIn: false,
   pageStatus: "HomePage",
   userID: "",
+  accountName: "",
+  phoneNumber: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -14,6 +16,12 @@ const rootReducer = (state = initialState, action) => {
 
     case "SET_USER_ID":
       return { ...state, userID: action.payload };
+
+    case "SET_ACCOUNT_NAME":
+      return { ...state, accountName: action.payload };
+
+    case "SET_PHONE_NUMBER":
+      return { ...state, phoneNumber: action.payload };
 
     default:
       return state;
