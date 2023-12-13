@@ -16,20 +16,11 @@ const SignUp = () => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
+    const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
+    const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
     dispatch(storeIsSignIn);
     dispatch(storePage);
     dispatch(storeUserID);
-  };
-
-  const pendingForPost = () => {
-    const storeAccountName = {
-      type: "SET_POST_ACCOUNT_NAME",
-      payload: accountName,
-    };
-    const storePhoneNumber = {
-      type: "SET_POST_PHONE_NUMBER",
-      payload: phoneNumber,
-    };
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
   };
@@ -50,10 +41,9 @@ const SignUp = () => {
 
     const result = await postUserInformation(userInformation);
     if (result.status == "Success") {
-      pendingForPost();
       setIsLoading(false);
-      alert("User Registration is completed!");
       signUpStatus(result.userID);
+      alert("User Registration is completed!");
     } else if (result.status == "Existed") {
       setIsLoading(false);
       alert("Phone Number already Exists!");

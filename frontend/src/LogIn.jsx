@@ -12,20 +12,11 @@ const LogIn = () => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
+    const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
+    const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
     dispatch(storeIsSignIn);
     dispatch(storePage);
     dispatch(storeUserID);
-  };
-
-  const pendingForPost = () => {
-    const storeAccountName = {
-      type: "SET_POST_ACCOUNT_NAME",
-      payload: accountName,
-    };
-    const storePhoneNumber = {
-      type: "SET_POST_PHONE_NUMBER",
-      payload: phoneNumber,
-    };
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
   };
@@ -43,7 +34,6 @@ const LogIn = () => {
 
     const result = await checkLoginInformation(logInInformation);
     if (result.status == "Match") {
-      pendingForPost();
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
       alert("Account name or phone number is incorrect!");

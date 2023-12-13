@@ -6,12 +6,13 @@ import postJobInformation from "./clients/postjobinformation.js";
 const PostJobInformation = () => {
   const [imageFile, setImageFile] = useState();
   const userID = useSelector((state) => state.userID);
-  const postAccountName = useSelector((state) => state.postAccountName);
-  const postPhoneNumber = useSelector((state) => state.postPhoneNumber);
+  const accountName = useSelector((state) => state.accountName);
+  const phoneNumber = useSelector((state) => state.phoneNumber);
+  const inputImageFile = useRef();
+  const dispatch = useDispatch();
   let date = new Date();
   let localDate = date.toLocaleDateString().replace(/\//g, "-");
   let localTime = date.toLocaleTimeString();
-  const inputImageFile = useRef();
 
   const [jobData, setJobData] = useState({
     userId: userID,
@@ -23,11 +24,10 @@ const PostJobInformation = () => {
     image: "",
     createTime: localTime,
     createDate: localDate,
-    postAccountName: postAccountName,
-    postPhoneNumber: postPhoneNumber,
+    accountName: accountName,
+    phoneNumber: phoneNumber,
   });
 
-  const dispatch = useDispatch();
   const homePageStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storePage);
@@ -78,14 +78,14 @@ const PostJobInformation = () => {
         image: jobData.image,
         createTime: jobData.createTime,
         createDate: jobData.createDate,
-        postAccountName: jobData.postAccountName,
-        postPhoneNumber: jobData.postPhoneNumber,
+        accountName: jobData.accountName,
+        phoneNumber: jobData.phoneNumber,
       };
 
       const response = await postJobInformation(jobInformation);
       if (response.status === "Success") {
-        alert("Upload information is completed!");
         homePageStatus();
+        alert("Upload information is completed!");
       } else {
         alert("Upload information is failed!");
       }
