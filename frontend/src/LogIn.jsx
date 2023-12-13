@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
 import checkLoginInformation from "./clients/checklogininformation.js";
+import Box from "@mui/material/Grid";
 
 const LogIn = () => {
   const [userName, setUserName] = useState("");
@@ -40,34 +41,68 @@ const LogIn = () => {
 
   return (
     <>
-      <h2>Log In</h2>
       <div>
-        <div>
+        <h2 style={{ textAlign: "center" }}>Log In</h2>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>User Name</label>
         </div>
-        <div>
-          <input
-            type="text"
-            value={userName}
-            onChange={(event) => setUserName(event.target.value)}
-          ></input>
-        </div>
-        <div>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <div>
+            <input
+              type="text"
+              value={userName}
+              className="input"
+              onChange={(event) => setUserName(event.target.value)}
+              style={{
+                width: "86vw",
+                margin: "10px",
+                height: "5vh",
+                borderRadius: "10px",
+              }}
+            ></input>
+          </div>
+        </Box>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>Phone Number</label>
         </div>
-        <div>
-          <input
-            type="text"
-            value={phoneNumber}
-            placeholder="Number(10 digits)"
-            onChange={(event) => setPhoneNumber(event.target.value)}
-          ></input>
-        </div>
-        <button onClick={checkLogin}>Log in</button>
-        <div>
-          <label>Don't have an account?</label>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <div>
+            <input
+              type="text"
+              value={phoneNumber}
+              className="input"
+              onChange={(event) => setPhoneNumber(event.target.value)}
+              style={{
+                width: "86vw",
+                margin: "10px",
+                height: "5vh",
+                borderRadius: "10px",
+              }}
+            ></input>
+          </div>
+        </Box>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <button
+            onClick={checkLogin}
+            style={{
+              margin: "10px",
+              backgroundColor: "#2F69F6",
+              color: "#e0f2f1",
+            }}
+          >
+            Log In
+          </button>
+        </Box>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <label style={{ marginRight: "5px" }}>Don't have an account?</label>
           <Link underline="none" onClick={moveSignUpScreen}>
-            {" Sign up"}
+            Sign up
           </Link>
         </div>
       </div>
