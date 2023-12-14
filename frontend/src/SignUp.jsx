@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
@@ -13,18 +13,17 @@ const SignUp = () => {
   const dispatch = useDispatch();
   const [privacyPolicy, setprivacyPolicy] = useState("");
 
-  useEffect(() => {
-    fetch("/privacypolicy.docx")
-      .then((response) => response.arrayBuffer())
-      .then((buffer) => {
-        mammoth
-          .extractRawText({ arrayBuffer: buffer })
-          .then((result) => {
-            setprivacyPolicy(result.value);
-          })
-          .done();
-      });
-  }, []);
+  // load privacy policy file
+  fetch("/privacypolicy.docx")
+    .then((response) => response.arrayBuffer())
+    .then((buffer) => {
+      mammoth
+        .extractRawText({ arrayBuffer: buffer })
+        .then((result) => {
+          setprivacyPolicy(result.value);
+        })
+        .done();
+    });
 
   const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
