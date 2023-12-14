@@ -49,9 +49,14 @@ const PostJobInformation = () => {
 
   const confirmUpload = (event) => {
     event.preventDefault();
-    const isConfirm = confirm("Are you sure you want to upload?");
-    if (isConfirm) {
-      checkImageFile();
+    const deadlineValidation = checkDeadlineDate();
+    if (!deadlineValidation) {
+      alert("Deadline date has passed");
+    } else {
+      const isConfirm = confirm("Are you sure you want to upload?");
+      if (isConfirm) {
+        checkImageFile();
+      }
     }
   };
 
@@ -84,11 +89,6 @@ const PostJobInformation = () => {
         accountName: jobData.accountName,
         phoneNumber: jobData.phoneNumber,
       };
-
-      if (!checkDeadlineDate()) {
-        alert("Deadline date has passed");
-        return;
-      }
 
       const response = await postJobInformation(jobInformation);
       if (response.status === "Success") {
