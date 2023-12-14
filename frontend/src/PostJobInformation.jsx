@@ -239,7 +239,6 @@ const PostJobInformation = () => {
             <button
               type="submit"
               style={{
-                margin: "10px",
                 backgroundColor: "#2F69F6",
                 color: "#e0f2f1",
               }}
