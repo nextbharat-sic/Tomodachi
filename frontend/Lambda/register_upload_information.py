@@ -7,7 +7,7 @@ def convert_utc_to_india(utc_datetime):
     ist_offset = timedelta(hours=5, minutes=30)
     india_datetime = utc_datetime + ist_offset
 
-    india_date = india_datetime.strftime('%d-%m-%Y')
+    india_date = india_datetime.strftime('%Y-%m-%d')
     india_time = india_datetime.strftime('%H:%M:%S')
 
     return india_date, india_time
@@ -28,7 +28,7 @@ def lambda_handler(event, context):
     counter_table_name = os.environ.get('COUNTERTABLE')
 
     parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
-    deadline_date = parsed_deadline_date.strftime('%d-%m-%Y')
+    deadline_date = parsed_deadline_date.strftime('%Y-%m-%d')
 
     utc_time = datetime.utcnow()
     create_date, create_time = convert_utc_to_india(utc_time)
