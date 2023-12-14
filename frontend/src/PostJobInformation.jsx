@@ -11,8 +11,9 @@ const PostJobInformation = () => {
   const phoneNumber = useSelector((state) => state.phoneNumber);
   // const inputImageFile = useRef();
   const dispatch = useDispatch();
-  // let date = new Date();
-  // let localDate = date.toLocaleDateString().replace(/\//g, "-");
+  let date = new Date();
+  let localDate =
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
   // let localTime = date.toLocaleTimeString();
 
   const [jobData, setJobData] = useState({
@@ -50,10 +51,15 @@ const PostJobInformation = () => {
 
   const confirmUpload = (event) => {
     event.preventDefault();
-    const isConfirm = confirm("Are you sure you want to upload?");
-    if (isConfirm) {
-      // checkImageFile();
-      uploadJobInfo();
+    const deadlineValidation = checkDeadlineDate();
+    if (!deadlineValidation) {
+      alert("Deadline date has passed");
+    } else {
+      const isConfirm = confirm("Are you sure you want to upload?");
+      if (isConfirm) {
+        uploadJobInfo();
+        // checkImageFile();
+      }
     }
   };
 
@@ -65,6 +71,13 @@ const PostJobInformation = () => {
   //     uploadJobInfo();
   //   }
   // };
+
+  const checkDeadlineDate = () => {
+    if (jobData.deadlineDate >= localDate) {
+      return true;
+    }
+    return false;
+  };
 
   const uploadJobInfo = async () => {
     try {

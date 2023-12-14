@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Link from "@mui/material/Link";
 import checkLoginInformation from "./clients/checklogininformation.js";
 import Box from "@mui/material/Grid";
@@ -7,16 +7,24 @@ import Box from "@mui/material/Grid";
 const LogIn = () => {
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const nextAction = useSelector((state) => state.nextAction);
   const dispatch = useDispatch();
 
   const logInStatus = (userID) => {
+    let storePage = "";
+    if (nextAction == "PostJobInformation") {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+    } else {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    }
+
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
-    dispatch(storeIsSignIn);
+
     dispatch(storePage);
+    dispatch(storeIsSignIn);
     dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);

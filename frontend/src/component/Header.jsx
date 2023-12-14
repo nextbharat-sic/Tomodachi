@@ -24,7 +24,12 @@ const Header = () => {
   };
 
   const moveLogInScreen = () => {
+    const storeNextAction = {
+      type: "SET_NEXT_ACTION",
+      payload: "ViewInformation",
+    };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(storeNextAction);
     dispatch(storePage);
   };
 
