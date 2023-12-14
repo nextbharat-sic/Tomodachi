@@ -11,8 +11,10 @@ const PostJobInformation = () => {
   const inputImageFile = useRef();
   const dispatch = useDispatch();
   let date = new Date();
-  let localDate = date.toLocaleDateString().replace(/\//g, "-");
-  let localTime = date.toLocaleTimeString();
+  let jpDate = date.toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
+  let localDate = jpDate.replace(/\//g, "-").split(" ")[0];
+
+  // let localTime = japanTime.toLocaleTimeString();
 
   const [jobData, setJobData] = useState({
     userId: userID,
