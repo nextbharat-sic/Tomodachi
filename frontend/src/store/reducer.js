@@ -1,6 +1,7 @@
 const initialState = {
   isSignIn: false,
   pageStatus: "HomePage",
+  nextAction: "",
   userID: "",
   accountName: "",
   phoneNumber: "",
@@ -13,6 +14,9 @@ const rootReducer = (state = initialState, action) => {
 
     case "CHANGE_PAGE_STATE":
       return { ...state, pageStatus: action.payload };
+
+    case "SET_NEXT_ACTION":
+      return { ...state, nextAction: action.payload };
 
     case "SET_USER_ID":
       return { ...state, userID: action.payload };

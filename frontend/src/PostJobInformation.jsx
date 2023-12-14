@@ -11,8 +11,9 @@ const PostJobInformation = () => {
   const inputImageFile = useRef();
   const dispatch = useDispatch();
   let date = new Date();
-  let localDate = date.toLocaleDateString().replace(/\//g, "-");
-  let localTime = date.toLocaleTimeString();
+  let localDate =
+    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+  // let localTime = date.toLocaleTimeString();
 
   const [jobData, setJobData] = useState({
     userId: userID,
@@ -22,8 +23,6 @@ const PostJobInformation = () => {
     modeOfJob: "indoor",
     jobDescription: "",
     image: "",
-    createTime: localTime,
-    createDate: localDate,
     accountName: accountName,
     phoneNumber: phoneNumber,
   });
@@ -51,9 +50,14 @@ const PostJobInformation = () => {
 
   const confirmUpload = (event) => {
     event.preventDefault();
-    const isConfirm = confirm("Are you sure you want to upload?");
-    if (isConfirm) {
-      checkImageFile();
+    const deadlineValidation = checkDeadlineDate();
+    if (!deadlineValidation) {
+      alert("Deadline date has passed");
+    } else {
+      const isConfirm = confirm("Are you sure you want to upload?");
+      if (isConfirm) {
+        checkImageFile();
+      }
     }
   };
 
@@ -66,6 +70,13 @@ const PostJobInformation = () => {
     }
   };
 
+  const checkDeadlineDate = () => {
+    if (jobData.deadlineDate >= localDate) {
+      return true;
+    }
+    return false;
+  };
+
   const uploadJobInfo = async () => {
     try {
       const jobInformation = {
@@ -76,8 +87,6 @@ const PostJobInformation = () => {
         modeOfJob: jobData.modeOfJob,
         jobDescription: jobData.jobDescription,
         image: jobData.image,
-        createTime: jobData.createTime,
-        createDate: jobData.createDate,
         accountName: jobData.accountName,
         phoneNumber: jobData.phoneNumber,
       };
@@ -179,7 +188,7 @@ const PostJobInformation = () => {
           style={{ width: "61vw", marginBottom: "10px" }}
           required
         ></textarea>
-        <label>Photos</label>
+        <label>Photo</label>
         <input
           type="file"
           ref={inputImageFile}
