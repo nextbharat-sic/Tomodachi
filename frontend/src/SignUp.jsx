@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-
 import postUserInformation from "./clients/postuserinformation.js";
+import mammoth from "mammoth";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("tentative");
@@ -11,6 +11,19 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
+  const [privacyPolicy, setprivacyPolicy] = useState("");
+
+  // load privacy policy file
+  fetch("/privacypolicy.docx")
+    .then((response) => response.arrayBuffer())
+    .then((buffer) => {
+      mammoth
+        .extractRawText({ arrayBuffer: buffer })
+        .then((result) => {
+          setprivacyPolicy(result.value);
+        })
+        .done();
+    });
 
   const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
@@ -115,6 +128,29 @@ const SignUp = () => {
             ></input>
           </div>
         </Box>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          marginTop="2vh"
+        >
+          <div
+            style={{
+              marginBottom: "2vh",
+              paddingLeft: "4vw",
+              paddingRight: "4vw",
+              width: "80vw",
+              height: "30vh",
+              overflowX: "hidden",
+              overflowY: "auto",
+              textAlign: "justify",
+            }}
+          >
+            <h4 style={{ textAlign: "center" }}>Terms and Condition</h4>
+            {privacyPolicy}
+          </div>
+        </Box>
+
         <div style={{ margin: "10px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <div>
