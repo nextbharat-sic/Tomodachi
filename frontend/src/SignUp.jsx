@@ -157,7 +157,6 @@ const SignUp = () => {
             <div>
               <input
                 type="radio"
-                id="privacyPolicy"
                 onChange={() => setPrivacyPolicyCheck(true)}
               />
             </div>
