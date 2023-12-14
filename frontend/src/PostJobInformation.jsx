@@ -64,6 +64,13 @@ const PostJobInformation = () => {
     }
   };
 
+  const checkDeadlineDate = () => {
+    if (jobData.deadlineDate >= localDate) {
+      return true;
+    }
+    return false;
+  };
+
   const uploadJobInfo = async () => {
     try {
       const jobInformation = {
@@ -77,6 +84,11 @@ const PostJobInformation = () => {
         accountName: jobData.accountName,
         phoneNumber: jobData.phoneNumber,
       };
+
+      if (!checkDeadlineDate()) {
+        alert("Deadline date has passed");
+        return;
+      }
 
       const response = await postJobInformation(jobInformation);
       if (response.status === "Success") {
@@ -175,7 +187,7 @@ const PostJobInformation = () => {
           style={{ width: "61vw", marginBottom: "10px" }}
           required
         ></textarea>
-        <label>Photos</label>
+        <label>Photo</label>
         <input
           type="file"
           ref={inputImageFile}
