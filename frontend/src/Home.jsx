@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { S3 } from "aws-sdk";
+// import { S3 } from "aws-sdk";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import Box from "@mui/material/Grid";
 
@@ -9,7 +9,36 @@ const Home = () => {
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
-  const [dataFromS3, setDataFromS3] = useState(null);
+  // const [dataFromS3, setDataFromS3] = useState(null);
+  const monthNames = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+
+  const replaceDate = (PCT) => {
+    const day = PCT.split("-")[2].split("/")[0];
+    const month = PCT.split("-")[1];
+    const time = PCT.split("-")[2].split("/")[1];
+    return (
+      day +
+      " " +
+      monthNames[Number(month) - 1] +
+      ", " +
+      time.split(":")[0] +
+      ":" +
+      time.split(":")[1]
+    );
+  };
 
   const movePostScreen = () => {
     let storePage = "";
@@ -72,6 +101,7 @@ const Home = () => {
             <div
               style={{
                 overflowWrap: "break-word",
+                maxWidth: "80vw",
                 fontFamily: "DM sans-serif",
                 fontSize: "120%",
                 fontWeight: "Bold",
@@ -80,21 +110,21 @@ const Home = () => {
             >
               {jobData.PJT}
             </div>
-            <div>
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "5vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {jobData.PMJ}
-              </span>
-            </div>
+          </div>
+          <div>
+            <span
+              style={{
+                backgroundColor: "#f5f5f5",
+                border: "0.2em solid #f5f5f5",
+                borderRadius: "1em",
+                paddingRight: "0.3em",
+                paddingLeft: "0.3em",
+                marginLeft: "2vw",
+                fontSize: "0.9em",
+              }}
+            >
+              {jobData.PMJ}
+            </span>
           </div>
           <div
             style={{
@@ -118,7 +148,7 @@ const Home = () => {
             )}
           </div>*/}
           <div style={{ fontSize: "0.8em", margin: "0.5em" }}>
-            posted at:{jobData.PCT}
+            posted at: {replaceDate(String(jobData.PCT))}
           </div>
           {/* Add more details as needed */}
         </div>
@@ -129,7 +159,6 @@ const Home = () => {
   const fetchAndDisplayJobInformation = async () => {
     try {
       const uploadInformationResult = await getUploadInformation();
-      console.log(uploadInformationResult);
       setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error("Error fetching upload information:", error);
@@ -140,41 +169,36 @@ const Home = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
   };
 
-  const fetchS3Data = async () => {
-    const s3 = new S3({
-      region: import.meta.env.VITE_APP_S3_REGION, // バケットのリージョン
-      accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY, // アクセスキー
-      secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY, // シークレットアクセスキー
-    });
+  // const fetchS3Data = async () => {
+  //   const s3 = new S3({
+  //     region: import.meta.env.VITE_APP_S3_REGION, // バケットのリージョン
+  //     accessKeyId: import.meta.env.VITE_APP_S3_ACCESS_KEY, // アクセスキー
+  //     secretAccessKey: import.meta.env.VITE_APP_S3_SECRET_ACCESS_KEY, // シークレットアクセスキー
+  //   });
 
-    const params = {
-      Bucket: "tomodachijobinformationimage", // バケット名
-      Key: "sample.png", // ファイル名（パスも含める）
-      Expires: 60, // URL の有効期限（秒）
-    };
+  //   const params = {
+  //     Bucket: "tomodachijobinformationimage", // バケット名
+  //     Key: "sample.png", // ファイル名（パスも含める）
+  //     Expires: 60, // URL の有効期限（秒）
+  //   };
 
-    try {
-      const data = await s3.getSignedUrlPromise("getObject", params);
-      console.log(data);
-      setDataFromS3(data);
-    } catch (error) {
-      console.error("Error in fetching data from S3: ", error);
-    }
-  };
+  //   try {
+  //     const data = await s3.getSignedUrlPromise("getObject", params);
+  //     console.log(data);
+  //     setDataFromS3(data);
+  //   } catch (error) {
+  //     console.error("Error in fetching data from S3: ", error);
+  //   }
+  // };
 
   useEffect(() => {
     fetchAndDisplayJobInformation();
-    fetchS3Data();
+    // fetchS3Data();
   }, []);
 
   return (
     <>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        style={{ marginTop: "3.5em" }}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center">
         <div
           style={{
             width: "100vw",
@@ -200,7 +224,6 @@ const Home = () => {
           </p>
         </div>
       </Box>
-
       <Box
         display="flex"
         justifyContent="center"
@@ -221,10 +244,10 @@ const Home = () => {
             background: "linear-gradient(to right, #631ACF, #631ACF)",
           }}
         >
-          <p
+          <div
             style={{
               color: "#ffffff",
-              fontSize: "150%",
+              fontSize: "100%",
               fontWeight: "bold",
               marginLeft: "5vw",
               marginTop: "7vh",
@@ -232,18 +255,15 @@ const Home = () => {
             }}
           >
             Share career <br></br> information
-          </p>
+          </div>
+
           <div
-            style={{
-              position: "absolute",
-              top: "52%",
-              right: "6%",
-              margin: 3,
-            }}
+            style={{ marginTop: "4vh", marginRight: "5vw", textAlign: "right" }}
           >
             <button
               onClick={movePostScreen}
               style={{
+                fontSize: "90%",
                 backgroundColor: "#ffffff",
                 color: "#631ACF",
                 fontWeight: "bold",
@@ -256,7 +276,6 @@ const Home = () => {
       </Box>
       <div
         style={{
-          color: "#000000",
           fontWeight: "bold",
           fontSize: "1.2em",
           marginLeft: "5vw",
@@ -264,12 +283,7 @@ const Home = () => {
       >
         Recent post
       </div>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        style={{ marginBottom: "4em" }}
-      >
+      <Box display="flex" justifyContent="center" alignItems="center">
         <div>
           {/* Call displayJobInformationList directly in the JSX */}
           {informationResult.length > 0 &&
