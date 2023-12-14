@@ -22,8 +22,6 @@ const PostJobInformation = () => {
     modeOfJob: "indoor",
     jobDescription: "",
     image: "",
-    createTime: localTime,
-    createDate: localDate,
     accountName: accountName,
     phoneNumber: phoneNumber,
   });
@@ -76,8 +74,6 @@ const PostJobInformation = () => {
         modeOfJob: jobData.modeOfJob,
         jobDescription: jobData.jobDescription,
         image: jobData.image,
-        createTime: jobData.createTime,
-        createDate: jobData.createDate,
         accountName: jobData.accountName,
         phoneNumber: jobData.phoneNumber,
       };
