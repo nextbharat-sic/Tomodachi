@@ -14,7 +14,7 @@ const PostJobInformation = () => {
   let jpDate = date.toLocaleString("ja-JP", { timeZone: "Asia/Tokyo" });
   let localDate = jpDate.replace(/\//g, "-").split(" ")[0];
 
-  // let localTime = japanTime.toLocaleTimeString();
+  // let localTime = jpDate.replace(/\//g, "-").split(" ")[1];
 
   const [jobData, setJobData] = useState({
     userId: userID,
