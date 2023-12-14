@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
+import mammoth from "mammoth";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("tentative");
@@ -10,6 +11,20 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
+  const [privacyPolicy, setprivacyPolicy] = useState("");
+
+  useEffect(() => {
+    fetch("/privacypolicy.docx")
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => {
+        mammoth
+          .extractRawText({ arrayBuffer: buffer })
+          .then((result) => {
+            setprivacyPolicy(result.value);
+          })
+          .done();
+      });
+  }, []);
 
   const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
@@ -133,19 +148,7 @@ const SignUp = () => {
             }}
           >
             <h4 style={{ textAlign: "center" }}>Terms and Condition</h4>
-            It is a good platform to learn programming. It is an educational
-            website. Prepare for the Recruitment drive of product based
-            companies like Microsoft, Amazon, Adobe etc with a free online
-            placement preparation course. The course focuses on various MCQ's &
-            Coding question likely to be asked in the interviews & make your
-            upcoming placement season efficient and successful. Also, any geeks
-            can help other geeks by writing articles on the GeeksforGeeks,
-            publishing articles follow few steps that are Articles that need
-            little modification /improvement from reviewers are published first.
-            To quickly get your articles reviewed, please refer existing
-            articles, their formatting style, coding style, and try to make you
-            are close to them. In case you are a beginner, you may refer
-            Guidelines to write an Article
+            {privacyPolicy}
           </div>
         </Box>
 
@@ -154,6 +157,7 @@ const SignUp = () => {
             <div>
               <input
                 type="radio"
+                id="privacyPolicy"
                 onChange={() => setPrivacyPolicyCheck(true)}
               />
             </div>
