@@ -11,12 +11,17 @@ const Home = () => {
   const [dataFromS3, setDataFromS3] = useState(null);
 
   const movePostScreen = () => {
+    const storeNextAction = {
+      type: "SET_NEXT_ACTION",
+      payload: "PostJobInformation",
+    };
     let storePage = "";
     if (signInStatus) {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
     } else {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
     }
+    dispatch(storeNextAction);
     dispatch(storePage);
   };
 
