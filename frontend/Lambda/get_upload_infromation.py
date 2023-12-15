@@ -3,10 +3,10 @@ import boto3
 import os
 
 def lambda_handler(event, context):
-
+    
     dynamodb_client = boto3.client('dynamodb')
     post_information_table_name = os.environ.get('POSTINFORMATIONTABLE')
-
+    
     query_params = {
         'TableName': post_information_table_name,
         'IndexName': 'PTP-PCT-index',
@@ -14,17 +14,16 @@ def lambda_handler(event, context):
         'ExpressionAttributeValues': {':type': {'S': 'Post'}},
         'ScanIndexForward': False,
         }
-
+    
     response = dynamodb_client.query(**query_params)
-
+    
     post_list = []
     for item in response['Items']:
-        post_date = item['PCT']['S'].split('.')[0]
-        pct = post_date.split('T')[0] + '/' + post_date.split('T')[1][:-3]
+        pct = item['PCT']['S'].split('_')[0] + '/' + item['PCT']['S'].split('_')[1]
         pmd_list = []
         for pmd in item['PMD']['L']:
             pmd_list.append(pmd['S'])
-
+        
         print(pmd_list)
         post_list.append({
             'PCT':pct,
@@ -38,10 +37,12 @@ def lambda_handler(event, context):
             'PUID':item['PUID']['S'],
             'PJT':item['PJT']['S'],
             'PIT':item['PIT']['S'],
+            'PAN':item['PAN']['S'],
+            'PPN':item['PPN']['S'],
         })
-
+        
     print(post_list)
-
+    
     return {
         'statusCode': 200,
         'headers': {

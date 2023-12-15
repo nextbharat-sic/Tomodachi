@@ -9,8 +9,8 @@ const Footer = () => {
   const footerHeight = "8vh";
 
   const moveHomeScreen = () => {
-    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
-    dispatch(pageStatus);
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storePage);
   };
 
   return (
