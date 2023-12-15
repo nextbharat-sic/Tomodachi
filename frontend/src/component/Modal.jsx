@@ -38,8 +38,23 @@ const Modal = (props) => {
           >
             <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
           </div>
-          <span onClick={props.onClose} style={{}}>
-            <button>close</button>
+          <span
+            onClick={props.onClose}
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <button
+              style={{
+                margin: "10px",
+                backgroundColor: "#2F69F6",
+                color: "#e0f2f1",
+              }}
+            >
+              Close
+            </button>
           </span>
         </div>
       </div>
