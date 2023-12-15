@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
 import mammoth from "mammoth";
+import Modal from "./component/Modal.jsx";
+import "./component/Modal.css";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("tentative");
@@ -12,6 +14,7 @@ const SignUp = () => {
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
   const [privacyPolicy, setprivacyPolicy] = useState("");
+  const [isModalOpen, setModalIsOpen] = useState(false);
 
   // load privacy policy file
   fetch("/privacypolicy.docx")
@@ -24,6 +27,14 @@ const SignUp = () => {
         })
         .done();
     });
+
+  const handleOpen = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalIsOpen(false);
+  };
 
   const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
@@ -91,6 +102,7 @@ const SignUp = () => {
 
   return (
     <>
+      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <div>
         <h2 style={{ textAlign: "center" }}>Sign Up</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
@@ -136,23 +148,7 @@ const SignUp = () => {
           justifyContent="center"
           alignItems="center"
           marginTop="2vh"
-        >
-          <div
-            style={{
-              marginBottom: "2vh",
-              paddingLeft: "4vw",
-              paddingRight: "4vw",
-              width: "80vw",
-              height: "30vh",
-              overflowX: "hidden",
-              overflowY: "auto",
-              textAlign: "justify",
-            }}
-          >
-            <h4 style={{ textAlign: "center" }}>Terms and Condition</h4>
-            {privacyPolicy}
-          </div>
-        </Box>
+        ></Box>
 
         <div style={{ margin: "10px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
@@ -168,8 +164,11 @@ const SignUp = () => {
                 fontSize: "90%",
               }}
             >
-              I hereby accept terms and conditions & privacy policy of the
-              service
+              I hereby accept terms and conditions &{" "}
+              <span onClick={handleOpen} style={{ color: "blue" }}>
+                privacy policy
+              </span>{" "}
+              of the service
             </div>
           </div>
         </div>
