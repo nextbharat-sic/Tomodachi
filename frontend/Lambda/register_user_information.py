@@ -48,6 +48,52 @@ def lambda_handler(event, context):
             })
         }
 
+    # Check account name
+    query_UAN_params = {
+        'TableName': user_table_name,
+        'IndexName': 'UAN-index',
+        'KeyConditionExpression': 'UAN = :accountName',
+        'ExpressionAttributeValues': {':accountName': {'S': body['accountName'] }},
+        }
+
+    UAN_response = dynamodb_client.query(**query_UAN_params)
+    if UAN_response['Items']:
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps({
+                "status": "UAN Existed",
+            })
+        }
+
+    # Check phone number
+    query_UPN_params = {
+        'TableName': user_table_name,
+        'IndexName': 'UPN-index',
+        'KeyConditionExpression': 'UPN = :phoneNumber',
+        'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
+        }
+
+    UPN_response = dynamodb_client.query(**query_UPN_params)
+    if UPN_response['Items']:
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                "Access-Control-Allow-Headers" : "*",
+                "Access-Control-Allow-Origin": "*",
+                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+            },
+            'body': json.dumps({
+                "status": "UPN Existed",
+            })
+        }
+
     # Get most recentry userId from CounterTable
     counter_res = dynamodb_client.get_item(
         TableName=counter_table_name,
@@ -74,6 +120,7 @@ def lambda_handler(event, context):
     user_info = {}
     user_info['UID'] = 'U' + str(next_user_id).zfill(6)
     user_info['UNM'] = body['userName']
+    user_info['UAN'] = body['accountName']
     user_info['UPN'] = body['phoneNumber']
     user_info['UPC'] = body['privacyPolicyCheck']
     user_info['UCT'] = time
@@ -86,6 +133,7 @@ def lambda_handler(event, context):
             'Item' : {
                 'UID' : {'S': user_info['UID']},
                 'UNM' : {'S': user_info['UNM']},
+                'UAN' : {'S': user_info['UAN']},
                 'UPN' : {'S': user_info['UPN']},
                 'UPC' : {'BOOL': user_info['UPC']},
                 'UCT' : {'S': user_info['UCT']},

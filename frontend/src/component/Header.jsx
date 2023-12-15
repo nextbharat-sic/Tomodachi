@@ -1,8 +1,13 @@
 import { useSelector, useDispatch } from "react-redux";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 
 const Header = () => {
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
+  const headerHeight = "8vh";
 
   const confirmSignOut = () => {
     const isConfirm = confirm("Are you sure you want to sign out?");
@@ -19,22 +24,52 @@ const Header = () => {
     alert("Sign Out");
   };
 
-  const moveHomeScreen = () => {
-    const pageStatus = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
-    dispatch(pageStatus);
+  const moveLogInScreen = () => {
+    const storeNextAction = {
+      type: "SET_NEXT_ACTION",
+      payload: "ViewInformation",
+    };
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(storeNextAction);
+    dispatch(storePage);
   };
 
   return (
     <>
-      <div style={{ position: "absolute", top: 0, background: "blue" }}>
-        Header
-        <button onClick={moveHomeScreen}>Home</button>
-        {signInStatus ? (
-          <button onClick={confirmSignOut}>Sign out</button>
-        ) : (
-          <button>Sign In</button>
-        )}
-      </div>
+      <Box height={headerHeight}>
+        <AppBar>
+          <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+              Logo
+            </Typography>
+            {signInStatus ? (
+              <button
+                onClick={confirmSignOut}
+                variant="outline"
+                style={{
+                  color: "#e0f2f1",
+                  backgroundColor: "#631ACF",
+                  border: "1px solid",
+                }}
+              >
+                Log Out
+              </button>
+            ) : (
+              <button
+                variant="outline"
+                style={{
+                  color: "#e0f2f1",
+                  backgroundColor: "#631ACF",
+                  border: "1px solid",
+                }}
+                onClick={moveLogInScreen}
+              >
+                Log In
+              </button>
+            )}
+          </Toolbar>
+        </AppBar>
+      </Box>
     </>
   );
 };
