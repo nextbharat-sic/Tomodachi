@@ -3,8 +3,3 @@ VITE_APP_POST_USER_INFO = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.c
 VITE_APP_GET_UPLOAD_INFO = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/get-uploadinformation"
 VITE_APP_POST_JOB_INFO = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/uploadinformation"
 VITE_APP_CHECK_LOG_IN = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/checkLogIn"
-
-VITE_APP_S3_REGION = "ap-south-1"
-VITE_APP_S3_BUCKET_NAME = "tomodachijobinformationimage"
-VITE_APP_S3_ACCESS_KEY = "AKIA5GVQO2QP2TE2DYNM"
-VITE_APP_S3_SECRET_ACCESS_KEY = "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"
