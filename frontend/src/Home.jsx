@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-// import { S3 } from "aws-sdk";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import Box from "@mui/material/Grid";
@@ -63,8 +62,6 @@ const Home = () => {
         style={{
           width: "92vw",
           marginBottom: "1em",
-          // margin: "1.5em",
-          // height: "30vh",
           borderRadius: "10px",
           boxShadow:
             "0.2em 0.2em 0em rgba(0, 0, 0, 0.1),-0.05em -0.2em 0.2em rgba(0, 0, 0, 0.1)",
