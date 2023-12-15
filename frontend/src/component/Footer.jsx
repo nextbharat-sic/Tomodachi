@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 
 const Footer = () => {
   const dispatch = useDispatch();
-  const footerHeight = "8vh";
+  const footerHeight = "6vh";
 
   const moveHomeScreen = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
@@ -16,7 +16,10 @@ const Footer = () => {
   return (
     <>
       <Box height={footerHeight} position="fixed" bottom="0" width="100%">
-        <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
+        <Toolbar
+          position="static"
+          style={{ backgroundColor: "#631ACF", height: footerHeight }}
+        >
           <Grid container>
             <Grid
               item
