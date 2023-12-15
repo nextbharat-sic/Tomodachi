@@ -8,6 +8,7 @@ import Modal from "./Modal.jsx";
 
 const Footer = () => {
   const dispatch = useDispatch();
+  const footerHeight = "8vh";
 
   const moveHomeScreen = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
@@ -23,6 +24,8 @@ const Footer = () => {
   };
   return (
     <>
+      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
+      <Box height={footerHeight} position="fixed" bottom="0" width="100%">
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <Box position="fixed" bottom="0" width="100%">
         <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>

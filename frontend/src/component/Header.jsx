@@ -7,6 +7,7 @@ import Typography from "@mui/material/Typography";
 const Header = () => {
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
+  const headerHeight = "8vh";
 
   const confirmSignOut = () => {
     const isConfirm = confirm("Are you sure you want to sign out?");
@@ -24,14 +25,19 @@ const Header = () => {
   };
 
   const moveLogInScreen = () => {
+    const storeNextAction = {
+      type: "SET_NEXT_ACTION",
+      payload: "ViewInformation",
+    };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(storeNextAction);
     dispatch(storePage);
   };
 
   return (
     <>
-      <Box sx={{ flexGrow: 5 }}>
-        <AppBar position="static">
+      <Box height={headerHeight}>
+        <AppBar>
           <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Logo

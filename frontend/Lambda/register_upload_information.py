@@ -1,8 +1,16 @@
 import boto3
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
+def convert_utc_to_india(utc_datetime):
+    ist_offset = timedelta(hours=5, minutes=30)
+    india_datetime = utc_datetime + ist_offset
+
+    india_date = india_datetime.strftime('%Y-%m-%d')
+    india_time = india_datetime.strftime('%H:%M:%S')
+
+    return india_date, india_time
 
 def lambda_handler(event, context):
 
@@ -20,9 +28,10 @@ def lambda_handler(event, context):
     counter_table_name = os.environ.get('COUNTERTABLE')
 
     parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
-    deadline_date = parsed_deadline_date.strftime('%d-%m-%Y')
-    parsed_create_date = datetime.strptime(body['createDate'], '%Y-%m-%d')
-    create_date = parsed_create_date.strftime('%d-%m-%Y')
+    deadline_date = parsed_deadline_date.strftime('%Y-%m-%d')
+
+    utc_time = datetime.utcnow()
+    create_date, create_time = convert_utc_to_india(utc_time)
 
     # Validation check
     if deadline_date < create_date:
@@ -66,7 +75,7 @@ def lambda_handler(event, context):
     upload_info = {}
     upload_info['PID'] = 'P'+ str(next_upload_info_id).zfill(8)
     upload_info['PIT'] = body['informationTitle']
-    upload_info['PCT'] = create_date+"_"+body['createTime']
+    upload_info['PCT'] = create_date+"_"+ create_time
     upload_info['PDD'] = deadline_date
     upload_info['PJD'] = body['jobDescription']
     upload_info['PJT'] = body['jobTitle']
@@ -74,7 +83,7 @@ def lambda_handler(event, context):
     upload_info['PST'] = True
     upload_info['PTP'] = 'Post'
     upload_info['PUID'] = str(body['userId'])
-    upload_info['PUT'] = create_date+"_"+body['createTime']
+    upload_info['PUT'] = create_date+"_"+ create_time
     upload_info['PAN'] = body['accountName']
     upload_info['PPN'] = body['phoneNumber']
 
