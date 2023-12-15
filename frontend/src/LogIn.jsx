@@ -70,6 +70,7 @@ const LogIn = () => {
                 margin: "10px",
                 height: "5vh",
                 borderRadius: "10px",
+                borderWidth: "1px",
               }}
             ></input>
           </div>
@@ -89,6 +90,7 @@ const LogIn = () => {
                 margin: "10px",
                 height: "5vh",
                 borderRadius: "10px",
+                borderWidth: "1px",
               }}
             ></input>
           </div>
