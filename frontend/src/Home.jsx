@@ -55,6 +55,17 @@ const Home = () => {
     dispatch(storePage);
   };
 
+  const checkActive = (pdd) => {
+    let date = new Date();
+    let localDate =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    if (localDate < pdd) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const displayJobInformationList = (dataList) => {
     return dataList.slice(0, visibleItemCount).map((jobData, index) => (
       <div
@@ -128,13 +139,43 @@ const Home = () => {
             >
               {jobData.PMJ}
             </span>
+            {checkActive(jobData.PDD) ? (
+              <span
+                style={{
+                  backgroundColor: "#2f69f6",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                  color: "#e0f2f1",
+                }}
+              >
+                Active
+              </span>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: "#696969",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                  color: "#e0f2f1",
+                }}
+              >
+                Close
+              </span>
+            )}
           </div>
           <div
             style={{
               position: "relative",
               overflowWrap: "break-word",
               margin: "0.5em",
-              fontSize: "0.7em",
             }}
           >
             {jobData.PJD}
