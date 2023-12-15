@@ -90,6 +90,7 @@ const Home = () => {
           <div
             style={{
               overflowWrap: "break-word",
+              wordBreak: "break-word",
               display: "flex",
             }}
           >
@@ -110,6 +111,39 @@ const Home = () => {
             >
               {jobData.PAN}
             </div>
+            {checkActive(jobData.PDD) ? (
+              <span
+                style={{
+                  backgroundColor: "#2f69f6",
+                  padding: "0.3em 0.5em",
+                  color: "#e0f2f1",
+                  textAlign: "center",
+                  borderRadius: "0.5em",
+                  marginTop: "2vh",
+                  marginLeft: "auto",
+                  minWidth: "45px",
+                  maxHeight: "30px",
+                }}
+              >
+                Active
+              </span>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: "#696969",
+                  padding: "0.3em 0.5em",
+                  color: "#e0f2f1",
+                  textAlign: "center",
+                  borderRadius: "0.5em",
+                  marginTop: "2vh",
+                  marginLeft: "auto",
+                  minWidth: "45px",
+                  maxHeight: "30px",
+                }}
+              >
+                Close
+              </span>
+            )}
           </div>
           <div style={{ display: "flex" }}>
             <div
@@ -139,37 +173,6 @@ const Home = () => {
             >
               {jobData.PMJ}
             </span>
-            {checkActive(jobData.PDD) ? (
-              <span
-                style={{
-                  backgroundColor: "#2f69f6",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                  color: "#e0f2f1",
-                }}
-              >
-                Active
-              </span>
-            ) : (
-              <span
-                style={{
-                  backgroundColor: "#696969",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                  color: "#e0f2f1",
-                }}
-              >
-                Close
-              </span>
-            )}
           </div>
           <div
             style={{
