@@ -26,8 +26,6 @@ const Footer = () => {
     <>
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <Box height={footerHeight} position="fixed" bottom="0" width="100%">
-      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
-      <Box position="fixed" bottom="0" width="100%">
         <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
           <Grid container>
             <Grid
