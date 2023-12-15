@@ -24,19 +24,31 @@ function App() {
 
   return (
     <>
-      {pageStatus == "HomePage" ? <Header /> : ""}
-      <Box
-        justifyContent="center"
-        alignItems="center"
-        text-align="center"
-        height="100%"
-      >
-        {pageStatus == "HomePage" ? <Home /> : ""}
-        {pageStatus == "LogIn" ? <LogIn /> : ""}
-        {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
-        {isSignUp && pageStatus == "PostJobPage" ? <PostJobInformation /> : ""}
+      <Box diplay="flex" flexDirection="column">
+        <Box height={Header.headerHeight}>
+          {pageStatus == "HomePage" ? <Header /> : ""}
+        </Box>
+        {/* TODO height is make variable changes */}
+        <Box
+          justifyContent="center"
+          alignItems="center"
+          text-align="center"
+          height="84vh"
+          overflow="auto"
+        >
+          {pageStatus == "HomePage" ? <Home /> : ""}
+          {pageStatus == "LogIn" ? <LogIn /> : ""}
+          {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
+          {isSignUp && pageStatus == "PostJobPage" ? (
+            <PostJobInformation />
+          ) : (
+            ""
+          )}
+        </Box>
+        <Box height={Footer.footerHeight}>
+          <Footer />
+        </Box>
       </Box>
-      <Footer />
     </>
   );
 }
