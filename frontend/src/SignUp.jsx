@@ -57,7 +57,10 @@ const SignUp = () => {
       setIsLoading(false);
       signUpStatus(result.userID);
       alert("User Registration is completed!");
-    } else if (result.status == "Existed") {
+    } else if (result.status == "UAN Existed") {
+      setIsLoading(false);
+      alert("Account Name already Exists!");
+    } else if (result.status == "UPN Existed") {
       setIsLoading(false);
       alert("Phone Number already Exists!");
     } else {
