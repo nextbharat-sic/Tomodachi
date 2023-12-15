@@ -8,7 +8,7 @@ const Modal = (props) => {
     .then((response) => response.arrayBuffer())
     .then((buffer) => {
       mammoth
-        .extractRawText({ arrayBuffer: buffer })
+        .convertToHtml({ arrayBuffer: buffer })
         .then((result) => {
           setprivacyPolicy(result.value);
         })
@@ -36,7 +36,7 @@ const Modal = (props) => {
               color: "black",
             }}
           >
-            <p>{privacyPolicy}</p>
+            <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
           </div>
           <span onClick={props.onClose} style={{}}>
             <button>close</button>
