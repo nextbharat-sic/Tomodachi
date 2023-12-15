@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-import getUploadInformation from "./clients/getuploadinformation.js";
 import Box from "@mui/material/Grid";
+import getUploadInformation from "./clients/getuploadinformation.js";
+import ShareCarrerInformationImage from "./assets/ShareCarrerInformationImage.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -258,22 +259,29 @@ const Home = () => {
             background: "#2F69F6",
           }}
         >
-          <div
-            style={{
-              color: "#ffffff",
-              fontSize: "125%",
-              fontWeight: "bold",
-              marginLeft: "5vw",
-              marginTop: "7vh",
-              fontFamily: "DM sans-serif",
-            }}
-          >
-            Share career <br></br> information
+          <div style={{ display: "flex" }}>
+            <div
+              style={{
+                color: "#ffffff",
+                fontSize: "125%",
+                fontWeight: "bold",
+                marginLeft: "5vw",
+                marginTop: "7vh",
+                fontFamily: "DM sans-serif",
+              }}
+            >
+              Share career <br /> information
+            </div>
+            <div>
+              <img
+                src={ShareCarrerInformationImage}
+                style={{ width: "35vw", marginLeft: "7vw", marginTop: "5vw" }}
+              />
+            </div>
           </div>
 
           <div
             style={{
-              marginTop: "5vh",
               marginRight: "5vw",
               textAlign: "right",
             }}
