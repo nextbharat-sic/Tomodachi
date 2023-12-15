@@ -150,7 +150,13 @@ const Home = () => {
               <p>Loading...</p>
             )}
           </div>*/}
-          <div style={{ fontSize: "0.8em", margin: "0.5em" }}>
+          <div
+            style={{
+              fontSize: "0.8em",
+              margin: "0.5em",
+              paddingBottom: "10px",
+            }}
+          >
             posted at: {replaceDate(String(jobData.PCT))}
           </div>
           {/* Add more details as needed */}
@@ -212,10 +218,10 @@ const Home = () => {
             width: "100vw",
             height: "25vh",
             marginBottom: "0.5em",
-            boxShadow: "0em 0.55em 0.1em rgba(99, 26, 207, 1)",
+            boxShadow: "0em 0.55em 0.1em #631acf",
             borderBottomRightRadius: "0.8em",
             borderBottomLeftRadius: "0.8em",
-            background: "linear-gradient(to right,  #631ACF, #87CEEB)",
+            background: "linear-gradient(135deg, #631acf 0%,#2f69f6 85%)",
           }}
         >
           <p
@@ -247,15 +253,15 @@ const Home = () => {
           style={{
             width: "100vw",
             margin: "0.8em",
-            height: "25vh",
+            height: "30vh",
             borderRadius: "10px",
-            background: "linear-gradient(to right, #631ACF, #631ACF)",
+            background: "#2F69F6",
           }}
         >
           <div
             style={{
               color: "#ffffff",
-              fontSize: "100%",
+              fontSize: "125%",
               fontWeight: "bold",
               marginLeft: "5vw",
               marginTop: "7vh",
@@ -266,7 +272,11 @@ const Home = () => {
           </div>
 
           <div
-            style={{ marginTop: "4vh", marginRight: "5vw", textAlign: "right" }}
+            style={{
+              marginTop: "5vh",
+              marginRight: "5vw",
+              textAlign: "right",
+            }}
           >
             <button
               onClick={movePostScreen}
