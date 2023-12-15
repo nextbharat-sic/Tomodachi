@@ -135,6 +135,7 @@ const Home = () => {
               overflowWrap: "break-word",
               margin: "0.5em",
               fontSize: "0.7em",
+              whiteSpace: "pre-wrap",
             }}
           >
             {jobData.PJD}
