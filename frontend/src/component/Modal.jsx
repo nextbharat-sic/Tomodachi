@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Modal.css";
 import mammoth from "mammoth";
 
@@ -29,12 +29,13 @@ const Modal = (props) => {
           <div
             style={{
               width: "80vw",
-              height: "80vh",
+              height: "70vh",
               overflowX: "hidden",
               overflowY: "auto",
               textAlign: "justify",
               color: "black",
             }}
+            className="modal__content"
           >
             <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
           </div>
