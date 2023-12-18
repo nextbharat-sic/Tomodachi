@@ -2,9 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
-import mammoth from "mammoth";
 import Modal from "./component/Modal.jsx";
-import "./component/Modal.css";
 
 const SignUp = () => {
   const [userName, setUserName] = useState("tentative");
@@ -13,20 +11,7 @@ const SignUp = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
-  const [privacyPolicy, setprivacyPolicy] = useState("");
   const [isModalOpen, setModalIsOpen] = useState(false);
-
-  // load privacy policy file
-  fetch("/privacypolicy.docx")
-    .then((response) => response.arrayBuffer())
-    .then((buffer) => {
-      mammoth
-        .extractRawText({ arrayBuffer: buffer })
-        .then((result) => {
-          setprivacyPolicy(result.value);
-        })
-        .done();
-    });
 
   const handleOpen = () => {
     setModalIsOpen(true);
