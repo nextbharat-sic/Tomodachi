@@ -10,7 +10,7 @@ const Header = () => {
   const headerHeight = "8vh";
 
   const confirmSignOut = () => {
-    const isConfirm = confirm("Are you sure you want to sign out?");
+    const isConfirm = confirm("Are you sure you want to log out?");
     if (isConfirm) {
       signOut();
     }
@@ -21,7 +21,7 @@ const Header = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storeIsSignIn);
     dispatch(storePage);
-    alert("Sign Out");
+    alert("Log Out");
   };
 
   const moveLogInScreen = () => {
