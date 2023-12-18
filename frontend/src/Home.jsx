@@ -248,13 +248,14 @@ const Home = () => {
           borderBottomRightRadius: "0.8em",
           borderBottomLeftRadius: "0.8em",
           margin: "0.5em",
+          padding: "2em",
         }}
       >
         <div
           style={{
             width: "100vw",
             margin: "0.8em",
-            height: "30vh",
+            height: "35vh",
             borderRadius: "10px",
             background: "#2F69F6",
           }}
@@ -275,28 +276,22 @@ const Home = () => {
             <div>
               <img
                 src={ShareCarrerInformationImage}
-                style={{ width: "35vw", marginLeft: "7vw", marginTop: "5vw" }}
+                style={{ width: "35vw", margin: "5vw" }}
               />
+              <button
+                onClick={movePostScreen}
+                style={{
+                  fontSize: "90%",
+                  backgroundColor: "#ffffff",
+                  color: "#631ACF",
+                  fontWeight: "bold",
+                  margin: "auto",
+                  display: "flex",
+                }}
+              >
+                Share details
+              </button>
             </div>
-          </div>
-
-          <div
-            style={{
-              marginRight: "5vw",
-              textAlign: "right",
-            }}
-          >
-            <button
-              onClick={movePostScreen}
-              style={{
-                fontSize: "90%",
-                backgroundColor: "#ffffff",
-                color: "#631ACF",
-                fontWeight: "bold",
-              }}
-            >
-              Share details
-            </button>
           </div>
         </div>
       </Box>
