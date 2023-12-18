@@ -178,6 +178,7 @@ const Home = () => {
               position: "relative",
               overflowWrap: "break-word",
               margin: "0.5em",
+              whiteSpace: "pre-wrap",
             }}
           >
             {jobData.PJD}
