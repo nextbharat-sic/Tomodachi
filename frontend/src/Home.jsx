@@ -59,7 +59,7 @@ const Home = () => {
     let date = new Date();
     let localDate =
       date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-    if (localDate < pdd) {
+    if (localDate <= pdd) {
       return true;
     } else {
       return false;
@@ -103,7 +103,6 @@ const Home = () => {
             <div
               style={{
                 fontFamily: "DM sans",
-                textAlign: "center",
                 fontWeight: "Bold",
                 marginTop: "1.5vh",
                 marginLeft: "3vw",
