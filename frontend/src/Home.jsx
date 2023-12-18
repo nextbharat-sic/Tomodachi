@@ -55,6 +55,17 @@ const Home = () => {
     dispatch(storePage);
   };
 
+  const checkActive = (pdd) => {
+    let date = new Date();
+    let localDate =
+      date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    if (localDate <= pdd) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
   const displayJobInformationList = (dataList) => {
     return dataList.slice(0, visibleItemCount).map((jobData, index) => (
       <div
@@ -79,6 +90,7 @@ const Home = () => {
           <div
             style={{
               overflowWrap: "break-word",
+              wordBreak: "break-word",
               display: "flex",
             }}
           >
@@ -91,7 +103,6 @@ const Home = () => {
             <div
               style={{
                 fontFamily: "DM sans",
-                textAlign: "center",
                 fontWeight: "Bold",
                 marginTop: "1.5vh",
                 marginLeft: "3vw",
@@ -99,6 +110,39 @@ const Home = () => {
             >
               {jobData.PAN}
             </div>
+            {checkActive(jobData.PDD) ? (
+              <span
+                style={{
+                  backgroundColor: "#2f69f6",
+                  padding: "0.3em 0.5em",
+                  color: "#e0f2f1",
+                  textAlign: "center",
+                  borderRadius: "0.5em",
+                  marginTop: "2vh",
+                  marginLeft: "auto",
+                  minWidth: "45px",
+                  maxHeight: "30px",
+                }}
+              >
+                Active
+              </span>
+            ) : (
+              <span
+                style={{
+                  backgroundColor: "#696969",
+                  padding: "0.3em 0.5em",
+                  color: "#e0f2f1",
+                  textAlign: "center",
+                  borderRadius: "0.5em",
+                  marginTop: "2vh",
+                  marginLeft: "auto",
+                  minWidth: "45px",
+                  maxHeight: "30px",
+                }}
+              >
+                Close
+              </span>
+            )}
           </div>
           <div style={{ display: "flex" }}>
             <div
@@ -134,7 +178,6 @@ const Home = () => {
               position: "relative",
               overflowWrap: "break-word",
               margin: "0.5em",
-              fontSize: "0.7em",
             }}
           >
             {jobData.PJD}
