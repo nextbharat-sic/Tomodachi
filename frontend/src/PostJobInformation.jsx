@@ -6,6 +6,7 @@ import Box from "@mui/material/Grid";
 
 const PostJobInformation = () => {
   // const [imageFile, setImageFile] = useState();
+  const [isLoading, setIsLoading] = useState(false);
   const userID = useSelector((state) => state.userID);
   const accountName = useSelector((state) => state.accountName);
   const phoneNumber = useSelector((state) => state.phoneNumber);
@@ -57,6 +58,7 @@ const PostJobInformation = () => {
     } else {
       const isConfirm = confirm("Are you sure you want to upload?");
       if (isConfirm) {
+        setIsLoading(true);
         uploadJobInfo();
         // checkImageFile();
       }
@@ -94,13 +96,17 @@ const PostJobInformation = () => {
       };
 
       const response = await postJobInformation(jobInformation);
+
       if (response.status === "Success") {
+        setIsLoading(false);
         homePageStatus();
         alert("Upload information is completed!");
       } else {
+        setIsLoading(false);
         alert("Upload information is failed!");
       }
     } catch (error) {
+      setIsLoading(false);
       console.error("Error uploading information:", error);
     }
   };
@@ -251,12 +257,13 @@ const PostJobInformation = () => {
           <Box display="flex" justifyContent="center" alignItems="center">
             <button
               type="submit"
+              disabled={isLoading}
               style={{
                 backgroundColor: "#2F69F6",
                 color: "#e0f2f1",
               }}
             >
-              Upload
+              {isLoading ? "Upload now..." : "Upload"}
             </button>
           </Box>
         </form>
