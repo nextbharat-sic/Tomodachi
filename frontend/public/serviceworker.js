@@ -20,11 +20,3 @@ self.addEventListener("fetch", (event) => {
     }),
   );
 });
-
-// 更新を検知したときの処理_Ichimaru
-self.addEventListener("message", (event) => {
-  if (event.data && event.data.type === "SKIP_WAITING") {
-    self.skipWaiting();
-  }
-});
-// end ichimaru
