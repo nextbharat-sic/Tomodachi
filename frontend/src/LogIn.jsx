@@ -7,6 +7,7 @@ import Box from "@mui/material/Grid";
 const LogIn = () => {
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const nextAction = useSelector((state) => state.nextAction);
   const dispatch = useDispatch();
 
@@ -36,6 +37,7 @@ const LogIn = () => {
   };
 
   const checkLogin = async () => {
+    setIsLoading(true);
     const logInInformation = {
       accountName: accountName,
       phoneNumber: phoneNumber,
@@ -43,10 +45,13 @@ const LogIn = () => {
 
     const result = await checkLoginInformation(logInInformation);
     if (result.status == "Match") {
+      setIsLoading(false);
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
+      setIsLoading(false);
       alert("Account name or phone number is incorrect!");
     } else {
+      setIsLoading(false);
       alert("Please Try Again!");
     }
   };
@@ -98,13 +103,14 @@ const LogIn = () => {
         <Box display="flex" justifyContent="center" alignItems="center">
           <button
             onClick={checkLogin}
+            disabled={isLoading}
             style={{
               margin: "10px",
               backgroundColor: "#2F69F6",
               color: "#e0f2f1",
             }}
           >
-            Log In
+            {isLoading ? "Log in now..." : "Log In"}
           </button>
         </Box>
         <div
