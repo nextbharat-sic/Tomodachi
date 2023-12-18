@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
-import getUploadInformation from "./clients/getuploadinformation.js";
 import Box from "@mui/material/Grid";
+import getUploadInformation from "./clients/getuploadinformation.js";
+import ShareCarrerInformationImage from "./assets/ShareCarrerInformationImage.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -194,7 +195,13 @@ const Home = () => {
               <p>Loading...</p>
             )}
           </div>*/}
-          <div style={{ fontSize: "0.8em", margin: "0.5em" }}>
+          <div
+            style={{
+              fontSize: "0.8em",
+              margin: "0.5em",
+              paddingBottom: "10px",
+            }}
+          >
             posted at: {replaceDate(String(jobData.PCT))}
           </div>
           {/* Add more details as needed */}
@@ -256,10 +263,10 @@ const Home = () => {
             width: "100vw",
             height: "25vh",
             marginBottom: "0.5em",
-            boxShadow: "0em 0.55em 0.1em rgba(99, 26, 207, 1)",
+            boxShadow: "0em 0.55em 0.1em #631acf",
             borderBottomRightRadius: "0.8em",
             borderBottomLeftRadius: "0.8em",
-            background: "linear-gradient(to right,  #631ACF, #87CEEB)",
+            background: "linear-gradient(135deg, #631acf 0%,#2f69f6 85%)",
           }}
         >
           <p
@@ -285,44 +292,50 @@ const Home = () => {
           borderBottomRightRadius: "0.8em",
           borderBottomLeftRadius: "0.8em",
           margin: "0.5em",
+          padding: "2em",
         }}
       >
         <div
           style={{
             width: "100vw",
             margin: "0.8em",
-            height: "25vh",
+            height: "35vh",
             borderRadius: "10px",
-            background: "linear-gradient(to right, #631ACF, #631ACF)",
+            background: "#2F69F6",
           }}
         >
-          <div
-            style={{
-              color: "#ffffff",
-              fontSize: "100%",
-              fontWeight: "bold",
-              marginLeft: "5vw",
-              marginTop: "7vh",
-              fontFamily: "DM sans-serif",
-            }}
-          >
-            Share career <br></br> information
-          </div>
-
-          <div
-            style={{ marginTop: "4vh", marginRight: "5vw", textAlign: "right" }}
-          >
-            <button
-              onClick={movePostScreen}
+          <div style={{ display: "flex" }}>
+            <div
               style={{
-                fontSize: "90%",
-                backgroundColor: "#ffffff",
-                color: "#631ACF",
+                color: "#ffffff",
+                fontSize: "125%",
                 fontWeight: "bold",
+                marginLeft: "5vw",
+                marginTop: "7vh",
+                fontFamily: "DM sans-serif",
               }}
             >
-              Share details
-            </button>
+              Share career <br /> information
+            </div>
+            <div>
+              <img
+                src={ShareCarrerInformationImage}
+                style={{ width: "35vw", margin: "5vw" }}
+              />
+              <button
+                onClick={movePostScreen}
+                style={{
+                  fontSize: "90%",
+                  backgroundColor: "#ffffff",
+                  color: "#631ACF",
+                  fontWeight: "bold",
+                  margin: "auto",
+                  display: "flex",
+                }}
+              >
+                Share details
+              </button>
+            </div>
           </div>
         </div>
       </Box>
