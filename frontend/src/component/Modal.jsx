@@ -29,7 +29,7 @@ const Modal = (props) => {
           <div
             style={{
               width: "80vw",
-              height: "70vh",
+              height: "60vh",
               overflowX: "hidden",
               overflowY: "auto",
               textAlign: "justify",
