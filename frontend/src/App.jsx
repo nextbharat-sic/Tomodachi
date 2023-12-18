@@ -25,16 +25,21 @@ function App() {
   return (
     <>
       <Box diplay="flex" flexDirection="column">
-        <Box height={Header.headerHeight}>
-          {pageStatus == "HomePage" ? <Header /> : ""}
-        </Box>
+        {pageStatus == "HomePage" ? (
+          <Box height={Header.headerHeight}>
+            <Header />
+          </Box>
+        ) : (
+          ""
+        )}
+
         {/* TODO height is make variable changes */}
         <Box
           justifyContent="center"
           alignItems="center"
           text-align="center"
-          height="84vh"
           overflow="auto"
+          height="88vh"
         >
           {pageStatus == "HomePage" ? <Home /> : ""}
           {pageStatus == "LogIn" ? <LogIn /> : ""}

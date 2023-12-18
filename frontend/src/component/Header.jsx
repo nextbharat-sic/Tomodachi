@@ -7,7 +7,7 @@ import Typography from "@mui/material/Typography";
 const Header = () => {
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
-  const headerHeight = "8vh";
+  const headerHeight = "6vh";
 
   const confirmSignOut = () => {
     const isConfirm = confirm("Are you sure you want to log out?");
@@ -38,7 +38,10 @@ const Header = () => {
     <>
       <Box height={headerHeight}>
         <AppBar>
-          <Toolbar position="static" style={{ backgroundColor: "#631ACF" }}>
+          <Toolbar
+            position="static"
+            style={{ backgroundColor: "#631ACF", height: headerHeight }}
+          >
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Logo
             </Typography>
