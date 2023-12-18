@@ -291,15 +291,13 @@ const Home = () => {
           boxShadow: "0em 0.3em 0em rgba(0, 0, 0, 0.1)",
           borderBottomRightRadius: "0.8em",
           borderBottomLeftRadius: "0.8em",
-          margin: "0.5em",
-          padding: "2em",
+          marginBottom: "0.5em",
         }}
       >
         <div
           style={{
             width: "100vw",
             margin: "0.8em",
-            height: "35vh",
             borderRadius: "10px",
             background: "#2F69F6",
           }}
@@ -317,7 +315,7 @@ const Home = () => {
             >
               Share career <br /> information
             </div>
-            <div>
+            <div style={{ margin: "auto", marginBottom: "2vh" }}>
               <img
                 src={ShareCarrerInformationImage}
                 style={{ width: "35vw", margin: "5vw" }}
