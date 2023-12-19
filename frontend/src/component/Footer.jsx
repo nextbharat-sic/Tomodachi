@@ -28,7 +28,11 @@ const Footer = () => {
       <Box height={footerHeight} position="fixed" bottom="0" width="100%">
         <Toolbar
           position="static"
-          style={{ backgroundColor: "#631ACF", height: footerHeight }}
+          style={{
+            backgroundColor: "#631ACF",
+            height: footerHeight,
+            minHeight: "0",
+          }}
         >
           <Grid container>
             <Grid
