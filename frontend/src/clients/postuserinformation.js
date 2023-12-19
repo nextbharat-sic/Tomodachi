@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default async function postUserInformation(userInformation) {
-  console.log(userInformation);
   const postUserInfoURL = import.meta.env.VITE_APP_POST_USER_INFO;
   const header = { "Content-Type": "application/json" };
   try {
