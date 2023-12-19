@@ -35,8 +35,11 @@ const Header = () => {
     dispatch(storePage);
   };
 
-  const refreshHome = () => {
-    window.location.reload();
+  const refreshHome = async () => {
+    const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
+    await dispatch(storeInitialPage);
+    const storeHomePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storeHomePage);
   };
 
   return (
@@ -54,7 +57,7 @@ const Header = () => {
               onClick={refreshHome}
               fontSize="large"
               style={{ marginRight: "2vw" }}
-            />{" "}
+            />
             {signInStatus ? (
               <button
                 onClick={confirmSignOut}
