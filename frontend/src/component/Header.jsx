@@ -60,12 +60,15 @@ const Header = () => {
               component="div"
               sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
             >
-              <img
-                width="40"
-                height="40"
-                border="1px"
-                src="/tomodachilogo.png"
-              />
+              <div
+                style={{
+                  height: headerHeight,
+                  display: "flex",
+                  alignItems: "center",
+                }}
+              >
+                <img height="90%" border="1px" src="/tomodachilogo.png" />
+              </div>
               <span style={{ marginLeft: "4px" }}>Tomodachi</span>
             </Typography>
             <RefreshRoundedIcon
