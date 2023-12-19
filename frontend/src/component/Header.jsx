@@ -61,14 +61,12 @@ const Header = () => {
               sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
             >
               <img
-                width="48"
-                height="48"
-                verticalAlign="center"
-                objectFit="cover"
+                width="40"
+                height="40"
                 border="1px"
                 src="/tomodachilogo.png"
               />
-              <p style={{ marginLeft: "4px" }}>Tomodachi</p>
+              <span style={{ marginLeft: "4px" }}>Tomodachi</span>
             </Typography>
             <RefreshRoundedIcon
               onClick={refreshHome}
