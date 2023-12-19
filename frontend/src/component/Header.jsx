@@ -3,6 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -34,6 +35,13 @@ const Header = () => {
     dispatch(storePage);
   };
 
+  const refreshHome = async () => {
+    const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
+    await dispatch(storeInitialPage);
+    const storeHomePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storeHomePage);
+  };
+
   return (
     <>
       <Box height={headerHeight}>
@@ -62,6 +70,11 @@ const Header = () => {
               />
               <p style={{ marginLeft: "4px" }}>Tomodachi</p>
             </Typography>
+            <RefreshRoundedIcon
+              onClick={refreshHome}
+              fontSize="large"
+              style={{ marginRight: "2vw" }}
+            />
             {signInStatus ? (
               <button
                 onClick={confirmSignOut}
