@@ -1,36 +1,61 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState, useEffect } from "react";
+import { useSelector } from "react-redux";
+import Header from "./component/Header.jsx";
+import Footer from "./component/Footer.jsx";
+import Home from "./Home.jsx";
+import SignUp from "./SignUp.jsx";
+import LogIn from "./LogIn.jsx";
+import PostJobInformation from "./PostJobInformation.jsx";
+import "./App.css";
+
+import Box from "@mui/material/Grid";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [isSignUp, setIsSignUp] = useState(false);
+  const [displayPage, setDisplayPage] = useState("");
+
+  const signInStatus = useSelector((state) => state.isSignIn);
+  const pageStatus = useSelector((state) => state.pageStatus);
+
+  useEffect(() => {
+    setIsSignUp(signInStatus);
+    setDisplayPage(pageStatus);
+  }, [signInStatus, pageStatus]);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-      <p>MODE: {import.meta.env.VITE_APP_TITLE}</p>
+      <Box diplay="flex" flexDirection="column">
+        {pageStatus == "HomePage" ? (
+          <Box height={Header.headerHeight}>
+            <Header />
+          </Box>
+        ) : (
+          ""
+        )}
+
+        {/* TODO height is make variable changes */}
+        <Box
+          justifyContent="center"
+          alignItems="center"
+          text-align="center"
+          overflow="auto"
+          height="88vh"
+        >
+          {pageStatus == "HomePage" ? <Home /> : ""}
+          {pageStatus == "LogIn" ? <LogIn /> : ""}
+          {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
+          {isSignUp && pageStatus == "PostJobPage" ? (
+            <PostJobInformation />
+          ) : (
+            ""
+          )}
+        </Box>
+        <Box height={Footer.footerHeight}>
+          <Footer />
+        </Box>
+      </Box>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
