@@ -48,10 +48,25 @@ const Header = () => {
         <AppBar>
           <Toolbar
             position="static"
-            style={{ backgroundColor: "#631ACF", height: headerHeight }}
+            style={{
+              backgroundColor: "#631ACF",
+              height: headerHeight,
+              paddingLeft: "1px",
+              minHeight: "0",
+            }}
           >
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              Logo
+            <Typography
+              variant="h6"
+              component="div"
+              sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+            >
+              <img
+                width="40"
+                height="40"
+                border="1px"
+                src="/tomodachilogo.png"
+              />
+              <span style={{ marginLeft: "4px" }}>Tomodachi</span>
             </Typography>
             <RefreshRoundedIcon
               onClick={refreshHome}
