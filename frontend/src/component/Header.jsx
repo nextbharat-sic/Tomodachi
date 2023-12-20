@@ -72,7 +72,7 @@ const Header = () => {
             </Typography>
             <IoIosRefresh
               onClick={refreshHome}
-              style={{ marginRight: "2vw", fontSize: "2em" }}
+              style={{ marginRight: "2vw", fontSize: "1.5em" }}
             />
             {signInStatus ? (
               <span
