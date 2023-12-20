@@ -3,7 +3,7 @@ import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import RefreshRoundedIcon from "@mui/icons-material/RefreshRounded";
+import { IoIosRefresh } from "react-icons/io";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -51,7 +51,6 @@ const Header = () => {
             style={{
               backgroundColor: "#631ACF",
               height: headerHeight,
-              paddingLeft: "1px",
               minHeight: "0",
             }}
           >
@@ -67,39 +66,36 @@ const Header = () => {
                   alignItems: "center",
                 }}
               >
-                <img height="90%" border="1px" src="/tomodachilogo.png" />
+                <img height="90%" src="/logowhite.png" />
               </div>
               <span style={{ marginLeft: "4px" }}>Tomodachi</span>
             </Typography>
-            <RefreshRoundedIcon
+            <IoIosRefresh
               onClick={refreshHome}
-              fontSize="large"
-              style={{ marginRight: "2vw" }}
+              style={{ marginRight: "2vw", fontSize: "2em" }}
             />
             {signInStatus ? (
-              <button
+              <span
                 onClick={confirmSignOut}
                 variant="outline"
                 style={{
                   color: "#e0f2f1",
                   backgroundColor: "#631ACF",
-                  border: "1px solid",
                 }}
               >
                 Log Out
-              </button>
+              </span>
             ) : (
-              <button
+              <span
                 variant="outline"
                 style={{
                   color: "#e0f2f1",
                   backgroundColor: "#631ACF",
-                  border: "1px solid",
                 }}
                 onClick={moveLogInScreen}
               >
                 Log In
-              </button>
+              </span>
             )}
           </Toolbar>
         </AppBar>
