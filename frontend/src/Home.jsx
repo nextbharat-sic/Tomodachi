@@ -66,6 +66,30 @@ const Home = () => {
       return false;
     }
   };
+  const renderLinkedText = (text) => {
+    const linkRegex = /(?:https?|ftp):\/\/\S+/gi;
+    const parts = text.split(linkRegex);
+    const matches = text.match(linkRegex);
+
+    if (!matches) {
+      return text;
+    }
+
+    return parts.map((part, index) => (
+      <>
+        {index > 0 && (
+          <a
+            href={matches[index - 1]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {matches[index - 1]}
+          </a>
+        )}
+        {part}
+      </>
+    ));
+  };
 
   const displayJobInformationList = (dataList) => {
     return dataList.slice(0, visibleItemCount).map((jobData, index) => (
@@ -182,7 +206,7 @@ const Home = () => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {jobData.PJD}
+            {renderLinkedText(jobData.PJD)}
           </div>
           {/* <div>
             {dataFromS3 ? (
