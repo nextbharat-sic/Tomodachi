@@ -13,11 +13,6 @@ import Box from "@mui/material/Grid";
 function App() {
   const [isSignUp, setIsSignUp] = useState(false);
   const [displayPage, setDisplayPage] = useState("");
-  const [isHeaderVisible, setHeaderVisibility] = useState(true);
-
-  const handleHeaderVisibilityChange = (isVisible) => {
-    setHeaderVisibility(isVisible);
-  };
 
   const signInStatus = useSelector((state) => state.isSignIn);
   const pageStatus = useSelector((state) => state.pageStatus);
@@ -32,7 +27,7 @@ function App() {
       <Box diplay="flex" flexDirection="column">
         {pageStatus == "HomePage" ? (
           <Box height={Header.headerHeight}>
-            {isHeaderVisible && <Header />}
+            <Header />
           </Box>
         ) : (
           ""
@@ -56,7 +51,7 @@ function App() {
           )}
         </Box>
         <Box height={Footer.footerHeight}>
-          <Footer onHeaderVisibilityChange={handleHeaderVisibilityChange} />
+          <Footer />
         </Box>
       </Box>
     </>

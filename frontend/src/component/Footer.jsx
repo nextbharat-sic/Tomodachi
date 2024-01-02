@@ -6,7 +6,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Modal from "./Modal.jsx";
 
-const Footer = ({ onHeaderVisibilityChange }) => {
+const Footer = () => {
   const dispatch = useDispatch();
   const footerHeight = "6vh";
 
@@ -17,12 +17,10 @@ const Footer = ({ onHeaderVisibilityChange }) => {
   const [isModalOpen, setModalIsOpen] = useState(false);
   const handleOpen = () => {
     setModalIsOpen(true);
-    onHeaderVisibilityChange(false);
   };
 
   const handleClose = () => {
     setModalIsOpen(false);
-    onHeaderVisibilityChange(true);
   };
   return (
     <>
