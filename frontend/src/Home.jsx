@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
@@ -66,6 +66,7 @@ const Home = () => {
       return false;
     }
   };
+
   const renderLinkedText = (text) => {
     const linkRegex = /(?:https?|ftp):\/\/\S+/gi;
     const parts = text.split(linkRegex);
@@ -76,7 +77,7 @@ const Home = () => {
     }
 
     return parts.map((part, index) => (
-      <>
+      <Fragment key={index}>
         {index > 0 && (
           <a
             href={matches[index - 1]}
@@ -87,7 +88,7 @@ const Home = () => {
           </a>
         )}
         {part}
-      </>
+      </Fragment>
     ));
   };
 
