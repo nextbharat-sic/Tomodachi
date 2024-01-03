@@ -14,7 +14,11 @@ const PostJobInformation = () => {
   const dispatch = useDispatch();
   let date = new Date();
   let localDate =
-    date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    date.getFullYear() +
+    "-" +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    date.getDate().toString().padStart(2, "0");
   // let localTime = date.toLocaleTimeString();
 
   const [jobData, setJobData] = useState({
