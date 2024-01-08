@@ -74,9 +74,9 @@ const Home = () => {
   const renderLinkedText = (text) => {
     const linkRegex = /(?:https?|ftp):\/\/\S+/gi;
     const parts = text.split(linkRegex);
-    const matches = text.match(linkRegex);
+    const linkMatches = text.match(linkRegex);
 
-    if (!matches) {
+    if (!linkMatches) {
       return text;
     }
 
@@ -84,11 +84,11 @@ const Home = () => {
       <Fragment key={index}>
         {index > 0 && (
           <a
-            href={matches[index - 1]}
+            href={linkMatches[index - 1]}
             target="_blank"
             rel="noopener noreferrer"
           >
-            {matches[index - 1]}
+            {linkMatches[index - 1]}
           </a>
         )}
         {part}
