@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import JobMarket from "./JobMarket.jsx";
 import Box from "@mui/material/Grid";
 
-const PostJobInformation = () => {
+const SelectCategory = () => {
   const [category, setCategory] = useState("");
 
   const categoryDataChange = (event) => {
@@ -43,4 +43,4 @@ const PostJobInformation = () => {
   );
 };
 
-export default PostJobInformation;
+export default SelectCategory;

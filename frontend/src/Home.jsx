@@ -44,11 +44,11 @@ const Home = () => {
   const movePostScreen = () => {
     const storeNextAction = {
       type: "SET_NEXT_ACTION",
-      payload: "PostJobInformation",
+      payload: "PostInformation",
     };
     let storePage = "";
     if (signInStatus) {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
     } else {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
     }
@@ -185,7 +185,7 @@ const Home = () => {
                 marginLeft: "0.5em",
               }}
             >
-              {jobData.PJT}
+              {jobData.PTI}
             </div>
           </div>
           <div>
@@ -211,7 +211,7 @@ const Home = () => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {renderLinkedText(jobData.PJD)}
+            {renderLinkedText(jobData.PDE)}
           </div>
           {/* <div>
             {dataFromS3 ? (

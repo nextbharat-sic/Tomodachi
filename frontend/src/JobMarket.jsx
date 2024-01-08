@@ -1,7 +1,7 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import postJobInformation from "./clients/postjobinformation.js";
+import postInformation from "./clients/postinformation.js";
 import Box from "@mui/material/Grid";
 
 const JobMarket = () => {
@@ -21,13 +21,13 @@ const JobMarket = () => {
     date.getDate().toString().padStart(2, "0");
   // let localTime = date.toLocaleTimeString();
 
-  const [jobData, setJobData] = useState({
+  const [jobMarketData, setJobMarketData] = useState({
     userId: userID,
     category: "jobRelated",
-    jobTitle: "",
+    title: "",
     deadlineDate: "",
     modeOfJob: "indoor",
-    jobDescription: "",
+    description: "",
     image: "",
     accountName: accountName,
     phoneNumber: phoneNumber,
@@ -40,16 +40,16 @@ const JobMarket = () => {
 
   // const showImage = (event) => {
   //   setImageFile(URL.createObjectURL(event.target.files[0]));
-  //   setJobData({
-  //     ...jobData,
+  //   setJobMarketData({
+  //     ...jobMarketData,
   //     image: event.target.files[0],
   //   });
   // };
 
   const handleInputDataChange = (event) => {
     const { name, value } = event.target;
-    setJobData({
-      ...jobData,
+    setJobMarketData({
+      ...jobMarketData,
       [name]: value,
     });
   };
@@ -79,7 +79,7 @@ const JobMarket = () => {
   // };
 
   const checkDeadlineDate = () => {
-    if (jobData.deadlineDate >= localDate) {
+    if (jobMarketData.deadlineDate >= localDate) {
       return true;
     }
     return false;
@@ -88,18 +88,18 @@ const JobMarket = () => {
   const uploadJobInfo = async () => {
     try {
       const jobInformation = {
-        userId: jobData.userId,
-        categor: jobData.category,
-        jobTitle: jobData.jobTitle,
-        deadlineDate: jobData.deadlineDate,
-        modeOfJob: jobData.modeOfJob,
-        jobDescription: jobData.jobDescription,
-        image: jobData.image,
-        accountName: jobData.accountName,
-        phoneNumber: jobData.phoneNumber,
+        userId: jobMarketData.userId,
+        category: jobMarketData.category,
+        title: jobMarketData.title,
+        deadlineDate: jobMarketData.deadlineDate,
+        modeOfJob: jobMarketData.modeOfJob,
+        description: jobMarketData.description,
+        image: jobMarketData.image,
+        accountName: jobMarketData.accountName,
+        phoneNumber: jobMarketData.phoneNumber,
       };
 
-      const response = await postJobInformation(jobInformation);
+      const response = await postInformation(jobInformation);
 
       if (response.status === "Success") {
         setIsLoading(false);
@@ -119,7 +119,7 @@ const JobMarket = () => {
   //   const uploadImageFile = inputImageFile.current.files[0];
   //   const uploadFileName =
   //     userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
-  //   jobData.image = uploadFileName;
+  //   jobMarketData.image = uploadFileName;
 
   //   const s3Client = new S3Client({
   //     region: import.meta.env.VITE_APP_S3_REGION,
@@ -148,14 +148,14 @@ const JobMarket = () => {
       <div>
         <form onSubmit={confirmUpload}>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Job Title</label>
+            <label>Title</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
               type="text"
-              name="jobTitle"
-              placeholder="Write job title"
-              value={jobData.jobTitle}
+              name="title"
+              placeholder="Write title"
+              value={jobMarketData.title}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -175,7 +175,7 @@ const JobMarket = () => {
             <input
               type="date"
               name="deadlineDate"
-              value={jobData.deadlineDate}
+              value={jobMarketData.deadlineDate}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -194,7 +194,7 @@ const JobMarket = () => {
           <Box display="flex" justifyContent="center" alignItems="center">
             <select
               name="modeOfJob"
-              value={jobData.modeOfJob}
+              value={jobMarketData.modeOfJob}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -209,14 +209,14 @@ const JobMarket = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Job Description</label>
+            <label>Description</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <textarea
               rows="4"
-              name="jobDescription"
-              placeholder="Write description of the job"
-              value={jobData.jobDescription}
+              name="description"
+              placeholder="Write description"
+              value={jobMarketData.description}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
