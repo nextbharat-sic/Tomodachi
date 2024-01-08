@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
@@ -69,6 +69,31 @@ const Home = () => {
     } else {
       return false;
     }
+  };
+
+  const renderLinkedText = (text) => {
+    const linkRegex = /(?:https?|ftp):\/\/\S+/gi;
+    const parts = text.split(linkRegex);
+    const matches = text.match(linkRegex);
+
+    if (!matches) {
+      return text;
+    }
+
+    return parts.map((part, index) => (
+      <Fragment key={index}>
+        {index > 0 && (
+          <a
+            href={matches[index - 1]}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {matches[index - 1]}
+          </a>
+        )}
+        {part}
+      </Fragment>
+    ));
   };
 
   const displayJobInformationList = (dataList) => {
@@ -186,7 +211,7 @@ const Home = () => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {jobData.PJD}
+            {renderLinkedText(jobData.PJD)}
           </div>
           {/* <div>
             {dataFromS3 ? (
