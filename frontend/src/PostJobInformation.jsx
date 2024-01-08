@@ -23,11 +23,11 @@ const PostJobInformation = () => {
 
   const [jobData, setJobData] = useState({
     userId: userID,
-    informationTitle: "jobRelated",
-    jobTitle: "",
+    category: "jobRelated",
+    title: "",
     deadlineDate: "",
     modeOfJob: "indoor",
-    jobDescription: "",
+    description: "",
     image: "",
     accountName: accountName,
     phoneNumber: phoneNumber,
@@ -89,11 +89,11 @@ const PostJobInformation = () => {
     try {
       const jobInformation = {
         userId: jobData.userId,
-        informationTitle: jobData.informationTitle,
-        jobTitle: jobData.jobTitle,
+        category: jobData.category,
+        title: jobData.title,
         deadlineDate: jobData.deadlineDate,
         modeOfJob: jobData.modeOfJob,
-        jobDescription: jobData.jobDescription,
+        description: jobData.description,
         image: jobData.image,
         accountName: jobData.accountName,
         phoneNumber: jobData.phoneNumber,
@@ -150,12 +150,12 @@ const PostJobInformation = () => {
           <h2 style={{ textAlign: "center" }}>Information Details</h2>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Information Title</label>
+            <label>Category</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <select
-              name="informationTitle"
-              value={jobData.informationTitle}
+              name="category"
+              value={jobData.category}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -169,14 +169,14 @@ const PostJobInformation = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Job Title</label>
+            <label>Title</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
               type="text"
-              name="jobTitle"
-              placeholder="Write job title"
-              value={jobData.jobTitle}
+              name="title"
+              placeholder="Write title"
+              value={jobData.title}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -230,14 +230,14 @@ const PostJobInformation = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Job Description</label>
+            <label>Description</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <textarea
               rows="4"
-              name="jobDescription"
-              placeholder="Write description of the job"
-              value={jobData.jobDescription}
+              name="description"
+              placeholder="Write description"
+              value={jobData.description}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
