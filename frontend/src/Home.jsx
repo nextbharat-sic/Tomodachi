@@ -185,7 +185,7 @@ const Home = () => {
                 marginLeft: "0.5em",
               }}
             >
-              {jobData.PJT}
+              {jobData.PTI}
             </div>
           </div>
           <div>
@@ -211,7 +211,7 @@ const Home = () => {
               whiteSpace: "pre-wrap",
             }}
           >
-            {renderLinkedText(jobData.PJD)}
+            {renderLinkedText(jobData.PDE)}
           </div>
           {/* <div>
             {dataFromS3 ? (
