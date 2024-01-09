@@ -32,12 +32,12 @@ const SelectCategory = () => {
             }}
           >
             <option value="">select category</option>
-            <option value="jobRelated">Job Related</option>
+            <option value="jobMarket">Job Market</option>
             <option value="careerRelatedNews">Career Related News</option>
             <option value="ThandaTalks">Thanda Talks</option>
           </select>
         </Box>
-        {category == "jobRelated" ? <JobMarket /> : ""}
+        {category == "jobMarket" ? <JobMarket /> : ""}
       </div>
     </>
   );
