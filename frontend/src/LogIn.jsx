@@ -13,8 +13,8 @@ const LogIn = () => {
 
   const logInStatus = (userID) => {
     let storePage = "";
-    if (nextAction == "PostJobInformation") {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+    if (nextAction == "PostInformation") {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
     } else {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     }

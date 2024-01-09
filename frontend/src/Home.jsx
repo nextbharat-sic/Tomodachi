@@ -44,11 +44,11 @@ const Home = () => {
   const movePostScreen = () => {
     const storeNextAction = {
       type: "SET_NEXT_ACTION",
-      payload: "PostJobInformation",
+      payload: "PostInformation",
     };
     let storePage = "";
     if (signInStatus) {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
     } else {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
     }
