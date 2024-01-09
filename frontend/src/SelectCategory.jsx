@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useState } from "react";
 import JobMarket from "./JobMarket.jsx";
+import ThandaTalks from "./ThandaTalks.jsx";
 import Box from "@mui/material/Grid";
 
 const SelectCategory = () => {
@@ -34,10 +34,11 @@ const SelectCategory = () => {
             <option value="">select category</option>
             <option value="jobMarket">Job Market</option>
             <option value="careerRelatedNews">Career Related News</option>
-            <option value="ThandaTalks">Thanda Talks</option>
+            <option value="thandaTalks">Thanda Talks</option>
           </select>
         </Box>
         {category == "jobMarket" ? <JobMarket /> : ""}
+        {category == "thandaTalks" ? <ThandaTalks /> : ""}
       </div>
     </>
   );
