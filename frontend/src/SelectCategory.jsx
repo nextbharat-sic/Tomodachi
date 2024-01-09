@@ -1,5 +1,6 @@
 import { useState } from "react";
 import JobMarket from "./JobMarket.jsx";
+import CareerRelatedNews from "./CareerRelatedNews.jsx";
 import ThandaTalks from "./ThandaTalks.jsx";
 import Box from "@mui/material/Grid";
 
@@ -38,6 +39,7 @@ const SelectCategory = () => {
           </select>
         </Box>
         {category == "jobMarket" ? <JobMarket /> : ""}
+        {category == "careerRelatedNews" ? <CareerRelatedNews /> : ""}
         {category == "thandaTalks" ? <ThandaTalks /> : ""}
       </div>
     </>

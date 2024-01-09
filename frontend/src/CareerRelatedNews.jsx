@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import postInformation from "./clients/postinformation.js";
 import Box from "@mui/material/Grid";
 
-const JobMarket = () => {
+const CareerRelatedNews = () => {
   // const [imageFile, setImageFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const userID = useSelector((state) => state.userID);
@@ -12,22 +12,14 @@ const JobMarket = () => {
   const phoneNumber = useSelector((state) => state.phoneNumber);
   // const inputImageFile = useRef();
   const dispatch = useDispatch();
-  let date = new Date();
-  let localDate =
-    date.getFullYear() +
-    "-" +
-    (date.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    date.getDate().toString().padStart(2, "0");
-  // let localTime = date.toLocaleTimeString();
 
-  const [jobMarketData, setJobMarketData] = useState({
+  const [careerRelatedNewsData, setcareerRelatedNewsData] = useState({
     userId: userID,
-    category: "jobMarket",
+    category: "careerRelatedNews",
     forWhichThanda: "",
     title: "",
     deadlineDate: "",
-    modeOfJob: "indoor",
+    modeOfJob: "",
     description: "",
     image: "",
     accountName: accountName,
@@ -41,32 +33,28 @@ const JobMarket = () => {
 
   // const showImage = (event) => {
   //   setImageFile(URL.createObjectURL(event.target.files[0]));
-  //   setJobMarketData({
-  //     ...jobMarketData,
+  //   setcareerRelatedNewsData({
+  //     ...careerRelatedNewsData,
   //     image: event.target.files[0],
   //   });
   // };
 
   const handleInputDataChange = (event) => {
     const { name, value } = event.target;
-    setJobMarketData({
-      ...jobMarketData,
+    setcareerRelatedNewsData({
+      ...careerRelatedNewsData,
       [name]: value,
     });
   };
 
   const confirmUpload = (event) => {
     event.preventDefault();
-    const deadlineValidation = checkDeadlineDate();
-    if (!deadlineValidation) {
-      alert("Deadline date has passed");
-    } else {
-      const isConfirm = confirm("Are you sure you want to upload?");
-      if (isConfirm) {
-        setIsLoading(true);
-        uploadJobMarketInfo();
-        // checkImageFile();
-      }
+
+    const isConfirm = confirm("Are you sure you want to upload?");
+    if (isConfirm) {
+      setIsLoading(true);
+      uploadCareerRelatedNewsInfo();
+      // checkImageFile();
     }
   };
 
@@ -75,33 +63,26 @@ const JobMarket = () => {
   //   if (File && File.size > 0) {
   //     uploadFile();
   //   } else {
-  //     uploadJobMarketInfo();
+  //     uploadCareerRelatedNewsInfo();
   //   }
   // };
 
-  const checkDeadlineDate = () => {
-    if (jobMarketData.deadlineDate >= localDate) {
-      return true;
-    }
-    return false;
-  };
-
-  const uploadJobMarketInfo = async () => {
+  const uploadCareerRelatedNewsInfo = async () => {
     try {
-      const jobMarketInformation = {
-        userId: jobMarketData.userId,
-        category: jobMarketData.category,
-        forWhichThanda: jobMarketData.forWhichThanda,
-        title: jobMarketData.title,
-        deadlineDate: jobMarketData.deadlineDate,
-        modeOfJob: jobMarketData.modeOfJob,
-        description: jobMarketData.description,
-        image: jobMarketData.image,
-        accountName: jobMarketData.accountName,
-        phoneNumber: jobMarketData.phoneNumber,
+      const carreerRelatedNewsInformation = {
+        userId: careerRelatedNewsData.userId,
+        category: careerRelatedNewsData.category,
+        forWhichThanda: careerRelatedNewsData.forWhichThanda,
+        title: careerRelatedNewsData.title,
+        deadlineDate: careerRelatedNewsData.deadlineDate,
+        modeOfJob: careerRelatedNewsData.modeOfJob,
+        description: careerRelatedNewsData.description,
+        image: careerRelatedNewsData.image,
+        accountName: careerRelatedNewsData.accountName,
+        phoneNumber: careerRelatedNewsData.phoneNumber,
       };
 
-      const response = await postInformation(jobMarketInformation);
+      const response = await postInformation(carreerRelatedNewsInformation);
 
       if (response.status === "Success") {
         setIsLoading(false);
@@ -121,7 +102,7 @@ const JobMarket = () => {
   //   const uploadImageFile = inputImageFile.current.files[0];
   //   const uploadFileName =
   //     userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
-  //   jobMarketData.image = uploadFileName;
+  //   careerRelatedNewsData.image = uploadFileName;
 
   //   const s3Client = new S3Client({
   //     region: import.meta.env.VITE_APP_S3_REGION,
@@ -139,7 +120,7 @@ const JobMarket = () => {
 
   //   try {
   //     const result = await s3Client.send(new PutObjectCommand(S3Params));
-  //     uploadJobMarketInfo();
+  //     uploadCareerRelatedNewsInfo();
   //   } catch (err) {
   //     console.log("Error", err);
   //   }
@@ -157,7 +138,7 @@ const JobMarket = () => {
               type="text"
               name="title"
               placeholder="Write title"
-              value={jobMarketData.title}
+              value={careerRelatedNewsData.title}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -168,46 +149,6 @@ const JobMarket = () => {
               }}
               required
             />
-          </Box>
-
-          <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Deadline Date</label>
-          </div>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <input
-              type="date"
-              name="deadlineDate"
-              value={jobMarketData.deadlineDate}
-              onChange={handleInputDataChange}
-              style={{
-                width: "86vw",
-                margin: "10px",
-                height: "5vh",
-                borderRadius: "10px",
-                borderWidth: "1px",
-              }}
-              required
-            />
-          </Box>
-
-          <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Mode of Job</label>
-          </div>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <select
-              name="modeOfJob"
-              value={jobMarketData.modeOfJob}
-              onChange={handleInputDataChange}
-              style={{
-                width: "86vw",
-                margin: "10px",
-                height: "5vh",
-                borderRadius: "10px",
-              }}
-            >
-              <option value="indoor">Indoor Work</option>
-              <option value="outdoor">Outdoor Work</option>
-            </select>
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
@@ -218,7 +159,7 @@ const JobMarket = () => {
               rows="8"
               name="description"
               placeholder="Write description"
-              value={jobMarketData.description}
+              value={careerRelatedNewsData.description}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -257,4 +198,4 @@ const JobMarket = () => {
   );
 };
 
-export default JobMarket;
+export default CareerRelatedNews;
