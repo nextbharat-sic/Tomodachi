@@ -35,8 +35,8 @@ const ThandaTalks = () => {
 
   // const showImage = (event) => {
   //   setImageFile(URL.createObjectURL(event.target.files[0]));
-  //   setJobMarketData({
-  //     ...jobMarketData,
+  //   setThandaTalksData({
+  //     ...thandaTalksData,
   //     image: event.target.files[0],
   //   });
   // };
@@ -65,7 +65,7 @@ const ThandaTalks = () => {
   //   if (File && File.size > 0) {
   //     uploadFile();
   //   } else {
-  //     uploadJobInfo();
+  //     uploadThandaTalksInfo();
   //   }
   // };
 
@@ -104,7 +104,7 @@ const ThandaTalks = () => {
   //   const uploadImageFile = inputImageFile.current.files[0];
   //   const uploadFileName =
   //     userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
-  //   jobMarketData.image = uploadFileName;
+  //   thandaTalksData.image = uploadFileName;
 
   //   const s3Client = new S3Client({
   //     region: import.meta.env.VITE_APP_S3_REGION,
@@ -122,7 +122,7 @@ const ThandaTalks = () => {
 
   //   try {
   //     const result = await s3Client.send(new PutObjectCommand(S3Params));
-  //     uploadJobInfo();
+  //     uploadThandaTalksInfo();
   //   } catch (err) {
   //     console.log("Error", err);
   //   }

@@ -91,6 +91,7 @@ const JobMarket = () => {
       const jobInformation = {
         userId: jobMarketData.userId,
         category: jobMarketData.category,
+        forWhichThanda: jobMarketData.forWhichThanda,
         title: jobMarketData.title,
         deadlineDate: jobMarketData.deadlineDate,
         modeOfJob: jobMarketData.modeOfJob,
