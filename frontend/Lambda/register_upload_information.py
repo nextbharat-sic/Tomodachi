@@ -26,28 +26,34 @@ def lambda_handler(event, context):
 
     postinformation_table_name = os.environ.get('POSTINFORMATIONTABLE')
     counter_table_name = os.environ.get('COUNTERTABLE')
-
-    parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
-    deadline_date = parsed_deadline_date.strftime('%Y-%m-%d')
     
     utc_time = datetime.utcnow()
     create_date, create_time = convert_utc_to_india(utc_time)
     
-    # Validation check
-    if deadline_date < create_date:
-        print('deadlineDateError')
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": "Failed",
-            })
-        }
+    #Check category regarding deadline date
+    if body['category'] == 'jobMarket':
+        # Parse deadline date
+        parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
+        deadline_date = parsed_deadline_date.strftime('%Y-%m-%d')
+            
+        # Validation check
+        if deadline_date < create_date:
+            print('deadlineDateError')
+            return {
+                'statusCode': 500,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Headers" : "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                },
+                'body': json.dumps({
+                    "status": "Failed",
+                })
+            }
+    
+    else:
+        deadline_date = body['deadlineDate']
 
     # Get most recentry postId from CounterTable
     counter_res = dynamodb_client.get_item(
@@ -75,6 +81,7 @@ def lambda_handler(event, context):
     upload_info = {}
     upload_info['PID'] = 'P'+ str(next_upload_info_id).zfill(8)
     upload_info['PIT'] = body['category']
+    upload_info['PFT'] = body['forWhichThanda']
     upload_info['PCT'] = create_date+"_"+ create_time
     upload_info['PDD'] = deadline_date
     upload_info['PDE'] = body['description']
@@ -105,6 +112,7 @@ def lambda_handler(event, context):
           'Item' : {
               'PID' : {'S': upload_info['PID']},
               'PIT' : {'S': upload_info['PIT']},
+              'PFT' : {'S': upload_info['PFT']},
               'PCT' : {'S': upload_info['PCT']},
               'PDD' : {'S': upload_info['PDD']},
               'PDE' : {'S': upload_info['PDE']},
