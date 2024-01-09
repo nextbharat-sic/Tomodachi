@@ -17,6 +17,8 @@ function App() {
   const signInStatus = useSelector((state) => state.isSignIn);
   const pageStatus = useSelector((state) => state.pageStatus);
 
+  const contentHeight = pageStatus == "HomePage" ? "88vh" : "94vh";
+
   useEffect(() => {
     setIsSignUp(signInStatus);
     setDisplayPage(pageStatus);
@@ -39,7 +41,7 @@ function App() {
           alignItems="center"
           text-align="center"
           overflow="auto"
-          height="88vh"
+          height={contentHeight}
         >
           {pageStatus == "HomePage" ? <Home /> : ""}
           {pageStatus == "LogIn" ? <LogIn /> : ""}

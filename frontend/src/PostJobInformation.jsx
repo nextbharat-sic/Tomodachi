@@ -234,7 +234,7 @@ const PostJobInformation = () => {
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <textarea
-              rows="4"
+              rows="8"
               name="description"
               placeholder="Write description"
               value={jobData.description}
