@@ -18,7 +18,7 @@ const ThandaTalks = () => {
   const [thandaTalksData, setThandaTalksData] = useState({
     userId: userID,
     category: "thandaTalks",
-    forWhichThanda: "Tunikala Thanda",
+    forWhichThanda: "tunikalaThanda",
     title: "",
     deadlineDate: "",
     modeOfJob: "",
