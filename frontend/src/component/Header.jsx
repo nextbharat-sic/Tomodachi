@@ -45,60 +45,60 @@ const Header = () => {
   return (
     <>
       <Box height={headerHeight}>
-        <AppBar>
-          <Toolbar
-            position="static"
-            style={{
-              backgroundColor: "#631ACF",
-              height: headerHeight,
-              minHeight: "0",
-            }}
+        <Toolbar
+          position="static"
+          style={{
+            backgroundColor: "#631ACF",
+            height: headerHeight,
+            minHeight: "0",
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
           >
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+            <div
+              style={{
+                height: headerHeight,
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              <div
-                style={{
-                  height: headerHeight,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <img height="90%" src="/logowhite.png" />
-              </div>
-              <span style={{ marginLeft: "4px" }}>Tomodachi</span>
-            </Typography>
-            <IoIosRefresh
-              onClick={refreshHome}
-              style={{ marginRight: "2vw", fontSize: "1.5em" }}
-            />
-            {signInStatus ? (
-              <span
-                onClick={confirmSignOut}
-                variant="outline"
-                style={{
-                  color: "#e0f2f1",
-                  backgroundColor: "#631ACF",
-                }}
-              >
-                Log Out
-              </span>
-            ) : (
-              <span
-                variant="outline"
-                style={{
-                  color: "#e0f2f1",
-                  backgroundColor: "#631ACF",
-                }}
-                onClick={moveLogInScreen}
-              >
-                Log In
-              </span>
-            )}
-          </Toolbar>
-        </AppBar>
+              <img height="90%" src="/logowhite.png" />
+            </div>
+            <span style={{ marginLeft: "4px", color: "#e0f2f1" }}>
+              Tomodachi
+            </span>
+          </Typography>
+          <IoIosRefresh
+            onClick={refreshHome}
+            style={{ marginRight: "2vw", fontSize: "1.5em", color: "#e0f2f1" }}
+          />
+          {signInStatus ? (
+            <span
+              onClick={confirmSignOut}
+              variant="outline"
+              style={{
+                color: "#e0f2f1",
+                backgroundColor: "#631ACF",
+              }}
+            >
+              Log Out
+            </span>
+          ) : (
+            <span
+              variant="outline"
+              style={{
+                color: "#e0f2f1",
+                backgroundColor: "#631ACF",
+              }}
+              onClick={moveLogInScreen}
+            >
+              Log In
+            </span>
+          )}
+        </Toolbar>
       </Box>
     </>
   );
