@@ -3,7 +3,7 @@ import { useState, useEffect, Fragment } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
-import temptImage from "./assets/tempt.png";
+import homeImage from "./assets/home_img.png";
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -294,7 +294,7 @@ const Home = () => {
             boxShadow: "0em 0.55em 0.1em #631acf",
             borderBottomRightRadius: "0.8em",
             borderBottomLeftRadius: "0.8em",
-            backgroundImage: `url(${temptImage})`,
+            backgroundImage: `url(${homeImage})`,
             backgroundSize: "cover",
             backgroundPosition: "center center",
             paddingBottom: "2vh",
