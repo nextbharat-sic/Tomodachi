@@ -145,7 +145,7 @@ const Home = () => {
                 <span
                   style={{
                     backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.5em ",
+                    padding: "0.3em 0.5em",
                     color: "#e0f2f1",
                     textAlign: "center",
                     borderRadius: "0.5em",
@@ -285,7 +285,6 @@ const Home = () => {
   const fetchAndDisplayJobInformation = async () => {
     try {
       const uploadInformationResult = await getUploadInformation();
-      console.log(uploadInformationResult);
       setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error("Error fetching upload information:", error);
