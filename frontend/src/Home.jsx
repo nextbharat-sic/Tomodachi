@@ -140,38 +140,42 @@ const Home = () => {
             >
               {jobData.PAN}
             </div>
-            {checkActive(jobData.PDD) ? (
-              <span
-                style={{
-                  backgroundColor: "#2f69f6",
-                  padding: "0.3em 0.5em",
-                  color: "#e0f2f1",
-                  textAlign: "center",
-                  borderRadius: "0.5em",
-                  marginTop: "2vh",
-                  marginLeft: "auto",
-                  minWidth: "45px",
-                  maxHeight: "30px",
-                }}
-              >
-                Active
-              </span>
+            {jobData.PIT === "jobMarket" ? (
+              checkActive(jobData.PDD) ? (
+                <span
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em ",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "45px",
+                    maxHeight: "30px",
+                  }}
+                >
+                  Active
+                </span>
+              ) : (
+                <span
+                  style={{
+                    backgroundColor: "#696969",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "45px",
+                    maxHeight: "30px",
+                  }}
+                >
+                  Close
+                </span>
+              )
             ) : (
-              <span
-                style={{
-                  backgroundColor: "#696969",
-                  padding: "0.3em 0.5em",
-                  color: "#e0f2f1",
-                  textAlign: "center",
-                  borderRadius: "0.5em",
-                  marginTop: "2vh",
-                  marginLeft: "auto",
-                  minWidth: "45px",
-                  maxHeight: "30px",
-                }}
-              >
-                Close
-              </span>
+              <span></span>
             )}
           </div>
           <div style={{ display: "flex" }}>
@@ -200,8 +204,47 @@ const Home = () => {
                 fontSize: "0.9em",
               }}
             >
-              {jobData.PMJ}
+              {jobData.PIT === "thandaTalks" ? (
+                "Thanda Talks"
+              ) : jobData.PIT === "jobMarket" ? (
+                "Job Market"
+              ) : jobData.PIT === "careerRelatedNews" ? (
+                "Career Related News"
+              ) : (
+                <span></span>
+              )}
             </span>
+            {jobData.PIT === "thandaTalks" ? (
+              <span
+                style={{
+                  backgroundColor: "#f5f5f5",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                }}
+              >
+                Tunikala Thanda
+              </span>
+            ) : jobData.PIT === "jobMarket" ? (
+              <span
+                style={{
+                  backgroundColor: "#f5f5f5",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                }}
+              >
+                {jobData.PMJ}
+              </span>
+            ) : (
+              <span></span>
+            )}
           </div>
           <div
             style={{
@@ -242,6 +285,7 @@ const Home = () => {
   const fetchAndDisplayJobInformation = async () => {
     try {
       const uploadInformationResult = await getUploadInformation();
+      console.log(uploadInformationResult);
       setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error("Error fetching upload information:", error);
