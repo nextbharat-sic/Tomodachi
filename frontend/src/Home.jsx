@@ -309,6 +309,7 @@ const Home = () => {
               marginLeft: "2vw",
               marginBottom: "8vh",
               fontFamily: "DM sans-serif",
+              lineHeight: "110%",
             }}
           >
             Your Hub for <br></br>
@@ -364,8 +365,10 @@ const Home = () => {
       </Box>
       <div
         style={{
+          marginTop: "2vh",
+          marginBottom: "2vh",
           fontWeight: "bold",
-          fontSize: "1.2em",
+          fontSize: "1.1em",
           marginLeft: "5vw",
         }}
       >
