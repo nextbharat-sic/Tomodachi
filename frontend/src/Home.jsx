@@ -317,7 +317,6 @@ const Home = () => {
           </div>
           <div
             style={{
-              height: "12vh",
               borderRadius: "10px",
               marginLeft: "2vw",
               marginRight: "2vw",
@@ -330,6 +329,9 @@ const Home = () => {
               style={{
                 display: "flex",
                 alignItems: "center",
+                width: "100%",
+                marginTop: "1vh",
+                marginBottom: "1vh",
               }}
             >
               <div
@@ -337,7 +339,7 @@ const Home = () => {
                   color: "#ffffff",
                   fontSize: "100%",
                   fontWeight: "bold",
-                  marginLeft: "2vw",
+                  marginLeft: "3vw",
                   fontFamily: "DM sans-serif",
                 }}
               >
@@ -350,6 +352,8 @@ const Home = () => {
                   backgroundColor: "#ffffff",
                   color: "#631ACF",
                   fontWeight: "bold",
+                  marginLeft: "auto",
+                  marginRight: "3vw",
                 }}
               >
                 Share details
