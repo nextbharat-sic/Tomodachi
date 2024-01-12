@@ -3,8 +3,6 @@ import boto3
 import os
 
 def lambda_handler(event, context):
-    print(event['headers']['X-Forwarded-For'])
-    
     dynamodb_client = boto3.client('dynamodb')
     post_information_table_name = os.environ.get('POSTINFORMATIONTABLE')
     
@@ -40,6 +38,7 @@ def lambda_handler(event, context):
             'PIT':item['PIT']['S'],
             'PAN':item['PAN']['S'],
             'PPN':item['PPN']['S'],
+            'PFT':item['PFT']['S'],
         })
         
     print(post_list)
