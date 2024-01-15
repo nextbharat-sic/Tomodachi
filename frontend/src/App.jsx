@@ -6,6 +6,7 @@ import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
 import LogIn from "./LogIn.jsx";
 import SelectCategory from "./SelectCategory.jsx";
+import CheckOtp from "./CheckOtp.jsx";
 import "./App.css";
 
 import Box from "@mui/material/Grid";
@@ -46,7 +47,7 @@ function App() {
           {pageStatus == "HomePage" ? <Home /> : ""}
           {pageStatus == "LogIn" ? <LogIn /> : ""}
           {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
-          {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
+          {isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
         </Box>
         <Box height={Footer.footerHeight}>
           <Footer />
