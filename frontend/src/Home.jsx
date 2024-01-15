@@ -296,7 +296,7 @@ const Home = () => {
             borderBottomLeftRadius: "0.8em",
             backgroundImage: `url(${homeImage})`,
             backgroundSize: "cover",
-            backgroundPosition: "center center",
+            backgroundPosition: "center",
             paddingBottom: "2vh",
           }}
         >
