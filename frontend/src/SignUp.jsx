@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
+import generateOtpCode from "./clients/generateotpcode.js";
 import Modal from "./component/Modal.jsx";
 
 const SignUp = () => {
@@ -24,10 +25,10 @@ const SignUp = () => {
   const signUpStatus = (userID) => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
+
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
-    dispatch(storeIsSignIn);
     dispatch(storePage);
     dispatch(storeUserID);
     dispatch(storeAccountName);
@@ -48,7 +49,7 @@ const SignUp = () => {
       privacyPolicyCheck: privacyPolicyCheck,
     };
 
-    const result = await postUserInformation(userInformation);
+    const result = await generateOtpCode(userInformation);
     if (result.status == "Success") {
       setIsLoading(false);
       signUpStatus(result.userID);
