@@ -11,6 +11,15 @@ import "./App.css";
 import Box from "@mui/material/Grid";
 
 function App() {
+  const checkForUpdates = () => {
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.controller.postMessage({
+        type: "CHECK_FOR_UPDATES",
+      });
+    }
+  };
+  checkForUpdates();
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [displayPage, setDisplayPage] = useState("");
 
