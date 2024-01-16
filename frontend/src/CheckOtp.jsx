@@ -5,6 +5,7 @@ import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
 
 const CheckOtp = () => {
+  const [userName, setUserName] = useState("tentative");
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = React.useState("");
 
@@ -13,10 +14,17 @@ const CheckOtp = () => {
   };
 
   const phoneNumber = useSelector((state) => state.phoneNumber);
+  const accountName = useSelector((state) => state.accountName);
+  const otpInformation = {
+    userName: userName,
+    phoneNumber: phoneNumber,
+    otp: otp,
+    accountName: accountName,
+  };
 
   const otpChecking = async () => {
     setIsLoading(true);
-    const result = await checkOtpCode(otp);
+    const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
       alert("User Registration is completed!");
     } else {

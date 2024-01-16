@@ -6,7 +6,6 @@ import generateOtpCode from "./clients/generateotpcode.js";
 import Modal from "./component/Modal.jsx";
 
 const SignUp = () => {
-  const [userName, setUserName] = useState("tentative");
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +40,6 @@ const SignUp = () => {
     }
 
     const userInformation = {
-      userName: userName,
       accountName: accountName,
       phoneNumber: phoneNumber,
       privacyPolicyCheck: privacyPolicyCheck,
