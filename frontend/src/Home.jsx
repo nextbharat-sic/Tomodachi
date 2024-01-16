@@ -204,15 +204,13 @@ const Home = () => {
                 fontSize: "0.9em",
               }}
             >
-              {jobData.PIT === "thandaTalks" ? (
-                "Thanda Talks"
-              ) : jobData.PIT === "jobMarket" ? (
-                "Job Market"
-              ) : jobData.PIT === "careerRelatedNews" ? (
-                "Career Related News"
-              ) : (
-                <span></span>
-              )}
+              {jobData.PIT === "thandaTalks"
+                ? "Thanda Talks"
+                : jobData.PIT === "jobMarket"
+                  ? "Job Market"
+                  : jobData.PIT === "careerRelatedNews"
+                    ? "Career Related News"
+                    : ""}
             </span>
             {jobData.PIT === "thandaTalks" ? (
               <span
