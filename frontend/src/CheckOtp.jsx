@@ -13,13 +13,10 @@ const CheckOtp = () => {
   };
 
   const phoneNumber = useSelector((state) => state.phoneNumber);
-  console.log(phoneNumber);
 
   const otpChecking = async () => {
     setIsLoading(true);
-    console.log(otp);
     const result = await checkOtpCode(otp);
-    console.log(result.status);
     if (result.status == "Success") {
       alert("User Registration is completed!");
     } else {

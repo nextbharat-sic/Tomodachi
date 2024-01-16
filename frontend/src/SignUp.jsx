@@ -23,9 +23,7 @@ const SignUp = () => {
   };
 
   const signUpStatus = (userID) => {
-    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
-
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
@@ -53,7 +51,6 @@ const SignUp = () => {
     if (result.status == "Success") {
       setIsLoading(false);
       signUpStatus(result.userID);
-      alert("User Registration is completed!");
     } else if (result.status == "UAN Existed") {
       setIsLoading(false);
       alert("Account Name already Exists!");
