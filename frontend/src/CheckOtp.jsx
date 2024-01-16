@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Grid";
+import checkOtpCode from "./clients/checkotpcode.js";
 
 const CheckOtp = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = React.useState("");
 
   const handleChange = (newValue) => {
@@ -12,6 +14,19 @@ const CheckOtp = () => {
 
   const phoneNumber = useSelector((state) => state.phoneNumber);
   console.log(phoneNumber);
+
+  const otpChecking = async () => {
+    setIsLoading(true);
+    console.log(otp);
+    const result = await checkOtpCode(otp);
+    console.log(result.status);
+    if (result.status == "Success") {
+      alert("User Registration is completed!");
+    } else {
+      alert("OTP entered is incorrect");
+      setIsLoading(false);
+    }
+  };
 
   return (
     <>
@@ -25,7 +40,7 @@ const CheckOtp = () => {
           width: "76vw",
           marginLeft: "12vw",
         }}
-        TextFieldsProps={{ disabled: true, size: "small" }}
+        TextFieldsProps={{ size: "small" }}
         length={6}
         value={otp}
         onChange={handleChange}
@@ -39,6 +54,8 @@ const CheckOtp = () => {
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <button
+          onClick={otpChecking}
+          disabled={isLoading}
           style={{
             margin: "10px",
             backgroundColor: "#2F69F6",
@@ -46,7 +63,7 @@ const CheckOtp = () => {
             marginTop: "15vh",
           }}
         >
-          Verify
+          {isLoading ? "Verifying..." : "Verify"}
         </button>
       </Box>
     </>
