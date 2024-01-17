@@ -23,6 +23,10 @@ const CheckOtp = () => {
   };
 
   const otpChecking = async () => {
+    if (otp == "") {
+      alert("Input OTP Code!");
+      return false;
+    }
     setIsLoading(true);
     const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
