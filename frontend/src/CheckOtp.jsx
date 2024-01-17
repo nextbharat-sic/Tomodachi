@@ -37,7 +37,7 @@ const CheckOtp = () => {
     <>
       <h2 style={{ textAlign: "center" }}>Verification</h2>
       <div style={{ textAlign: "center" }}>
-        Please enter the verification code send to +91{phoneNumber}
+        Please enter the verification code send <br /> to +91{phoneNumber}
       </div>
       <MuiOtpInput
         style={{

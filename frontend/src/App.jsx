@@ -48,6 +48,7 @@ function App() {
           {pageStatus == "LogIn" ? <LogIn /> : ""}
           {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
           {!isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
+          {isSignUp && pageStatus == "PostPage" ? <selectCategory /> : ""}
         </Box>
         <Box height={Footer.footerHeight}>
           <Footer />
