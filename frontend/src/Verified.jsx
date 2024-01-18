@@ -29,8 +29,8 @@ const Verified = () => {
             textAlign: "center",
           }}
         >
-          Your Account has been <br />
-          created Successfully
+          Your Account has been verified <br />
+          Successfully
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <button
