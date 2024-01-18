@@ -7,7 +7,11 @@ export default async function checkSignUpOtpCode(otp) {
     const response = await axios.post(checkOTPURL, otp, {
       headers: header,
     });
-    return response.data;
+    // return response.data;
+
+    // Just testing. After creating check_OTP lambda, delete below line
+    console.log(response.data);
+    return { status: "Success" };
   } catch (error) {
     return error;
   }

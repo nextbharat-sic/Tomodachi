@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import Box from "@mui/material/Grid";
 import Header from "./component/Header.jsx";
 import Footer from "./component/Footer.jsx";
 import Home from "./Home.jsx";
@@ -7,9 +8,8 @@ import SignUp from "./SignUp.jsx";
 import LogIn from "./LogIn.jsx";
 import SelectCategory from "./SelectCategory.jsx";
 import CheckOtp from "./CheckOtp.jsx";
+import Verified from "./Verified.jsx";
 import "./App.css";
-
-import Box from "@mui/material/Grid";
 
 function App() {
   const [isSignUp, setIsSignUp] = useState(false);
@@ -49,10 +49,15 @@ function App() {
           {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
           {!isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
           {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
+          {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
         </Box>
-        <Box height={Footer.footerHeight}>
-          <Footer />
-        </Box>
+        {pageStatus != "CheckOtpPage" && pageStatus != "OtpVerifiedPage" ? (
+          <Box height={Footer.footerHeight}>
+            <Footer />
+          </Box>
+        ) : (
+          ""
+        )}
       </Box>
     </>
   );
