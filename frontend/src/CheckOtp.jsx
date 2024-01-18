@@ -3,7 +3,6 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
-import Verified from "./Verified.jsx";
 
 const CheckOtp = () => {
   const [userName, setUserName] = useState("tentative");
@@ -36,7 +35,6 @@ const CheckOtp = () => {
     setIsLoading(true);
     const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
-      alert("User Registration is completed!");
       otpVerifiedStatus();
     } else {
       alert("OTP entered is incorrect");
@@ -62,12 +60,6 @@ const CheckOtp = () => {
         onChange={handleChange}
         gap="5px"
       />
-      <div style={{ marginLeft: "12vw", marginTop: "3vh" }}>
-        Don't receive OTP?{" "}
-        <a>
-          <u>Resend OTP</u>
-        </a>
-      </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <button
           onClick={otpChecking}

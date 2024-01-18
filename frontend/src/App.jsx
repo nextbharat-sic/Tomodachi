@@ -52,13 +52,13 @@ function App() {
           {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
           {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
         </Box>
-        {pageStatus == "CheckOtpPage" || "OtpVerifiedPage" ? (
-          ""
-        ) : (
+        {pageStatus != "CheckOtpPage" && pageStatus != "OtpVerifiedPage" ?  (
           <Box height={Footer.footerHeight}>
             <Footer />
           </Box>
-        )}
+        ):(
+          ""
+        ) }
       </Box>
     </>
   );
