@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export default async function postOtpCode(otp) {
+export default async function checkSignUpOtpCode(otp) {
   const checkOTPURL = import.meta.env.VITE_APP_CHECK_OTP_CODE;
   const header = { "Content-Type": "application/json" };
   try {
