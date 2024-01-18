@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import postUserInformation from "./clients/postuserinformation.js";
-import generateOtpCode from "./clients/generateotpcode.js";
+import generateSignUpOtpCode from "./clients/generatesignupotpcode.js";
 import Modal from "./component/Modal.jsx";
 
 const SignUp = () => {
@@ -45,7 +44,7 @@ const SignUp = () => {
       privacyPolicyCheck: privacyPolicyCheck,
     };
 
-    const result = await generateOtpCode(userInformation);
+    const result = await generateSignUpOtpCode(userInformation);
     if (result.status == "Success") {
       setIsLoading(false);
       signUpStatus(result.userID);
