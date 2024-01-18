@@ -8,6 +8,7 @@ import LogIn from "./LogIn.jsx";
 import SelectCategory from "./SelectCategory.jsx";
 import CheckOtp from "./CheckOtp.jsx";
 import "./App.css";
+import Verified from "./Verified.jsx";
 
 import Box from "@mui/material/Grid";
 
@@ -48,10 +49,15 @@ function App() {
           {pageStatus == "LogIn" ? <LogIn /> : ""}
           {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
           {!isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
+          {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
         </Box>
-        <Box height={Footer.footerHeight}>
-          <Footer />
-        </Box>
+        {pageStatus == "CheckOtpPage" || "OtpVerifiedPage" ? (
+          ""
+        ) : (
+          <Box height={Footer.footerHeight}>
+            <Footer />
+          </Box>
+        )}
       </Box>
     </>
   );
