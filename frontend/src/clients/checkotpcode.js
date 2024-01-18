@@ -9,7 +9,7 @@ export default async function postOtpCode(otp) {
     });
     // return response.data;
 
-    // Just testing. After creating generate_OTP lambda, delete below line
+    // Just testing. After creating check_OTP lambda, delete below line
     console.log(response.data);
     return { status: "Success" };
   } catch (error) {
