@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
-// import checkLoginInformation from "./clients/checklogininformation.js";
 import generateLogInOtpCode from "./clients/generateloginotpcode.js";
 import Box from "@mui/material/Grid";
 
@@ -11,16 +10,12 @@ const LogIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const logInStatus = (userID) => {
+  const logInStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
-    // const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
-    // const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
 
     dispatch(storePage);
-    // dispatch(storeIsSignIn);
-    // dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
   };
@@ -40,7 +35,7 @@ const LogIn = () => {
     const result = await generateLogInOtpCode(logInInformation);
     if (result.status == "Success") {
       setIsLoading(false);
-      logInStatus(result.userID);
+      logInStatus();
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
       alert("Account name or phone number is incorrect!");
