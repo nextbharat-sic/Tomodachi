@@ -5,8 +5,10 @@ import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Modal from "./Modal.jsx";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const footerHeight = "6vh";
 
@@ -50,7 +52,7 @@ const Footer = () => {
                   color: "#e0f2f1",
                 }}
               >
-                Home
+                {t("home")}
               </div>
             </Grid>
             <Grid
@@ -69,7 +71,7 @@ const Footer = () => {
                     color: "#e0f2f1",
                   }}
                 >
-                  Privacy policy
+                  {t("privacypolicy")}
                 </span>
               </Typography>
             </Grid>
@@ -82,7 +84,7 @@ const Footer = () => {
               justifyContent="center"
             >
               <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
-                Ⓒ 2023 Job App
+                {t("copyright")}
               </Typography>
             </Grid>
           </Grid>

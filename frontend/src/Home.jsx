@@ -4,8 +4,10 @@ import { useState, useEffect, Fragment } from "react";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
@@ -155,7 +157,7 @@ const Home = () => {
                     maxHeight: "30px",
                   }}
                 >
-                  Active
+                  {t("active")}
                 </span>
               ) : (
                 <span
@@ -171,7 +173,7 @@ const Home = () => {
                     maxHeight: "30px",
                   }}
                 >
-                  Close
+                  {t("close")}
                 </span>
               )
             ) : (
@@ -207,10 +209,10 @@ const Home = () => {
               {jobData.PIT === "thandaTalks"
                 ? "Thanda Talks"
                 : jobData.PIT === "jobMarket"
-                  ? "Job Market"
-                  : jobData.PIT === "careerRelatedNews"
-                    ? "Career Related News"
-                    : ""}
+                ? "Job Market"
+                : jobData.PIT === "careerRelatedNews"
+                ? "Career Related News"
+                : ""}
             </span>
             {jobData.PIT === "thandaTalks" ? (
               <span
@@ -272,7 +274,7 @@ const Home = () => {
               paddingBottom: "10px",
             }}
           >
-            posted at: {replaceDate(String(jobData.PCT))}
+            {t("postedat")} {replaceDate(String(jobData.PCT))}
           </div>
           {/* Add more details as needed */}
         </div>
@@ -285,7 +287,7 @@ const Home = () => {
       const uploadInformationResult = await getUploadInformation();
       setInformationResult(uploadInformationResult);
     } catch (error) {
-      console.error("Error fetching upload information:", error);
+      console.error(t("errorfetching"), error);
     }
   };
 
@@ -353,9 +355,9 @@ const Home = () => {
               lineHeight: "110%",
             }}
           >
-            Your Hub for <br></br>
-            Information <br></br>
-            Exchange <br></br>
+            {t("yourhub")} <br></br>
+            {t("information")} <br></br>
+            {t("exchange")} <br></br>
           </div>
           <div
             style={{
@@ -385,7 +387,7 @@ const Home = () => {
                   fontFamily: "DM sans-serif",
                 }}
               >
-                Share your <br /> information
+                {t("shareyour")} <br /> {t("info")}
               </div>
               <button
                 onClick={movePostScreen}
@@ -398,7 +400,7 @@ const Home = () => {
                   marginRight: "3vw",
                 }}
               >
-                Share details
+                {t("sharedetails")}
               </button>
             </div>
           </div>
@@ -413,7 +415,7 @@ const Home = () => {
           marginLeft: "5vw",
         }}
       >
-        Recent post
+        {t("recentpost")}
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>
@@ -427,7 +429,7 @@ const Home = () => {
               onClick={handleShowMore}
               style={{ display: "block", margin: "auto" }}
             >
-              Show more
+              {t("showmore")}
             </button>
           )}
         </div>

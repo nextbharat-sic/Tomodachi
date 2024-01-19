@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 // import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import postInformation from "./clients/postinformation.js";
 import Box from "@mui/material/Grid";
+import { useTranslation } from "react-i18next";
 
 const CareerRelatedNews = () => {
+  const { t } = useTranslation();
   // const [imageFile, setImageFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const userID = useSelector((state) => state.userID);
@@ -50,7 +52,7 @@ const CareerRelatedNews = () => {
   const confirmUpload = (event) => {
     event.preventDefault();
 
-    const isConfirm = confirm("Are you sure you want to upload?");
+    const isConfirm = confirm(t("confirmupload"));
     if (isConfirm) {
       setIsLoading(true);
       uploadCareerRelatedNewsInfo();
@@ -87,14 +89,14 @@ const CareerRelatedNews = () => {
       if (response.status === "Success") {
         setIsLoading(false);
         homePageStatus();
-        alert("Upload information is completed!");
+        alert(t("uploadcompleted"));
       } else {
         setIsLoading(false);
-        alert("Upload information is failed!");
+        alert(t("uploadfailed"));
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Error uploading information:", error);
+      console.error(t("erroruploading"), error);
     }
   };
 
@@ -131,13 +133,13 @@ const CareerRelatedNews = () => {
       <div>
         <form onSubmit={confirmUpload}>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Title</label>
+            <label>{t("title")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
               type="text"
               name="title"
-              placeholder="Write title"
+              placeholder={t("writetitle")}
               value={careerRelatedNewsData.title}
               onChange={handleInputDataChange}
               style={{
@@ -152,13 +154,13 @@ const CareerRelatedNews = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Description</label>
+            <label>{t("description")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <textarea
               rows="8"
               name="description"
-              placeholder="Write description"
+              placeholder={t("writedescription")}
               value={careerRelatedNewsData.description}
               onChange={handleInputDataChange}
               style={{
@@ -189,7 +191,7 @@ const CareerRelatedNews = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? "Upload now..." : "Upload"}
+              {isLoading ? t("uploadnow") : t("upload")}
             </button>
           </Box>
         </form>

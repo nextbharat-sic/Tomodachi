@@ -4,14 +4,21 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { IoIosRefresh } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
   const headerHeight = "6vh";
 
+  const changeLanguage = (event) => {
+    const lng = event.target.value;
+    i18n.changeLanguage(lng);
+  };
+
   const confirmSignOut = () => {
-    const isConfirm = confirm("Are you sure you want to log out?");
+    const isConfirm = confirm(t("confirmlogout"));
     if (isConfirm) {
       signOut();
     }
@@ -22,7 +29,7 @@ const Header = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storeIsSignIn);
     dispatch(storePage);
-    alert("Log Out");
+    alert(t("logout"));
   };
 
   const moveLogInScreen = () => {
@@ -67,9 +74,12 @@ const Header = () => {
             >
               <img height="90%" src="/logowhite.png" />
             </div>
-            <span style={{ marginLeft: "4px", color: "#e0f2f1" }}>
-              Tomodachi
-            </span>
+            <div>
+              <select onChange={changeLanguage} value={i18n.language}>
+                <option value="en">{t("english")}</option>
+                <option value="te">{t("telugu")}</option>
+              </select>
+            </div>
           </Typography>
           <IoIosRefresh
             onClick={refreshHome}
@@ -84,7 +94,7 @@ const Header = () => {
                 backgroundColor: "#631ACF",
               }}
             >
-              Log Out
+              {t("logout")}
             </span>
           ) : (
             <span
@@ -95,7 +105,7 @@ const Header = () => {
               }}
               onClick={moveLogInScreen}
             >
-              Log In
+              {t("login")}
             </span>
           )}
         </Toolbar>

@@ -4,8 +4,10 @@ import Box from "@mui/material/Grid";
 import postUserInformation from "./clients/postuserinformation.js";
 import generateOtpCode from "./clients/generateotpcode.js";
 import Modal from "./component/Modal.jsx";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
+  const { t } = useTranslation();
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -51,13 +53,13 @@ const SignUp = () => {
       signUpStatus(result.userID);
     } else if (result.status == "UAN Existed") {
       setIsLoading(false);
-      alert("Account Name already Exists!");
+      alert(t("accountnameexist"));
     } else if (result.status == "UPN Existed") {
       setIsLoading(false);
-      alert("Phone Number already Exists!");
+      alert(t("phonenumberexist"));
     } else {
       setIsLoading(false);
-      alert("User Registration is Failed!");
+      alert(t("signupfailed"));
     }
   };
 
@@ -65,17 +67,17 @@ const SignUp = () => {
     const formatter = /^[0-9]{10}$/;
 
     if (accountName == "") {
-      alert("Input Account name!");
+      alert(t("inputaccountname"));
       return false;
     }
 
     if (!formatter.test(phoneNumber)) {
-      alert("Phone Number must be 10 digits!");
+      alert(t("phonenumber10digits"));
       return false;
     }
 
     if (privacyPolicyCheck != true) {
-      alert("You need to check privacy policy!");
+      alert(t("needtocheckprivacypolicy"));
       return false;
     }
     return true;
@@ -85,9 +87,9 @@ const SignUp = () => {
     <>
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <div>
-        <h2 style={{ textAlign: "center" }}>Sign Up</h2>
+        <h2 style={{ textAlign: "center" }}>{t("signup")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Account Name</label>
+          <label>{t("accountname")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -106,7 +108,7 @@ const SignUp = () => {
           </div>
         </Box>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Phone Number</label>
+          <label>{t("phonenumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -145,11 +147,11 @@ const SignUp = () => {
                 fontSize: "90%",
               }}
             >
-              I hereby accept terms and conditions &{" "}
+              {t("privacypolicysentence")}
               <span onClick={handleOpen} style={{ color: "blue" }}>
-                privacy policy
-              </span>{" "}
-              of the service
+                {t("privacypolicy")}
+              </span>
+              {t("oftheservice")}
             </div>
           </div>
         </div>
@@ -163,7 +165,7 @@ const SignUp = () => {
               color: "#e0f2f1",
             }}
           >
-            {isLoading ? "Create now..." : "Sign Up"}
+            {isLoading ? t("creatnow") : t("signup")}
           </button>
         </Box>
       </div>
