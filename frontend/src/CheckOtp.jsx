@@ -15,11 +15,15 @@ const CheckOtp = () => {
 
   const phoneNumber = useSelector((state) => state.phoneNumber);
   const accountName = useSelector((state) => state.accountName);
+  const privacyPolicyCheck = useSelector((state) => state.privacyPolicyCheck);
+  const clientPage = useSelector((state) => state.clientPage);
   const otpInformation = {
     userName: userName,
     phoneNumber: phoneNumber,
     otp: otp,
     accountName: accountName,
+    privacyPolicyCheck: true,
+    clientPage: clientPage,
   };
 
   const otpChecking = async () => {
