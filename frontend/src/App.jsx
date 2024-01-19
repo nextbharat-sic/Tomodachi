@@ -11,13 +11,19 @@ import "./App.css";
 import Box from "@mui/material/Grid";
 
 function App() {
-  const checkForUpdates = () => {
+  const checkForUpdates = async () => {
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.controller.postMessage({
-        type: "CHECK_FOR_UPDATES",
-      });
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        registration.active.postMessage({
+          type: "CHECK_FOR_UPDATES",
+        });
+      } catch (error) {
+        console.error("Error communicating with service worker:", error);
+      }
     }
   };
+
   checkForUpdates();
 
   const [isSignUp, setIsSignUp] = useState(false);
