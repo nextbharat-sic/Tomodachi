@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
 
@@ -8,7 +8,7 @@ const CheckOtp = () => {
   const [userName, setUserName] = useState("tentative");
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = React.useState("");
-
+  const dispatch = useDispatch();
   const handleChange = (newValue) => {
     setOtp(newValue);
   };
@@ -26,6 +26,11 @@ const CheckOtp = () => {
     clientPage: clientPage,
   };
 
+  const otpVerifiedStatus = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "OtpVerifiedPage" };
+    dispatch(storePage);
+  };
+
   const otpChecking = async () => {
     if (otp == "") {
       alert("Input OTP Code!");
@@ -34,7 +39,7 @@ const CheckOtp = () => {
     setIsLoading(true);
     const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
-      alert("User Registration is completed!");
+      otpVerifiedStatus();
     } else {
       alert("OTP entered is incorrect");
       setIsLoading(false);
@@ -59,12 +64,6 @@ const CheckOtp = () => {
         onChange={handleChange}
         gap="5px"
       />
-      <div style={{ marginLeft: "12vw", marginTop: "3vh" }}>
-        Don't receive OTP?{" "}
-        <a>
-          <u>Resend OTP</u>
-        </a>
-      </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <button
           onClick={otpChecking}
