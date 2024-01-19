@@ -68,7 +68,7 @@ const Header = () => {
               <img height="90%" src="/logowhite.png" />
             </div>
             <span style={{ marginLeft: "4px", color: "#e0f2f1" }}>
-              Tomodachi
+              Tomodachist
             </span>
           </Typography>
           <IoIosRefresh
