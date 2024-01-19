@@ -34,7 +34,7 @@ def lambda_handler(event, context):
                 "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
             },
             'body': json.dumps({
-                "status": "OTP code has not be generated",
+                "status": "OTP code has not been generated",
             })
         }
 
@@ -45,16 +45,16 @@ def lambda_handler(event, context):
             InvocationType='RequestResponse',
             Payload = json.dumps(body)
             )
-            body = json.loads(response['Payload'].read())
-            return body
+            signUpResponse = json.loads(response['Payload'].read())
+            return signUpResponse
         elif body['clientPage'] == "logIn":
             response = boto3.client('lambda').invoke(
             FunctionName = 'check_user_information',
             InvocationType='RequestResponse',
             Payload = json.dumps(body)
             )
-            body = json.loads(response['Payload'].read())
-            return body
+            logInResponse = json.loads(response['Payload'].read())
+            return logInResponse
         else:
             return {
             'statusCode': 200,
