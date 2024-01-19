@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import checkSignUpOtpCode from "./clients/checksignupotpcode.js";
+import checkOtpCode from "./clients/checkotpcode.js";
 
 const CheckOtp = () => {
   const [userName, setUserName] = useState("tentative");
@@ -33,7 +33,7 @@ const CheckOtp = () => {
       return false;
     }
     setIsLoading(true);
-    const result = await checkSignUpOtpCode(otpInformation);
+    const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
       otpVerifiedStatus();
     } else {
