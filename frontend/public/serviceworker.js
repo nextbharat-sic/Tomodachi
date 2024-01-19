@@ -1,4 +1,4 @@
-const cacheName = "tomodachi-cache-v1";
+const cacheName = "tomodachi-cache-v1.";
 
 // Processing during installation
 self.addEventListener("install", (event) => {
