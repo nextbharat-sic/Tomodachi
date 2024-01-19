@@ -4,7 +4,7 @@ const cacheName = "tomodachi-cache-v1";
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(cacheName).then((cache) => {
-      return cache.addAll(["/", "/index.html", "/version.json"]);
+      return cache.addAll(["/", "/index.html"]);
     }),
   );
 });
@@ -25,16 +25,19 @@ self.addEventListener("fetch", (event) => {
 
 self.addEventListener("activate", (event) => {
   event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames.map((name) => {
-          if (name !== cacheName) {
-            // Delete old caches when a new version is activated
-            return caches.delete(name);
-          }
-        }),
-      );
-    }),
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((name) => {
+            if (name !== cacheName) {
+              // Delete old caches when a new version is activated
+              return caches.delete(name);
+            }
+          }),
+        );
+      })
+      .then(() => self.clients.claim()),
   );
 });
 
