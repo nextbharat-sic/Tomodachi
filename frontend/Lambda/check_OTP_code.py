@@ -46,7 +46,39 @@ def lambda_handler(event, context):
             Payload = json.dumps(body)
             )
             signUpResponse = json.loads(response['Payload'].read())
-            return signUpResponse
+            if signUpResponse['statusCode'] == 200:
+                return {
+                    'statusCode': 200,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers" : "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    'body': json.dumps(signUpResponse['body'])
+                }
+            elif signUpResponse['statusCode'] == 500:
+                return {
+                    'statusCode': 500,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers" : "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    'body': json.dumps(signUpResponse['body'])
+                }
+            else:
+                return {
+                    'statusCode': 400,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers" : "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    'body': json.dumps({'status': 'Failed'})
+                }
         elif body['clientPage'] == "logIn":
             response = boto3.client('lambda').invoke(
             FunctionName = 'check_user_information',
@@ -54,18 +86,50 @@ def lambda_handler(event, context):
             Payload = json.dumps(body)
             )
             logInResponse = json.loads(response['Payload'].read())
-            return logInResponse
+            if logInResponse['statusCode'] == 200:
+                return {
+                    'statusCode': 200,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers" : "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    'body': json.dumps(logInResponse['body'])
+                }
+            elif logInResponse['statusCode'] == 500:
+                return {
+                    'statusCode': 500,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers" : "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    'body': json.dumps(logInResponse['body'])
+                }
+            else:
+                return {
+                    'statusCode': 400,
+                    'headers': {
+                        'Content-Type': 'application/json',
+                        "Access-Control-Allow-Headers" : "*",
+                        "Access-Control-Allow-Origin": "*",
+                        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                    },
+                    'body': json.dumps({'status': 'Failed'})
+                }
         else:
             return {
-            'statusCode': 200,
-            'headers': {
+                'statusCode': 200,
+                'headers': {
                     'Content-Type': 'application/json',
                     "Access-Control-Allow-Headers" : "*",
                     "Access-Control-Allow-Origin": "*",
                     "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
                 },
-            'body': json.dumps({"status": "Request from wrong page"})
-        }
+                'body': json.dumps({'status': 'Request from wrong page',})
+            }
     else:
         return {
             'statusCode': 200,
