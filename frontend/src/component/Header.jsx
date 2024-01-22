@@ -75,7 +75,17 @@ const Header = () => {
               <img height="90%" src="/logowhite.png" />
             </div>
             <div>
-              <select onChange={changeLanguage} value={i18n.language}>
+              <select
+                onChange={changeLanguage}
+                value={i18n.language}
+                style={{
+                  marginLeft: "4vw",
+                  color: "#e0f2f1",
+                  backgroundColor: "#631ACF",
+                  border: "none",
+                  fontSize: "4vw",
+                }}
+              >
                 <option value="en">{t("english")}</option>
                 <option value="te">{t("telugu")}</option>
               </select>
