@@ -28,7 +28,9 @@ const CheckOtp = () => {
 
   const otpVerifiedStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "OtpVerifiedPage" };
+    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     dispatch(storePage);
+    dispatch(storeIsSignIn);
   };
 
   const otpChecking = async () => {
