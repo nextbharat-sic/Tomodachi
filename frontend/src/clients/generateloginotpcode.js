@@ -1,12 +1,17 @@
 import axios from "axios";
 
-export default async function checkOtpCode(otp) {
-  const checkOTPURL = import.meta.env.VITE_APP_CHECK_OTP_CODE;
+export default async function generateLogInOtpCode(userInformation) {
+  const postGenerateLogInOTPURL = import.meta.env
+    .VITE_APP_GENERATE_LOG_IN_OTP_CODE;
   const header = { "Content-Type": "application/json" };
   try {
-    const response = await axios.post(checkOTPURL, otp, {
-      headers: header,
-    });
+    const response = await axios.post(
+      postGenerateLogInOTPURL,
+      userInformation,
+      {
+        headers: header,
+      },
+    );
     // return response.data;
 
     // Just testing. After creating check_OTP lambda, delete below line

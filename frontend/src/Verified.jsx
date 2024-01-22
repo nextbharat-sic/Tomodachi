@@ -1,12 +1,18 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Grid";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 
 const Verified = () => {
   const dispatch = useDispatch();
+  const nextAction = useSelector((state) => state.nextAction);
 
   const doneVerfied = () => {
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    let storePage = "";
+    if (nextAction == "PostInformation") {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
+    } else {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    }
     dispatch(storePage);
   };
 
