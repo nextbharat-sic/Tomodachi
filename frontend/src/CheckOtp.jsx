@@ -22,7 +22,7 @@ const CheckOtp = () => {
     phoneNumber: phoneNumber,
     otp: otp,
     accountName: accountName,
-    privacyPolicyCheck: true,
+    privacyPolicyCheck: privacyPolicyCheck,
     clientPage: clientPage,
   };
 
