@@ -54,7 +54,7 @@ const ThandaTalks = () => {
   const confirmUpload = (event) => {
     event.preventDefault();
 
-    const isConfirm = confirm(t("confirmupload"));
+    const isConfirm = confirm(t("confirmUpload"));
     if (isConfirm) {
       setIsLoading(true);
       uploadThandaTalksInfo();
@@ -91,14 +91,14 @@ const ThandaTalks = () => {
       if (response.status === "Success") {
         setIsLoading(false);
         homePageStatus();
-        alert(t("uploadcompleted"));
+        alert(t("uploadCompleted"));
       } else {
         setIsLoading(false);
-        alert(t("uploadfailed"));
+        alert(t("uploadFailed"));
       }
     } catch (error) {
       setIsLoading(false);
-      console.error(t("erroruploading"), error);
+      console.error(t("errorUploading"), error);
     }
   };
 
@@ -135,7 +135,7 @@ const ThandaTalks = () => {
       <div>
         <form onSubmit={confirmUpload}>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>{t("forwhichthanda")}</label>
+            <label>{t("forWhichThanda")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <select
@@ -159,7 +159,7 @@ const ThandaTalks = () => {
             <input
               type="text"
               name="title"
-              placeholder={t("writetitle")}
+              placeholder={t("writeTitle")}
               value={thandaTalksData.title}
               onChange={handleInputDataChange}
               style={{
@@ -180,7 +180,7 @@ const ThandaTalks = () => {
             <textarea
               rows="8"
               name="description"
-              placeholder={t("writedescription")}
+              placeholder={t("writeDescription")}
               value={thandaTalksData.description}
               onChange={handleInputDataChange}
               style={{
@@ -211,7 +211,7 @@ const ThandaTalks = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? t("uploadnow") : t("upload")}
+              {isLoading ? t("uploadNow") : t("upload")}
             </button>
           </Box>
         </form>

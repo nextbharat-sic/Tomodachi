@@ -274,7 +274,7 @@ const Home = () => {
               paddingBottom: "10px",
             }}
           >
-            {t("postedat")} {replaceDate(String(jobData.PCT))}
+            {t("postedAt")} {replaceDate(String(jobData.PCT))}
           </div>
           {/* Add more details as needed */}
         </div>
@@ -287,7 +287,7 @@ const Home = () => {
       const uploadInformationResult = await getUploadInformation();
       setInformationResult(uploadInformationResult);
     } catch (error) {
-      console.error(t("errorfetching"), error);
+      console.error(t("errorFetching"), error);
     }
   };
 
@@ -355,7 +355,7 @@ const Home = () => {
               lineHeight: "110%",
             }}
           >
-            {t("yourhub")} <br></br>
+            {t("yourHub")} <br></br>
             {t("information")} <br></br>
             {t("exchange")} <br></br>
           </div>
@@ -387,7 +387,7 @@ const Home = () => {
                   fontFamily: "DM sans-serif",
                 }}
               >
-                {t("shareyour")} <br /> {t("info")}
+                {t("shareYour")} <br /> {t("info")}
               </div>
               <button
                 onClick={movePostScreen}
@@ -400,7 +400,7 @@ const Home = () => {
                   marginRight: "3vw",
                 }}
               >
-                {t("sharedetails")}
+                {t("shareDetails")}
               </button>
             </div>
           </div>
@@ -415,7 +415,7 @@ const Home = () => {
           marginLeft: "5vw",
         }}
       >
-        {t("recentpost")}
+        {t("recentPost")}
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>
@@ -429,7 +429,7 @@ const Home = () => {
               onClick={handleShowMore}
               style={{ display: "block", margin: "auto" }}
             >
-              {t("showmore")}
+              {t("showMore")}
             </button>
           )}
         </div>

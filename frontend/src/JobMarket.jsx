@@ -61,9 +61,9 @@ const JobMarket = () => {
     event.preventDefault();
     const deadlineValidation = checkDeadlineDate();
     if (!deadlineValidation) {
-      alert(t("deadlinedatepassed"));
+      alert(t("deadlineDatePassed"));
     } else {
-      const isConfirm = confirm(t("confirmupload"));
+      const isConfirm = confirm(t("confirmUpload"));
       if (isConfirm) {
         setIsLoading(true);
         uploadJobMarketInfo();
@@ -108,14 +108,14 @@ const JobMarket = () => {
       if (response.status === "Success") {
         setIsLoading(false);
         homePageStatus();
-        alert(t("uploadcompleted"));
+        alert(t("uploadCompleted"));
       } else {
         setIsLoading(false);
-        alert(t("uploadfailed"));
+        alert(t("uploadFailed"));
       }
     } catch (error) {
       setIsLoading(false);
-      console.error(t("erroruploading"), error);
+      console.error(t("errorUploading"), error);
     }
   };
 
@@ -158,7 +158,7 @@ const JobMarket = () => {
             <input
               type="text"
               name="title"
-              placeholder={t("writetitle")}
+              placeholder={t("writeTitle")}
               value={jobMarketData.title}
               onChange={handleInputDataChange}
               style={{
@@ -173,7 +173,7 @@ const JobMarket = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>{t("deadlinedate")}</label>
+            <label>{t("deadlineDate")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
@@ -193,7 +193,7 @@ const JobMarket = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>{t("modeofjob")}</label>
+            <label>{t("modeOfJob")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <select
@@ -219,7 +219,7 @@ const JobMarket = () => {
             <textarea
               rows="8"
               name="description"
-              placeholder={t("writedescription")}
+              placeholder={t("writeDescription")}
               value={jobMarketData.description}
               onChange={handleInputDataChange}
               style={{
@@ -250,7 +250,7 @@ const JobMarket = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? t("uploadnow") : t("upload")}
+              {isLoading ? t("uploadNow") : t("upload")}
             </button>
           </Box>
         </form>

@@ -18,7 +18,7 @@ const Header = () => {
   };
 
   const confirmSignOut = () => {
-    const isConfirm = confirm(t("confirmlogout"));
+    const isConfirm = confirm(t("confirmLogOut"));
     if (isConfirm) {
       signOut();
     }
@@ -29,7 +29,7 @@ const Header = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storeIsSignIn);
     dispatch(storePage);
-    alert(t("logout"));
+    alert(t("logOut"));
   };
 
   const moveLogInScreen = () => {
@@ -104,7 +104,7 @@ const Header = () => {
                 backgroundColor: "#631ACF",
               }}
             >
-              {t("logout")}
+              {t("logOut")}
             </span>
           ) : (
             <span
@@ -115,7 +115,7 @@ const Header = () => {
               }}
               onClick={moveLogInScreen}
             >
-              {t("login")}
+              {t("logIn")}
             </span>
           )}
         </Toolbar>

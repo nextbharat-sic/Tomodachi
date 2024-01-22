@@ -52,7 +52,7 @@ const CareerRelatedNews = () => {
   const confirmUpload = (event) => {
     event.preventDefault();
 
-    const isConfirm = confirm(t("confirmupload"));
+    const isConfirm = confirm(t("confirmUpload"));
     if (isConfirm) {
       setIsLoading(true);
       uploadCareerRelatedNewsInfo();
@@ -89,14 +89,14 @@ const CareerRelatedNews = () => {
       if (response.status === "Success") {
         setIsLoading(false);
         homePageStatus();
-        alert(t("uploadcompleted"));
+        alert(t("uploadCompleted"));
       } else {
         setIsLoading(false);
-        alert(t("uploadfailed"));
+        alert(t("uploadFailed"));
       }
     } catch (error) {
       setIsLoading(false);
-      console.error(t("erroruploading"), error);
+      console.error(t("errorUploading"), error);
     }
   };
 
@@ -139,7 +139,7 @@ const CareerRelatedNews = () => {
             <input
               type="text"
               name="title"
-              placeholder={t("writetitle")}
+              placeholder={t("writeTitle")}
               value={careerRelatedNewsData.title}
               onChange={handleInputDataChange}
               style={{
@@ -160,7 +160,7 @@ const CareerRelatedNews = () => {
             <textarea
               rows="8"
               name="description"
-              placeholder={t("writedescription")}
+              placeholder={t("writeDescription")}
               value={careerRelatedNewsData.description}
               onChange={handleInputDataChange}
               style={{
@@ -191,7 +191,7 @@ const CareerRelatedNews = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? t("uploadnow") : t("upload")}
+              {isLoading ? t("uploadNow") : t("upload")}
             </button>
           </Box>
         </form>

@@ -17,7 +17,7 @@ const SelectCategory = () => {
   return (
     <>
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("informationdetails")}</h2>
+        <h2 style={{ textAlign: "center" }}>{t("informationDetails")}</h2>
 
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("category")}</label>
@@ -34,10 +34,10 @@ const SelectCategory = () => {
               borderRadius: "10px",
             }}
           >
-            <option value="">{t("selectcategory")}</option>
-            <option value="jobMarket">{t("jobmarket")}</option>
-            <option value="careerRelatedNews">{t("careerrelatednews")}</option>
-            <option value="thandaTalks">{t("thandatalks")}</option>
+            <option value="">{t("selectCategory")}</option>
+            <option value="jobMarket">{t("jobMarket")}</option>
+            <option value="careerRelatedNews">{t("careerRelatedNews")}</option>
+            <option value="thandaTalks">{t("thandaTalks")}</option>
           </select>
         </Box>
         {category == "jobMarket" ? <JobMarket /> : ""}

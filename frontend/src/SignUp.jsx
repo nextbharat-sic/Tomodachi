@@ -53,13 +53,13 @@ const SignUp = () => {
       signUpStatus(result.userID);
     } else if (result.status == "UAN Existed") {
       setIsLoading(false);
-      alert(t("accountnameexist"));
+      alert(t("accountNameExist"));
     } else if (result.status == "UPN Existed") {
       setIsLoading(false);
-      alert(t("phonenumberexist"));
+      alert(t("phoneNumberExist"));
     } else {
       setIsLoading(false);
-      alert(t("signupfailed"));
+      alert(t("signUpFailed"));
     }
   };
 
@@ -67,17 +67,17 @@ const SignUp = () => {
     const formatter = /^[0-9]{10}$/;
 
     if (accountName == "") {
-      alert(t("inputaccountname"));
+      alert(t("inputAccountName"));
       return false;
     }
 
     if (!formatter.test(phoneNumber)) {
-      alert(t("phonenumber10digits"));
+      alert(t("phoneNumberDigits"));
       return false;
     }
 
     if (privacyPolicyCheck != true) {
-      alert(t("needtocheckprivacypolicy"));
+      alert(t("needToCheckPrivacyPolicy"));
       return false;
     }
     return true;
@@ -87,9 +87,9 @@ const SignUp = () => {
     <>
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("signup")}</h2>
+        <h2 style={{ textAlign: "center" }}>{t("signUp")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("accountname")}</label>
+          <label>{t("accountName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -108,7 +108,7 @@ const SignUp = () => {
           </div>
         </Box>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("phonenumber")}</label>
+          <label>{t("phoneNumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -147,11 +147,11 @@ const SignUp = () => {
                 fontSize: "90%",
               }}
             >
-              {t("privacypolicysentence")}
+              {t("privacyPolicySentence")}
               <span onClick={handleOpen} style={{ color: "blue" }}>
-                {t("privacypolicy")}
+                {t("privacyPolicy")}
               </span>
-              {t("oftheservice")}
+              {t("ofTheService")}
             </div>
           </div>
         </div>
@@ -165,7 +165,7 @@ const SignUp = () => {
               color: "#e0f2f1",
             }}
           >
-            {isLoading ? t("creatnow") : t("signup")}
+            {isLoading ? t("createNow") : t("signUp")}
           </button>
         </Box>
       </div>

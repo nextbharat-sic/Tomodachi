@@ -26,15 +26,15 @@ const CheckOtp = () => {
 
   const otpChecking = async () => {
     if (otp == "") {
-      alert(t("inputotpcode"));
+      alert(t("inputOtpCode"));
       return false;
     }
     setIsLoading(true);
     const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
-      alert(t("signupcompleted"));
+      alert(t("signUpCompleted"));
     } else {
-      alert(t("otpisincorrect"));
+      alert(t("otpIsIncorrect"));
       setIsLoading(false);
     }
   };
@@ -43,7 +43,7 @@ const CheckOtp = () => {
     <>
       <h2 style={{ textAlign: "center" }}>{t("verification")}</h2>
       <div style={{ textAlign: "center" }}>
-        {t("enterverificationcode")} <br /> {t("to91")}
+        {t("enterVerificationCode")} <br /> {t("toPhoneNumber")}
         {phoneNumber}
       </div>
       <MuiOtpInput
@@ -59,9 +59,9 @@ const CheckOtp = () => {
         gap="5px"
       />
       <div style={{ marginLeft: "12vw", marginTop: "3vh" }}>
-        {t("dontreceiveotp")}
+        {t("dontReceiveOtp")}
         <a>
-          <u>{t("resendotp")}</u>
+          <u>{t("resendOtp")}</u>
         </a>
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">

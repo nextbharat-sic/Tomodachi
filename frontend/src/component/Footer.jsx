@@ -71,7 +71,7 @@ const Footer = () => {
                     color: "#e0f2f1",
                   }}
                 >
-                  {t("privacypolicy")}
+                  {t("privacyPolicy")}
                 </span>
               </Typography>
             </Grid>

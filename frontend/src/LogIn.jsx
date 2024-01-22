@@ -51,19 +51,19 @@ const LogIn = () => {
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
-      alert(t("accountnameorphnoisincorrect"));
+      alert(t("accountNameOrPhNoIsIncorrect"));
     } else {
       setIsLoading(false);
-      alert(t("tryagain"));
+      alert(t("tryAgain"));
     }
   };
 
   return (
     <>
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("login")}</h2>
+        <h2 style={{ textAlign: "center" }}>{t("logIn")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("accountname")}</label>
+          <label>{t("accountName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -83,7 +83,7 @@ const LogIn = () => {
           </div>
         </Box>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("phonenumber")}</label>
+          <label>{t("phoneNumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -112,7 +112,7 @@ const LogIn = () => {
               color: "#e0f2f1",
             }}
           >
-            {isLoading ? t("loginnow") : t("login")}
+            {isLoading ? t("loginNow") : t("logIn")}
           </button>
         </Box>
         <div
@@ -122,9 +122,9 @@ const LogIn = () => {
             alignItems: "center",
           }}
         >
-          <label style={{ marginRight: "5px" }}>{t("donthaveanaccount")}</label>
+          <label style={{ marginRight: "5px" }}>{t("dontHaveAnAccount")}</label>
           <Link underline="none" onClick={moveSignUpScreen}>
-            {t("signup")}
+            {t("signUp")}
           </Link>
         </div>
       </div>
