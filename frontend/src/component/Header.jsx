@@ -1,5 +1,4 @@
 import { useSelector, useDispatch } from "react-redux";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -86,8 +85,8 @@ const Header = () => {
                   fontSize: "4vw",
                 }}
               >
-                <option value="en">{t("english")}</option>
-                <option value="te">{t("telugu")}</option>
+                <option value="en">English</option>
+                <option value="te">తెలుగ</option>
               </select>
             </div>
           </Typography>
