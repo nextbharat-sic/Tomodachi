@@ -3,8 +3,10 @@ import { useSelector, useDispatch } from "react-redux";
 // import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
 import postInformation from "./clients/postinformation.js";
 import Box from "@mui/material/Grid";
+import { useTranslation } from "react-i18next";
 
 const JobMarket = () => {
+  const { t } = useTranslation();
   // const [imageFile, setImageFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const userID = useSelector((state) => state.userID);
@@ -59,9 +61,9 @@ const JobMarket = () => {
     event.preventDefault();
     const deadlineValidation = checkDeadlineDate();
     if (!deadlineValidation) {
-      alert("Deadline date has passed");
+      alert(t("deadlineDatePassed"));
     } else {
-      const isConfirm = confirm("Are you sure you want to upload?");
+      const isConfirm = confirm(t("confirmUpload"));
       if (isConfirm) {
         setIsLoading(true);
         uploadJobMarketInfo();
@@ -106,14 +108,14 @@ const JobMarket = () => {
       if (response.status === "Success") {
         setIsLoading(false);
         homePageStatus();
-        alert("Upload information is completed!");
+        alert(t("uploadCompleted"));
       } else {
         setIsLoading(false);
-        alert("Upload information is failed!");
+        alert(t("uploadFailed"));
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Error uploading information:", error);
+      console.error(t("errorUploading"), error);
     }
   };
 
@@ -150,13 +152,13 @@ const JobMarket = () => {
       <div>
         <form onSubmit={confirmUpload}>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Title</label>
+            <label>{t("title")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
               type="text"
               name="title"
-              placeholder="Write title"
+              placeholder={t("writeTitle")}
               value={jobMarketData.title}
               onChange={handleInputDataChange}
               style={{
@@ -171,7 +173,7 @@ const JobMarket = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Deadline Date</label>
+            <label>{t("deadlineDate")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
@@ -191,7 +193,7 @@ const JobMarket = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Mode of Job</label>
+            <label>{t("modeOfJob")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <select
@@ -205,19 +207,19 @@ const JobMarket = () => {
                 borderRadius: "10px",
               }}
             >
-              <option value="indoor">Indoor Work</option>
-              <option value="outdoor">Outdoor Work</option>
+              <option value="indoor">{t("indoor")}</option>
+              <option value="outdoor">{t("outdoor")}</option>
             </select>
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Description</label>
+            <label>{t("description")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <textarea
               rows="8"
               name="description"
-              placeholder="Write description"
+              placeholder={t("writeDescription")}
               value={jobMarketData.description}
               onChange={handleInputDataChange}
               style={{
@@ -248,7 +250,7 @@ const JobMarket = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? "Upload now..." : "Upload"}
+              {isLoading ? t("uploadNow") : t("upload")}
             </button>
           </Box>
         </form>

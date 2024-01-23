@@ -3,8 +3,10 @@ import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
 import generateLogInOtpCode from "./clients/generateloginotpcode.js";
 import Box from "@mui/material/Grid";
+import { useTranslation } from "react-i18next";
 
 const LogIn = () => {
+  const { t } = useTranslation();
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -38,19 +40,19 @@ const LogIn = () => {
       logInStatus();
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
-      alert("Account name or phone number is incorrect!");
+      alert(t("accountNameOrPhNoIsIncorrect"));
     } else {
       setIsLoading(false);
-      alert("Please Try Again!");
+      alert(t("tryAgain"));
     }
   };
 
   return (
     <>
       <div>
-        <h2 style={{ textAlign: "center" }}>Log In</h2>
+        <h2 style={{ textAlign: "center" }}>{t("logIn")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Account Name</label>
+          <label>{t("accountName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -70,7 +72,7 @@ const LogIn = () => {
           </div>
         </Box>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Phone Number</label>
+          <label>{t("phoneNumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -99,7 +101,7 @@ const LogIn = () => {
               color: "#e0f2f1",
             }}
           >
-            {isLoading ? "Log in now..." : "Log In"}
+            {isLoading ? t("loginNow") : t("logIn")}
           </button>
         </Box>
         <div
@@ -109,9 +111,9 @@ const LogIn = () => {
             alignItems: "center",
           }}
         >
-          <label style={{ marginRight: "5px" }}>Don't have an account?</label>
+          <label style={{ marginRight: "5px" }}>{t("dontHaveAnAccount")}</label>
           <Link underline="none" onClick={moveSignUpScreen}>
-            Sign up
+            {t("signUp")}
           </Link>
         </div>
       </div>
