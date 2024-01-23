@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
-import checkLoginInformation from "./clients/checklogininformation.js";
+import generateLogInOtpCode from "./clients/generateloginotpcode.js";
 import Box from "@mui/material/Grid";
 import { useTranslation } from "react-i18next";
 
@@ -10,25 +10,14 @@ const LogIn = () => {
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const nextAction = useSelector((state) => state.nextAction);
   const dispatch = useDispatch();
 
-  const logInStatus = (userID) => {
-    let storePage = "";
-    if (nextAction == "PostInformation") {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
-    } else {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
-    }
-
-    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
-    const storeUserID = { type: "SET_USER_ID", payload: userID };
+  const logInStatus = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
 
     dispatch(storePage);
-    dispatch(storeIsSignIn);
-    dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
   };
@@ -45,10 +34,10 @@ const LogIn = () => {
       phoneNumber: phoneNumber,
     };
 
-    const result = await checkLoginInformation(logInInformation);
-    if (result.status == "Match") {
+    const result = await generateLogInOtpCode(logInInformation);
+    if (result.status == "Success") {
       setIsLoading(false);
-      logInStatus(result.userID);
+      logInStatus();
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
       alert(t("accountNameOrPhNoIsIncorrect"));

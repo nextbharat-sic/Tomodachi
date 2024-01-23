@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
 import { useTranslation } from "react-i18next";
@@ -10,18 +10,29 @@ const CheckOtp = () => {
   const [userName, setUserName] = useState("tentative");
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = React.useState("");
-
+  const dispatch = useDispatch();
   const handleChange = (newValue) => {
     setOtp(newValue);
   };
 
   const phoneNumber = useSelector((state) => state.phoneNumber);
   const accountName = useSelector((state) => state.accountName);
+  const privacyPolicyCheck = useSelector((state) => state.privacyPolicyCheck);
+  const clientPage = useSelector((state) => state.clientPage);
   const otpInformation = {
     userName: userName,
     phoneNumber: phoneNumber,
     otp: otp,
     accountName: accountName,
+    privacyPolicyCheck: privacyPolicyCheck,
+    clientPage: clientPage,
+  };
+
+  const otpVerifiedStatus = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "OtpVerifiedPage" };
+    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
+    dispatch(storePage);
+    dispatch(storeIsSignIn);
   };
 
   const otpChecking = async () => {
@@ -32,7 +43,7 @@ const CheckOtp = () => {
     setIsLoading(true);
     const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
-      alert(t("signUpCompleted"));
+      otpVerifiedStatus();
     } else {
       alert(t("otpIsIncorrect"));
       setIsLoading(false);
@@ -58,12 +69,7 @@ const CheckOtp = () => {
         onChange={handleChange}
         gap="5px"
       />
-      <div style={{ marginLeft: "12vw", marginTop: "3vh" }}>
-        {t("dontReceiveOtp")}
-        <a>
-          <u>{t("resendOtp")}</u>
-        </a>
-      </div>
+
       <Box display="flex" justifyContent="center" alignItems="center">
         <button
           onClick={otpChecking}

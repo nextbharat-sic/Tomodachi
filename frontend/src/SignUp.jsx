@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import postUserInformation from "./clients/postuserinformation.js";
-import generateOtpCode from "./clients/generateotpcode.js";
+import generateSignUpOtpCode from "./clients/generatesignupotpcode.js";
 import Modal from "./component/Modal.jsx";
 import { useTranslation } from "react-i18next";
 
@@ -28,10 +27,15 @@ const SignUp = () => {
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
+    const storePrivacyPolicyCheck = {
+      type: "SET_PRIVACY_POLICY_CHECK",
+      payload: privacyPolicyCheck,
+    };
     dispatch(storePage);
     dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
+    dispatch(storePrivacyPolicyCheck);
   };
 
   const createUser = async () => {
@@ -41,13 +45,16 @@ const SignUp = () => {
       return;
     }
 
+    const storeClientPage = { type: "SET_CLIENT_PAGE", payload: "signUp" };
+    dispatch(storeClientPage);
+
     const userInformation = {
       accountName: accountName,
       phoneNumber: phoneNumber,
       privacyPolicyCheck: privacyPolicyCheck,
     };
 
-    const result = await generateOtpCode(userInformation);
+    const result = await generateSignUpOtpCode(userInformation);
     if (result.status == "Success") {
       setIsLoading(false);
       signUpStatus(result.userID);

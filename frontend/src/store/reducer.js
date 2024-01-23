@@ -5,6 +5,8 @@ const initialState = {
   userID: "",
   accountName: "",
   phoneNumber: "",
+  privacyPolicyCheck: false,
+  clientPage: "",
 };
 
 const rootReducer = (state = initialState, action) => {
@@ -26,6 +28,12 @@ const rootReducer = (state = initialState, action) => {
 
     case "SET_PHONE_NUMBER":
       return { ...state, phoneNumber: action.payload };
+
+    case "SET_PRIVACY_POLICY_CHECK":
+      return { ...state, privacyPolicyCheck: action.payload };
+
+    case "SET_CLIENT_PAGE":
+      return { ...state, clientPage: action.payload };
 
     default:
       return state;
