@@ -9,8 +9,8 @@ import store from "./store";
 import { initReactI18next } from "react-i18next";
 import i18n from "i18next";
 // Import translations
-import enTranslation from "./locales/en/translation.json";
-import teTranslation from "./locales/te/translation.json";
+import enTranslation from "./locales/entranslation.json";
+import teTranslation from "./locales/tetranslation.json";
 
 // Initialize i18next
 i18n
