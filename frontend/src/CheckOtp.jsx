@@ -15,16 +15,22 @@ const CheckOtp = () => {
 
   const phoneNumber = useSelector((state) => state.phoneNumber);
   const accountName = useSelector((state) => state.accountName);
+  const privacyPolicyCheck = useSelector((state) => state.privacyPolicyCheck);
+  const clientPage = useSelector((state) => state.clientPage);
   const otpInformation = {
     userName: userName,
     phoneNumber: phoneNumber,
     otp: otp,
     accountName: accountName,
+    privacyPolicyCheck: privacyPolicyCheck,
+    clientPage: clientPage,
   };
 
   const otpVerifiedStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "OtpVerifiedPage" };
+    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
     dispatch(storePage);
+    dispatch(storeIsSignIn);
   };
 
   const otpChecking = async () => {

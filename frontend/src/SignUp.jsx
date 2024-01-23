@@ -25,10 +25,15 @@ const SignUp = () => {
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
+    const storePrivacyPolicyCheck = {
+      type: "SET_PRIVACY_POLICY_CHECK",
+      payload: privacyPolicyCheck,
+    };
     dispatch(storePage);
     dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
+    dispatch(storePrivacyPolicyCheck);
   };
 
   const createUser = async () => {
@@ -37,6 +42,9 @@ const SignUp = () => {
       setIsLoading(false);
       return;
     }
+
+    const storeClientPage = { type: "SET_CLIENT_PAGE", payload: "signUp" };
+    dispatch(storeClientPage);
 
     const userInformation = {
       accountName: accountName,
