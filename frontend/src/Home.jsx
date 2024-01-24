@@ -3,7 +3,7 @@ import { useState, useEffect, Fragment } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
-import homeImage from "./assets/home_img.png";
+import homeImage from "./assets/home_img.jpeg";
 import { useTranslation } from "react-i18next";
 
 const Home = () => {
