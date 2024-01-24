@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
 
 const CheckOtp = () => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const [userName, setUserName] = useState("tentative");
   const [isLoading, setIsLoading] = useState(false);
   const [otp, setOtp] = React.useState("");
@@ -25,6 +26,26 @@ const CheckOtp = () => {
     privacyPolicyCheck: privacyPolicyCheck,
     clientPage: clientPage,
   };
+
+  useEffect(() => {
+    const darkModeMediaQuery = window.matchMedia(
+      "(prefers-color-scheme: dark)",
+    );
+    setIsDarkMode(darkModeMediaQuery.matches);
+
+    // Event listener for changes in dark mode preference
+    const handleDarkModeChange = (event) => {
+      setIsDarkMode(event.matches);
+    };
+
+    // Attach the event listener
+    darkModeMediaQuery.addEventListener("change", handleDarkModeChange);
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      darkModeMediaQuery.removeEventListener("change", handleDarkModeChange);
+    };
+  }, []);
 
   const otpVerifiedStatus = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "OtpVerifiedPage" };
@@ -59,8 +80,16 @@ const CheckOtp = () => {
           marginTop: "5vh",
           width: "76vw",
           marginLeft: "12vw",
+          backgroundColor: isDarkMode ? "#333" : "white",
         }}
-        TextFieldsProps={{ size: "small" }}
+        TextFieldsProps={{
+          size: "small",
+          inputProps: {
+            style: {
+              color: isDarkMode ? "white" : "black",
+            },
+          },
+        }}
         length={6}
         value={otp}
         onChange={handleChange}
