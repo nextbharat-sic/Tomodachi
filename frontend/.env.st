@@ -3,6 +3,6 @@ VITE_APP_POST_USER_INFO = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.c
 VITE_APP_GET_UPLOAD_INFO = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/get-uploadinformation"
 VITE_APP_POST_INFO = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/uploadinformation"
 VITE_APP_CHECK_LOG_IN = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/checkLogIn"
-VITE_APP_GENERATE_OTP_CODE = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/generate_OTP_code"
+VITE_APP_GENERATE_SIGN_UP_OTP_CODE = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/generatesignupOTPcode"
 VITE_APP_CHECK_OTP_CODE = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/check_OTP_code"
 VITE_APP_GENERATE_LOG_IN_OTP_CODE="https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/generate_log_in_OTP_code"

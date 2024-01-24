@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default async function generateSignUpOtpCode(userInformation) {
-  const postGenerateOTPURL = import.meta.env.VITE_APP_GENERATE_OTP_CODE;
+  const postGenerateOTPURL = import.meta.env.VITE_APP_GENERATE_SIGN_UP_OTP_CODE;
   const header = { "Content-Type": "application/json" };
   try {
     const response = await axios.post(postGenerateOTPURL, userInformation, {
