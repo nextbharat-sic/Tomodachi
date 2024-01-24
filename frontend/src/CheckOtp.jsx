@@ -86,10 +86,13 @@ const CheckOtp = () => {
           backgroundColor: isDarkMode ? "#333" : "white",
         }}
         TextFieldsProps={{
-          size: "small",
           inputProps: {
             style: {
               color: isDarkMode ? "white" : "black",
+              padding: "1vh 0",
+              border: "solid 0.5px",
+              borderRadius: "5px",
+              borderColor: isDarkMode ? "white" : "black",
             },
           },
         }}
