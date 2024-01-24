@@ -44,7 +44,7 @@ function App() {
     <>
       <Box diplay="flex" flexDirection="column">
         {pageStatus == "HomePage" ? (
-          <Box height={Header.headerHeight}>
+          <Box>
             <Header />
           </Box>
         ) : (
@@ -67,7 +67,7 @@ function App() {
           {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
         </Box>
         {pageStatus != "CheckOtpPage" && pageStatus != "OtpVerifiedPage" ? (
-          <Box height={Footer.footerHeight}>
+          <Box>
             <Footer />
           </Box>
         ) : (

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
 import { useTranslation } from "react-i18next";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const CheckOtp = () => {
   const { t } = useTranslation();
@@ -71,9 +72,41 @@ const CheckOtp = () => {
     }
   };
 
+  const backPage = () => {
+    if (clientPage === "signUp") {
+      const storePage = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
+      dispatch(storePage);
+    }
+    if (clientPage === "logIn") {
+      const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+      dispatch(storePage);
+    }
+  };
+
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>{t("verification")}</h2>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <ArrowBackIcon
+          onClick={backPage}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "2vw",
+            width: "10vw",
+          }}
+        />
+        <h2 style={{ textAlign: "center" }}>{t("verification")}</h2>
+        <div
+          style={{
+            marginRight: "2vw",
+            width: "10vw",
+          }}
+        />
+      </div>
       <div style={{ textAlign: "center" }}>
         {t("enterVerificationCode")} <br /> {t("toPhoneNumber")}
         {phoneNumber}
