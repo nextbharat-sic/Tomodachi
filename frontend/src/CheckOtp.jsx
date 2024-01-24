@@ -99,7 +99,9 @@ const CheckOtp = () => {
             width: "10vw",
           }}
         />
-        <h2 style={{ textAlign: "center" }}>{t("verification")}</h2>
+        <h2 style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {t("verification")}
+        </h2>
         <div
           style={{
             marginRight: "2vw",
