@@ -217,10 +217,10 @@ const Home = () => {
               {jobData.PIT === "thandaTalks"
                 ? "Thanda Talks"
                 : jobData.PIT === "jobMarket"
-                ? "Job Market"
-                : jobData.PIT === "careerRelatedNews"
-                ? "Career Related News"
-                : ""}
+                  ? "Job Market"
+                  : jobData.PIT === "careerRelatedNews"
+                    ? "Career Related News"
+                    : ""}
             </span>
             {jobData.PIT === "thandaTalks" ? (
               <span

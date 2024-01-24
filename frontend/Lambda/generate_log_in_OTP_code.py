@@ -1,25 +1,27 @@
-import boto3
 import json
+import boto3
 import os
+import pyotp
 
 def lambda_handler(event, context):
-    dynamodb_client = boto3.client('dynamodb')
+    
     if 'body' in event:
         body = json.loads(event['body'])
     else:
         body = event
-
-    user_table_name = os.environ.get('USERTABLE')
-
     print(body)
-
+    
+    # check acocunt name and phone number
+    dynamodb_client = boto3.client('dynamodb')
+    user_table_name = os.environ.get('USERTABLE')
+    
     query_params = {
         'TableName': user_table_name,
         'IndexName': 'UPN-index',
         'KeyConditionExpression': 'UPN = :phoneNumber',
         'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
         }
-    response = dynamodb_client.query(**query_params)
+    response = dynamodb_client.query(**query_params)    
 
     if len(response['Items']) == 1:
         data_account_name = response['Items'][0]['UAN']['S']
@@ -27,7 +29,7 @@ def lambda_handler(event, context):
         data_userID = response['Items'][0]['UID']['S']
 
     else:
-        return {
+        return { 
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
@@ -39,8 +41,33 @@ def lambda_handler(event, context):
                 "status": "Unmatch",
             })
         }
-
+    
     if body['accountName'] == data_account_name and body['phoneNumber'] == data_phone_number:
+        # generate otp code
+        dynamodb = boto3.resource('dynamodb')
+        totp = pyotp.TOTP(pyotp.random_base32())
+        totp_number = totp.now()
+        print(totp_number)
+        
+        otp_table_name = os.environ.get('OTPTABLE')
+        table = dynamodb.Table(otp_table_name)
+    
+        response = table.put_item(
+            Item = {
+                'OPN': body['phoneNumber'],
+                'OOC': totp_number
+            }
+        )
+        
+        # send sms
+        sns = boto3.client('sns', region_name='ap-south-1')
+        
+        message = f"{totp_number} is your Tomodachi OTP. Do not share it with anyone."
+        sns.publish(
+            PhoneNumber = "+91" + body['phoneNumber'],
+            Message = message
+        )
+        
         return {
             'statusCode': 200,
             'headers': {
@@ -54,8 +81,9 @@ def lambda_handler(event, context):
                 "userID": data_userID,
             })
         }
+        
     else:
-        return {
+        return { 
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
