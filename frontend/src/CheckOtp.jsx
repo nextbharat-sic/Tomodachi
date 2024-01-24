@@ -3,8 +3,10 @@ import { MuiOtpInput } from "mui-one-time-password-input";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import checkOtpCode from "./clients/checkotpcode.js";
+import { useTranslation } from "react-i18next";
 
 const CheckOtp = () => {
+  const { t } = useTranslation();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [userName, setUserName] = useState("tentative");
   const [isLoading, setIsLoading] = useState(false);
@@ -56,7 +58,7 @@ const CheckOtp = () => {
 
   const otpChecking = async () => {
     if (otp == "") {
-      alert("Input OTP Code!");
+      alert(t("inputOtpCode"));
       return false;
     }
     setIsLoading(true);
@@ -64,16 +66,17 @@ const CheckOtp = () => {
     if (result.status == "Success") {
       otpVerifiedStatus();
     } else {
-      alert("OTP entered is incorrect");
+      alert(t("otpIsIncorrect"));
       setIsLoading(false);
     }
   };
 
   return (
     <>
-      <h2 style={{ textAlign: "center" }}>Verification</h2>
+      <h2 style={{ textAlign: "center" }}>{t("verification")}</h2>
       <div style={{ textAlign: "center" }}>
-        Please enter the verification code send <br /> to +91{phoneNumber}
+        {t("enterVerificationCode")} <br /> {t("toPhoneNumber")}
+        {phoneNumber}
       </div>
       <MuiOtpInput
         style={{
@@ -95,6 +98,7 @@ const CheckOtp = () => {
         onChange={handleChange}
         gap="5px"
       />
+
       <Box display="flex" justifyContent="center" alignItems="center">
         <button
           onClick={otpChecking}
@@ -106,7 +110,7 @@ const CheckOtp = () => {
             marginTop: "15vh",
           }}
         >
-          {isLoading ? "Verifying..." : "Verify"}
+          {isLoading ? t("verifying") : t("verify")}
         </button>
       </Box>
     </>
