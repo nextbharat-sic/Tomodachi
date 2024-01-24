@@ -74,28 +74,36 @@ const Home = () => {
   };
 
   const renderLinkedText = (text) => {
-    const linkRegex = /(?:https?|ftp):\/\/\S+/gi;
-    const parts = text.split(linkRegex);
-    const linkMatches = text.match(linkRegex);
+    const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{5}\s?\d{5}\b/g;
 
-    if (!linkMatches) {
-      return text;
-    }
+    const matches = text.match(combinedRegex);
+    const parts = text.split(combinedRegex);
 
-    return parts.map((part, index) => (
-      <Fragment key={index}>
-        {index > 0 && (
-          <a
-            href={linkMatches[index - 1]}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {linkMatches[index - 1]}
+    const renderLink = (match) => {
+      if (match.startsWith("http")) {
+        return (
+          <a key={match} href={match} target="_blank" rel="noopener noreferrer">
+            {match}
           </a>
-        )}
-        {part}
-      </Fragment>
-    ));
+        );
+      } else {
+        return (
+          <a key={match} href={`tel:${match}`}>
+            {match}
+          </a>
+        );
+      }
+    };
+
+    const renderParts = () =>
+      parts.map((part, index) => (
+        <Fragment key={index}>
+          {index > 0 && renderLink(matches[index - 1])}
+          {part}
+        </Fragment>
+      ));
+
+    return <>{renderParts()}</>;
   };
 
   const displayJobInformationList = (dataList) => {
