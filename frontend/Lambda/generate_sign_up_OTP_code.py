@@ -108,7 +108,6 @@ def lambda_handler(event, context):
         }
     )
     
-    # SNSクライアントの作成
     sns = boto3.client('sns', region_name='ap-south-1')
     
     message = f"{totp_number} is your Tomodachi OTP. Do not share it with anyone."
