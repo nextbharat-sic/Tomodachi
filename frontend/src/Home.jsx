@@ -72,7 +72,7 @@ const Home = () => {
   };
 
   const renderLinkedText = (text) => {
-    const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{10}\b/g;
+    const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{5}\s?\d{5}\b/g;
 
     const matches = text.match(combinedRegex);
     const parts = text.split(combinedRegex);
@@ -215,10 +215,10 @@ const Home = () => {
               {jobData.PIT === "thandaTalks"
                 ? "Thanda Talks"
                 : jobData.PIT === "jobMarket"
-                  ? "Job Market"
-                  : jobData.PIT === "careerRelatedNews"
-                    ? "Career Related News"
-                    : ""}
+                ? "Job Market"
+                : jobData.PIT === "careerRelatedNews"
+                ? "Career Related News"
+                : ""}
             </span>
             {jobData.PIT === "thandaTalks" ? (
               <span
