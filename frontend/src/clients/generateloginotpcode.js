@@ -12,11 +12,7 @@ export default async function generateLogInOtpCode(userInformation) {
         headers: header,
       },
     );
-    // return response.data;
-
-    // Just testing. After creating check_OTP lambda, delete below line
-    console.log(response.data);
-    return { status: "Success" };
+    return response.data;
   } catch (error) {
     return error;
   }
