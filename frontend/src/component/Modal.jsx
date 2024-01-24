@@ -1,8 +1,10 @@
 import { useState } from "react";
 import "./Modal.css";
 import mammoth from "mammoth";
+import { useTranslation } from "react-i18next";
 
 const Modal = (props) => {
+  const { t } = useTranslation();
   const [privacyPolicy, setprivacyPolicy] = useState("");
   fetch("/privacypolicy.docx")
     .then((response) => response.arrayBuffer())
@@ -54,7 +56,7 @@ const Modal = (props) => {
                 color: "#e0f2f1",
               }}
             >
-              Close
+              {t("close")}
             </button>
           </span>
         </div>

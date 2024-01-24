@@ -3,8 +3,10 @@ import JobMarket from "./JobMarket.jsx";
 import CareerRelatedNews from "./CareerRelatedNews.jsx";
 import ThandaTalks from "./ThandaTalks.jsx";
 import Box from "@mui/material/Grid";
+import { useTranslation } from "react-i18next";
 
 const SelectCategory = () => {
+  const { t } = useTranslation();
   const [category, setCategory] = useState("");
 
   const categoryDataChange = (event) => {
@@ -15,10 +17,10 @@ const SelectCategory = () => {
   return (
     <>
       <div>
-        <h2 style={{ textAlign: "center" }}>Information Details</h2>
+        <h2 style={{ textAlign: "center" }}>{t("informationDetails")}</h2>
 
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Category</label>
+          <label>{t("category")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <select
@@ -32,10 +34,10 @@ const SelectCategory = () => {
               borderRadius: "10px",
             }}
           >
-            <option value="">select category</option>
-            <option value="jobMarket">Job Market</option>
-            <option value="careerRelatedNews">Career Related News</option>
-            <option value="thandaTalks">Thanda Talks</option>
+            <option value="">{t("selectCategory")}</option>
+            <option value="jobMarket">{t("jobMarket")}</option>
+            <option value="careerRelatedNews">{t("careerRelatedNews")}</option>
+            <option value="thandaTalks">{t("thandaTalks")}</option>
           </select>
         </Box>
         {category == "jobMarket" ? <JobMarket /> : ""}

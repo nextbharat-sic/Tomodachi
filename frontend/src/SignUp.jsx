@@ -1,11 +1,12 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import postUserInformation from "./clients/postuserinformation.js";
+import generateSignUpOtpCode from "./clients/generatesignupotpcode.js";
 import Modal from "./component/Modal.jsx";
+import { useTranslation } from "react-i18next";
 
 const SignUp = () => {
-  const [userName, setUserName] = useState("tentative");
+  const { t } = useTranslation();
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -22,16 +23,19 @@ const SignUp = () => {
   };
 
   const signUpStatus = (userID) => {
-    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
-    dispatch(storeIsSignIn);
+    const storePrivacyPolicyCheck = {
+      type: "SET_PRIVACY_POLICY_CHECK",
+      payload: privacyPolicyCheck,
+    };
     dispatch(storePage);
     dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
+    dispatch(storePrivacyPolicyCheck);
   };
 
   const createUser = async () => {
@@ -41,27 +45,28 @@ const SignUp = () => {
       return;
     }
 
+    const storeClientPage = { type: "SET_CLIENT_PAGE", payload: "signUp" };
+    dispatch(storeClientPage);
+
     const userInformation = {
-      userName: userName,
       accountName: accountName,
       phoneNumber: phoneNumber,
       privacyPolicyCheck: privacyPolicyCheck,
     };
 
-    const result = await postUserInformation(userInformation);
+    const result = await generateSignUpOtpCode(userInformation);
     if (result.status == "Success") {
       setIsLoading(false);
       signUpStatus(result.userID);
-      alert("User Registration is completed!");
     } else if (result.status == "UAN Existed") {
       setIsLoading(false);
-      alert("Account Name already Exists!");
+      alert(t("accountNameExist"));
     } else if (result.status == "UPN Existed") {
       setIsLoading(false);
-      alert("Phone Number already Exists!");
+      alert(t("phoneNumberExist"));
     } else {
       setIsLoading(false);
-      alert("User Registration is Failed!");
+      alert(t("signUpFailed"));
     }
   };
 
@@ -69,17 +74,17 @@ const SignUp = () => {
     const formatter = /^[0-9]{10}$/;
 
     if (accountName == "") {
-      alert("Input Account name!");
+      alert(t("inputAccountName"));
       return false;
     }
 
     if (!formatter.test(phoneNumber)) {
-      alert("Phone Number must be 10 digits!");
+      alert(t("phoneNumberDigits"));
       return false;
     }
 
     if (privacyPolicyCheck != true) {
-      alert("You need to check privacy policy!");
+      alert(t("needToCheckPrivacyPolicy"));
       return false;
     }
     return true;
@@ -89,9 +94,9 @@ const SignUp = () => {
     <>
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <div>
-        <h2 style={{ textAlign: "center" }}>Sign Up</h2>
+        <h2 style={{ textAlign: "center" }}>{t("signUp")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Account Name</label>
+          <label>{t("accountName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -110,7 +115,7 @@ const SignUp = () => {
           </div>
         </Box>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Phone Number</label>
+          <label>{t("phoneNumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -149,11 +154,11 @@ const SignUp = () => {
                 fontSize: "90%",
               }}
             >
-              I hereby accept terms and conditions &{" "}
+              {t("privacyPolicySentence")}
               <span onClick={handleOpen} style={{ color: "blue" }}>
-                privacy policy
-              </span>{" "}
-              of the service
+                {t("privacyPolicy")}
+              </span>
+              {t("ofTheService")}
             </div>
           </div>
         </div>
@@ -167,7 +172,7 @@ const SignUp = () => {
               color: "#e0f2f1",
             }}
           >
-            {isLoading ? "Create now..." : "Sign Up"}
+            {isLoading ? t("createNow") : t("signUp")}
           </button>
         </Box>
       </div>

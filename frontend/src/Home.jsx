@@ -3,9 +3,11 @@ import { useState, useEffect, Fragment } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
-import ShareCarrerInformationImage from "./assets/ShareCarrerInformationImage.png";
+import homeImage from "./assets/home_img.png";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
@@ -72,28 +74,36 @@ const Home = () => {
   };
 
   const renderLinkedText = (text) => {
-    const linkRegex = /(?:https?|ftp):\/\/\S+/gi;
-    const parts = text.split(linkRegex);
-    const linkMatches = text.match(linkRegex);
+    const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{5}\s?\d{5}\b/g;
 
-    if (!linkMatches) {
-      return text;
-    }
+    const matches = text.match(combinedRegex);
+    const parts = text.split(combinedRegex);
 
-    return parts.map((part, index) => (
-      <Fragment key={index}>
-        {index > 0 && (
-          <a
-            href={linkMatches[index - 1]}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {linkMatches[index - 1]}
+    const renderLink = (match) => {
+      if (match.startsWith("http")) {
+        return (
+          <a key={match} href={match} target="_blank" rel="noopener noreferrer">
+            {match}
           </a>
-        )}
-        {part}
-      </Fragment>
-    ));
+        );
+      } else {
+        return (
+          <a key={match} href={`tel:${match}`}>
+            {match}
+          </a>
+        );
+      }
+    };
+
+    const renderParts = () =>
+      parts.map((part, index) => (
+        <Fragment key={index}>
+          {index > 0 && renderLink(matches[index - 1])}
+          {part}
+        </Fragment>
+      ));
+
+    return <>{renderParts()}</>;
   };
 
   const displayJobInformationList = (dataList) => {
@@ -140,38 +150,42 @@ const Home = () => {
             >
               {jobData.PAN}
             </div>
-            {checkActive(jobData.PDD) ? (
-              <span
-                style={{
-                  backgroundColor: "#2f69f6",
-                  padding: "0.3em 0.5em",
-                  color: "#e0f2f1",
-                  textAlign: "center",
-                  borderRadius: "0.5em",
-                  marginTop: "2vh",
-                  marginLeft: "auto",
-                  minWidth: "45px",
-                  maxHeight: "30px",
-                }}
-              >
-                Active
-              </span>
+            {jobData.PIT === "jobMarket" ? (
+              checkActive(jobData.PDD) ? (
+                <span
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "45px",
+                    maxHeight: "30px",
+                  }}
+                >
+                  {t("active")}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    backgroundColor: "#696969",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "45px",
+                    maxHeight: "30px",
+                  }}
+                >
+                  {t("close")}
+                </span>
+              )
             ) : (
-              <span
-                style={{
-                  backgroundColor: "#696969",
-                  padding: "0.3em 0.5em",
-                  color: "#e0f2f1",
-                  textAlign: "center",
-                  borderRadius: "0.5em",
-                  marginTop: "2vh",
-                  marginLeft: "auto",
-                  minWidth: "45px",
-                  maxHeight: "30px",
-                }}
-              >
-                Close
-              </span>
+              <span></span>
             )}
           </div>
           <div style={{ display: "flex" }}>
@@ -200,8 +214,45 @@ const Home = () => {
                 fontSize: "0.9em",
               }}
             >
-              {jobData.PMJ}
+              {jobData.PIT === "thandaTalks"
+                ? "Thanda Talks"
+                : jobData.PIT === "jobMarket"
+                ? "Job Market"
+                : jobData.PIT === "careerRelatedNews"
+                ? "Career Related News"
+                : ""}
             </span>
+            {jobData.PIT === "thandaTalks" ? (
+              <span
+                style={{
+                  backgroundColor: "#f5f5f5",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                }}
+              >
+                Tunikala Thanda
+              </span>
+            ) : jobData.PIT === "jobMarket" ? (
+              <span
+                style={{
+                  backgroundColor: "#f5f5f5",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                }}
+              >
+                {jobData.PMJ}
+              </span>
+            ) : (
+              <span></span>
+            )}
           </div>
           <div
             style={{
@@ -231,7 +282,7 @@ const Home = () => {
               paddingBottom: "10px",
             }}
           >
-            posted at: {replaceDate(String(jobData.PCT))}
+            {t("postedAt")} {replaceDate(String(jobData.PCT))}
           </div>
           {/* Add more details as needed */}
         </div>
@@ -244,7 +295,7 @@ const Home = () => {
       const uploadInformationResult = await getUploadInformation();
       setInformationResult(uploadInformationResult);
     } catch (error) {
-      console.error("Error fetching upload information:", error);
+      console.error(t("errorFetching"), error);
     }
   };
 
@@ -286,69 +337,66 @@ const Home = () => {
 
   return (
     <>
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box display="flex">
         <div
           style={{
             width: "100vw",
-            height: "25vh",
             marginBottom: "0.5em",
             boxShadow: "0em 0.55em 0.1em #631acf",
             borderBottomRightRadius: "0.8em",
             borderBottomLeftRadius: "0.8em",
-            background: "linear-gradient(135deg, #631acf 0%,#2f69f6 85%)",
+            backgroundImage: `url(${homeImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            paddingBottom: "2vh",
           }}
         >
-          <p
+          <div
             style={{
               color: "#ffffff",
               fontSize: "180%",
               fontWeight: "bold",
-              marginLeft: "5vw",
+              marginTop: "3vh",
+              marginLeft: "2vw",
+              marginBottom: "8vh",
               fontFamily: "DM sans-serif",
+              lineHeight: "110%",
             }}
           >
-            Find your job <br></br>
-            <span style={{ fontSize: "150%" }}> here!</span>
-          </p>
-        </div>
-      </Box>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center"
-        style={{
-          boxShadow: "0em 0.3em 0em rgba(0, 0, 0, 0.1)",
-          borderBottomRightRadius: "0.8em",
-          borderBottomLeftRadius: "0.8em",
-          marginBottom: "0.5em",
-        }}
-      >
-        <div
-          style={{
-            width: "100vw",
-            margin: "0.8em",
-            borderRadius: "10px",
-            background: "#2F69F6",
-          }}
-        >
-          <div style={{ display: "flex" }}>
+            {t("yourHub")} <br></br>
+            {t("information")} <br></br>
+            {t("exchange")} <br></br>
+          </div>
+          <div
+            style={{
+              borderRadius: "10px",
+              marginLeft: "2vw",
+              marginRight: "2vw",
+              background: "linear-gradient(-135deg, #631acf 0%,#2f69f6 85%)",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <div
               style={{
-                color: "#ffffff",
-                fontSize: "125%",
-                fontWeight: "bold",
-                marginLeft: "5vw",
-                marginTop: "7vh",
-                fontFamily: "DM sans-serif",
+                display: "flex",
+                alignItems: "center",
+                width: "100%",
+                marginTop: "1vh",
+                marginBottom: "1vh",
               }}
             >
-              Share career <br /> information
-            </div>
-            <div style={{ margin: "auto", marginBottom: "2vh" }}>
-              <img
-                src={ShareCarrerInformationImage}
-                style={{ width: "35vw", margin: "5vw" }}
-              />
+              <div
+                style={{
+                  color: "#ffffff",
+                  fontSize: "100%",
+                  fontWeight: "bold",
+                  marginLeft: "3vw",
+                  fontFamily: "DM sans-serif",
+                }}
+              >
+                {t("shareYour")} <br /> {t("info")}
+              </div>
               <button
                 onClick={movePostScreen}
                 style={{
@@ -356,11 +404,11 @@ const Home = () => {
                   backgroundColor: "#ffffff",
                   color: "#631ACF",
                   fontWeight: "bold",
-                  margin: "auto",
-                  display: "flex",
+                  marginLeft: "auto",
+                  marginRight: "3vw",
                 }}
               >
-                Share details
+                {t("shareDetails")}
               </button>
             </div>
           </div>
@@ -368,12 +416,14 @@ const Home = () => {
       </Box>
       <div
         style={{
+          marginTop: "2vh",
+          marginBottom: "2vh",
           fontWeight: "bold",
-          fontSize: "1.2em",
+          fontSize: "1.1em",
           marginLeft: "5vw",
         }}
       >
-        Recent post
+        {t("recentPost")}
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>
@@ -387,7 +437,7 @@ const Home = () => {
               onClick={handleShowMore}
               style={{ display: "block", margin: "auto" }}
             >
-              Show more
+              {t("showMore")}
             </button>
           )}
         </div>
