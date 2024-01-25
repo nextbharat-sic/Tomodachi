@@ -90,7 +90,7 @@ const LogIn = () => {
           <Box>
             <div
               style={{
-                fontSize: "0.5em",
+                fontSize: "0.9em",
                 color: "red",
                 paddingLeft: "5vw",
                 marginBottom: "1vh",
