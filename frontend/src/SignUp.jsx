@@ -24,7 +24,6 @@ const SignUp = () => {
 
   const signUpStatus = (userID) => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
-    const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
     const storePrivacyPolicyCheck = {
@@ -32,7 +31,6 @@ const SignUp = () => {
       payload: privacyPolicyCheck,
     };
     dispatch(storePage);
-    dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
     dispatch(storePrivacyPolicyCheck);
