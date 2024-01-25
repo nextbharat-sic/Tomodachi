@@ -13,6 +13,7 @@ const SignUp = () => {
   const [privacyPolicyCheck, setPrivacyPolicyCheck] = useState(false);
   const dispatch = useDispatch();
   const [isModalOpen, setModalIsOpen] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   const handleOpen = () => {
     setModalIsOpen(true);
@@ -20,6 +21,15 @@ const SignUp = () => {
 
   const handleClose = () => {
     setModalIsOpen(false);
+  };
+
+  const handleInputChange = (event) => {
+    setAccountName(event.target.value);
+    if (event.target.value.includes(" ")) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
   };
 
   const signUpStatus = (userID) => {
@@ -102,7 +112,7 @@ const SignUp = () => {
               type="text"
               value={accountName}
               className="input"
-              onChange={(event) => setAccountName(event.target.value)}
+              onChange={handleInputChange}
               style={{
                 width: "86vw",
                 margin: "10px",
@@ -112,6 +122,22 @@ const SignUp = () => {
             ></input>
           </div>
         </Box>
+        {isButtonDisabled ? (
+          <Box>
+            <div
+              style={{
+                fontSize: "0.5em",
+                color: "red",
+                paddingLeft: "5vw",
+                marginBottom: "1vh",
+              }}
+            >
+              {t("includeSpaces")}
+            </div>
+          </Box>
+        ) : (
+          <Box></Box>
+        )}
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("phoneNumber")}</label>
         </div>
@@ -161,17 +187,29 @@ const SignUp = () => {
           </div>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
-          <button
-            onClick={createUser}
-            disabled={isLoading}
-            style={{
-              margin: "10px",
-              backgroundColor: "#2F69F6",
-              color: "#e0f2f1",
-            }}
-          >
-            {isLoading ? t("createNow") : t("signUp")}
-          </button>
+          {isButtonDisabled ? (
+            <button
+              style={{
+                margin: "10px",
+                backgroundColor: "#b3b3b3b3",
+                color: "black",
+              }}
+            >
+              {t("signUp")}
+            </button>
+          ) : (
+            <button
+              onClick={createUser}
+              disabled={isLoading}
+              style={{
+                margin: "10px",
+                backgroundColor: "#2F69F6",
+                color: "#e0f2f1",
+              }}
+            >
+              {isLoading ? t("createNow") : t("signUp")}
+            </button>
+          )}
         </Box>
       </div>
     </>
