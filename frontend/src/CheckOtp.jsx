@@ -50,9 +50,13 @@ const CheckOtp = () => {
     };
   }, []);
 
-  const otpVerifiedStatus = () => {
+  const otpVerifiedStatus = (payload) => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "OtpVerifiedPage" };
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
+    if (clientPage === "signUp") {
+      const storeUserID = { type: "SET_USER_ID", payload: payload.userID };
+      dispatch(storeUserID);
+    }
     dispatch(storePage);
     dispatch(storeIsSignIn);
   };
@@ -65,7 +69,7 @@ const CheckOtp = () => {
     setIsLoading(true);
     const result = await checkOtpCode(otpInformation);
     if (result.status == "Success") {
-      otpVerifiedStatus();
+      otpVerifiedStatus(result);
     } else {
       alert(t("otpIsIncorrect"));
       setIsLoading(false);

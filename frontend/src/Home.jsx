@@ -215,12 +215,12 @@ const Home = () => {
               }}
             >
               {jobData.PIT === "thandaTalks"
-                ? "Thanda Talks"
+                ? t("thandaTalks")
                 : jobData.PIT === "jobMarket"
-                  ? "Job Market"
-                  : jobData.PIT === "careerRelatedNews"
-                    ? "Career Related News"
-                    : ""}
+                ? t("jobMarket")
+                : jobData.PIT === "careerRelatedNews"
+                ? t("careerRelatedNews")
+                : ""}
             </span>
             {jobData.PIT === "thandaTalks" ? (
               <span
@@ -234,7 +234,7 @@ const Home = () => {
                   fontSize: "0.9em",
                 }}
               >
-                Tunikala Thanda
+                {t("tunikalaThanda")}
               </span>
             ) : jobData.PIT === "jobMarket" ? (
               <span
@@ -248,7 +248,11 @@ const Home = () => {
                   fontSize: "0.9em",
                 }}
               >
-                {jobData.PMJ}
+                {jobData.PMJ === "indoor"
+                  ? t("indoor")
+                  : jobData.PMJ === "outdoor"
+                  ? t("outdoor")
+                  : ""}
               </span>
             ) : (
               <span></span>
