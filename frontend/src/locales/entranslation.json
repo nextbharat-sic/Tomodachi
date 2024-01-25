@@ -67,5 +67,6 @@
   "resendOtp": "Resend OTP",
   "verify": "Verify",
   "verifying": "Verifying...",
-  "verification": "Verification"
+  "verification": "Verification",
+  "includeSpaces": "Enter account name without spaces!"
 }

@@ -10,7 +10,17 @@ const LogIn = () => {
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const dispatch = useDispatch();
+
+  const handleInputChange = (event) => {
+    setAccountName(event.target.value);
+    if (event.target.value.includes(" ")) {
+      setIsButtonDisabled(true);
+    } else {
+      setIsButtonDisabled(false);
+    }
+  };
 
   const logInStatus = (userID) => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
@@ -65,7 +75,7 @@ const LogIn = () => {
               type="text"
               value={accountName}
               className="input"
-              onChange={(event) => setAccountName(event.target.value)}
+              onChange={handleInputChange}
               style={{
                 width: "86vw",
                 margin: "10px",
@@ -76,6 +86,22 @@ const LogIn = () => {
             ></input>
           </div>
         </Box>
+        {isButtonDisabled ? (
+          <Box>
+            <div
+              style={{
+                fontSize: "0.5em",
+                color: "red",
+                paddingLeft: "5vw",
+                marginBottom: "1vh",
+              }}
+            >
+              {t("includeSpaces")}
+            </div>
+          </Box>
+        ) : (
+          <Box></Box>
+        )}
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("phoneNumber")}</label>
         </div>
@@ -97,17 +123,29 @@ const LogIn = () => {
           </div>
         </Box>
         <Box display="flex" justifyContent="center" alignItems="center">
-          <button
-            onClick={checkLogin}
-            disabled={isLoading}
-            style={{
-              margin: "10px",
-              backgroundColor: "#2F69F6",
-              color: "#e0f2f1",
-            }}
-          >
-            {isLoading ? t("loginNow") : t("logIn")}
-          </button>
+          {isButtonDisabled ? (
+            <button
+              style={{
+                margin: "10px",
+                backgroundColor: "#b3b3b3b3",
+                color: "black",
+              }}
+            >
+              {t("logIn")}
+            </button>
+          ) : (
+            <button
+              onClick={checkLogin}
+              disabled={isLoading}
+              style={{
+                margin: "10px",
+                backgroundColor: "#2F69F6",
+                color: "#e0f2f1",
+              }}
+            >
+              {isLoading ? t("loginNow") : t("logIn")}
+            </button>
+          )}
         </Box>
         <div
           style={{

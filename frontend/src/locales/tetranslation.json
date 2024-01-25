@@ -67,5 +67,6 @@
   "resendOtp": "OTPమళ్లీ పంపించండి",
   "verify": "Verify",
   "verifying": "Verifying...",
-  "verification": "Verification"
+  "verification": "Verification",
+  "includeSpaces": "ఖాళీలు లేకుండా ఖాతా పేరును నమోదు చేయండి"
 }
