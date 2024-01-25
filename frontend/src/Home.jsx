@@ -217,10 +217,10 @@ const Home = () => {
               {jobData.PIT === "thandaTalks"
                 ? t("thandaTalks")
                 : jobData.PIT === "jobMarket"
-                ? t("jobMarket")
-                : jobData.PIT === "careerRelatedNews"
-                ? t("careerRelatedNews")
-                : ""}
+                  ? t("jobMarket")
+                  : jobData.PIT === "careerRelatedNews"
+                    ? t("careerRelatedNews")
+                    : ""}
             </span>
             {jobData.PIT === "thandaTalks" ? (
               <span
@@ -251,8 +251,8 @@ const Home = () => {
                 {jobData.PMJ === "indoor"
                   ? t("indoor")
                   : jobData.PMJ === "outdoor"
-                  ? t("outdoor")
-                  : ""}
+                    ? t("outdoor")
+                    : ""}
               </span>
             ) : (
               <span></span>
@@ -360,9 +360,9 @@ const Home = () => {
               color: "#ffffff",
               fontSize: "180%",
               fontWeight: "bold",
-              marginTop: "3vh",
-              marginLeft: "2vw",
-              marginBottom: "8vh",
+              marginTop: "6vh",
+              marginLeft: "5vw",
+              marginBottom: "3vh",
               fontFamily: "DM sans-serif",
               lineHeight: "110%",
             }}
@@ -374,8 +374,8 @@ const Home = () => {
           <div
             style={{
               borderRadius: "10px",
-              marginLeft: "2vw",
-              marginRight: "2vw",
+              marginLeft: "3vw",
+              marginRight: "3vw",
               background: "linear-gradient(-135deg, #631acf 0%,#2f69f6 85%)",
               display: "flex",
               alignItems: "center",
