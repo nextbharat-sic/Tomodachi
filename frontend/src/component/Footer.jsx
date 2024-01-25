@@ -53,7 +53,6 @@ const Footer = () => {
                 }}
               >
                 {t("home")}
-                test
               </div>
             </Grid>
             <Grid

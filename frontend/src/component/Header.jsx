@@ -86,7 +86,7 @@ const Header = () => {
                 }}
               >
                 <option value="en">English</option>
-                <option value="te">తెలుగ</option>
+                <option value="te">తెలుగు</option>
               </select>
             </div>
           </Typography>
