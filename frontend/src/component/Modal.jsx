@@ -26,7 +26,7 @@ const Modal = (props) => {
               textAlign: "center",
             }}
           >
-            Terms and Condition
+            {t("termsAndCondition")}
           </h4>
           <div
             style={{

@@ -65,7 +65,13 @@
   "toPhoneNumber": "to +91",
   "dontReceiveOtp": "OTP కోడ్  రా లేదు? ",
   "resendOtp": "OTPమళ్లీ పంపించండి",
-  "verify": "Verify",
-  "verifying": "Verifying...",
-  "verification": "Verification"
+  "verify": "వెరిఫై",
+  "verifying": "వెరిఫై అవుతుంది",
+  "verification": "ధృవీకరణ",
+  "verified": "ధృవీకరించబడింది",
+  "yourAccountHasVerified": "మీ ఖాతా విజయవంతంగా ధృవీకరించబడింది",
+  "successfully": "",
+  "done": "పూర్తయింది",
+  "termsAndCondition": "నిబంధనలు మరియు షరతులు",
+  "tunikalaThanda": "తునికల తండా"
 }

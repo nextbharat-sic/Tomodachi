@@ -1,8 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import Box from "@mui/material/Grid";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
+import { useTranslation } from "react-i18next";
 
 const Verified = () => {
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const nextAction = useSelector((state) => state.nextAction);
 
@@ -28,15 +30,15 @@ const Verified = () => {
           <TaskAltIcon sx={{ fontSize: 150 }} style={{ color: "#2F69F6" }} />
         </Box>
 
-        <h2 style={{ textAlign: "center" }}>Verified</h2>
+        <h2 style={{ textAlign: "center" }}>{t("verified")}</h2>
 
         <div
           style={{
             textAlign: "center",
           }}
         >
-          Your Account has been verified <br />
-          Successfully
+          {t("yourAccountHasVerified")} <br />
+          {t("successfully")}
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <button
@@ -47,7 +49,7 @@ const Verified = () => {
             }}
             onClick={doneVerfied}
           >
-            Done
+            {t("done")}
           </button>
         </Box>
       </div>

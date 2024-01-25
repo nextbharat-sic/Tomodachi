@@ -149,7 +149,7 @@ const ThandaTalks = () => {
                 borderRadius: "10px",
               }}
             >
-              <option value="tunikalaThanda">Tunikala Thanda</option>
+              <option value="tunikalaThanda">{t("tunikalaThanda")}</option>
             </select>
           </Box>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
