@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
+import jobMarketIcon from "./assets/jobMarketIcon.png";
+import careerRelatedNewsIcon from "./assets/careerRelatedNewsIcon.png";
+import thandaTalksIcon from "./assets/thandaTalksIcon.png";
+import contactBookIcon from "./assets/contactBookIcon.png";
 import { useTranslation } from "react-i18next";
 import Card from "./Card.jsx";
 
@@ -13,6 +17,11 @@ const Home = () => {
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
+  const [fetchCategoryType, setFetchCategoryType] = useState("jobMarket");
+
+  const pushCategoryButton = (categoryType) => {
+    setFetchCategoryType(categoryType);
+  };
 
   const movePostScreen = () => {
     const storeNextAction = {
@@ -31,7 +40,8 @@ const Home = () => {
 
   const fetchAndDisplayInformation = async () => {
     try {
-      const uploadInformationResult = await getUploadInformation();
+      const uploadInformationResult =
+        await getUploadInformation(fetchCategoryType);
       setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error(t("errorFetching"), error);
@@ -72,7 +82,7 @@ const Home = () => {
   useEffect(() => {
     fetchAndDisplayInformation();
     // fetchS3Data();
-  }, []);
+  }, [fetchCategoryType]);
 
   return (
     <>
@@ -152,6 +162,176 @@ const Home = () => {
             </div>
           </div>
         </div>
+      </Box>
+      <Box display="flex" style={{ margin: "2vh 2vw" }}>
+        {fetchCategoryType == "jobMarket" ? (
+          <button
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${jobMarketIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundColor: "#b3b3b3b3",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Job market
+          </button>
+        ) : (
+          <button
+            value="jobMarket"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${jobMarketIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Job market
+          </button>
+        )}
+        {fetchCategoryType == "careerRelatedNews" ? (
+          <button
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${careerRelatedNewsIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundColor: "#b3b3b3b3",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Career news
+          </button>
+        ) : (
+          <button
+            value="careerRelatedNews"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${careerRelatedNewsIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Career news
+          </button>
+        )}
+        {fetchCategoryType == "thandaTalks" ? (
+          <button
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${thandaTalksIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundColor: "#b3b3b3b3",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Thanda talks
+          </button>
+        ) : (
+          <button
+            value="thandaTalks"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${thandaTalksIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Thanda talks
+          </button>
+        )}
+        {fetchCategoryType == "contactBook" ? (
+          <button
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${contactBookIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundColor: "#b3b3b3b3",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Contact book
+          </button>
+        ) : (
+          <button
+            value="contactBook"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            style={{
+              height: "12vh",
+              width: "22vw",
+              margin: "0vh 1vw",
+              backgroundImage: `url(${contactBookIcon})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              whiteSpace: "nowrap",
+              fontSize: "40%",
+            }}
+          >
+            Contact book
+          </button>
+        )}
       </Box>
       <div
         style={{
