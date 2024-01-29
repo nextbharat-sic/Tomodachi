@@ -16,7 +16,7 @@ def lambda_handler(event, context):
 
     dynamodb_client = boto3.client('dynamodb')
     s3_client = boto3.client('s3')
-
+    
     if 'body' in event:
         body = json.loads(event['body'])
     else:
@@ -26,28 +26,34 @@ def lambda_handler(event, context):
 
     postinformation_table_name = os.environ.get('POSTINFORMATIONTABLE')
     counter_table_name = os.environ.get('COUNTERTABLE')
-
-    parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
-    deadline_date = parsed_deadline_date.strftime('%Y-%m-%d')
-
+    
     utc_time = datetime.utcnow()
     create_date, create_time = convert_utc_to_india(utc_time)
-
-    # Validation check
-    if deadline_date < create_date:
-        print('deadlineDateError')
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": "Failed",
-            })
-        }
+    
+    #Check category regarding deadline date
+    if body['category'] == 'jobMarket':
+        # Parse deadline date
+        parsed_deadline_date = datetime.strptime(body['deadlineDate'], '%Y-%m-%d')
+        deadline_date = parsed_deadline_date.strftime('%Y-%m-%d')
+            
+        # Validation check
+        if deadline_date < create_date:
+            print('deadlineDateError')
+            return {
+                'statusCode': 500,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Headers" : "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                },
+                'body': json.dumps({
+                    "status": "Failed",
+                })
+            }
+    
+    else:
+        deadline_date = body['deadlineDate']
 
     # Get most recentry postId from CounterTable
     counter_res = dynamodb_client.get_item(
@@ -74,11 +80,12 @@ def lambda_handler(event, context):
   # Data formatting.
     upload_info = {}
     upload_info['PID'] = 'P'+ str(next_upload_info_id).zfill(8)
-    upload_info['PIT'] = body['informationTitle']
+    upload_info['PIT'] = body['category']
+    upload_info['PFT'] = body['forWhichThanda']
     upload_info['PCT'] = create_date+"_"+ create_time
     upload_info['PDD'] = deadline_date
-    upload_info['PJD'] = body['jobDescription']
-    upload_info['PJT'] = body['jobTitle']
+    upload_info['PDE'] = body['description']
+    upload_info['PTI'] = body['title']
     upload_info['PMJ'] = body['modeOfJob']
     upload_info['PST'] = True
     upload_info['PTP'] = 'Post'
@@ -105,10 +112,11 @@ def lambda_handler(event, context):
           'Item' : {
               'PID' : {'S': upload_info['PID']},
               'PIT' : {'S': upload_info['PIT']},
+              'PFT' : {'S': upload_info['PFT']},
               'PCT' : {'S': upload_info['PCT']},
               'PDD' : {'S': upload_info['PDD']},
-              'PJD' : {'S': upload_info['PJD']},
-              'PJT' : {'S': upload_info['PJT']},
+              'PDE' : {'S': upload_info['PDE']},
+              'PTI' : {'S': upload_info['PTI']},
               'PMJ' : {'S': upload_info['PMJ']},
               'PST' : {'BOOL': upload_info['PST']},
               'PTP' : {'S': upload_info['PTP']},

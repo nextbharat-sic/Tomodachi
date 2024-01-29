@@ -1,7 +1,9 @@
+const cacheName = "tomodachi-cache-v2.0.2";
+
 // Processing during installation
 self.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open("your-cache-name").then((cache) => {
+    caches.open(cacheName).then((cache) => {
       return cache.addAll(["/", "/index.html"]);
     }),
   );
@@ -19,4 +21,30 @@ self.addEventListener("fetch", (event) => {
       );
     }),
   );
+});
+
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches
+      .keys()
+      .then((cacheNames) => {
+        return Promise.all(
+          cacheNames.map((name) => {
+            if (name !== cacheName) {
+              // Delete old caches when a new version is activated
+              return caches.delete(name);
+            }
+          }),
+        );
+      })
+      .then(() => self.clients.claim()),
+  );
+});
+
+// Check for updates in the background
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "CHECK_FOR_UPDATES") {
+    console.log("check for updates");
+    self.skipWaiting(); // Activate the new service worker immediately
+  }
 });

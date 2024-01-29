@@ -1,10 +1,12 @@
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
-import postJobInformation from "./clients/postjobinformation.js";
+import postInformation from "./clients/postinformation.js";
 import Box from "@mui/material/Grid";
+import { useTranslation } from "react-i18next";
 
-const PostJobInformation = () => {
+const ThandaTalks = () => {
+  const { t } = useTranslation();
   // const [imageFile, setImageFile] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const userID = useSelector((state) => state.userID);
@@ -12,22 +14,17 @@ const PostJobInformation = () => {
   const phoneNumber = useSelector((state) => state.phoneNumber);
   // const inputImageFile = useRef();
   const dispatch = useDispatch();
-  let date = new Date();
-  let localDate =
-    date.getFullYear() +
-    "-" +
-    (date.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    date.getDate().toString().padStart(2, "0");
+  // let date = new Date();
   // let localTime = date.toLocaleTimeString();
 
-  const [jobData, setJobData] = useState({
+  const [thandaTalksData, setThandaTalksData] = useState({
     userId: userID,
-    informationTitle: "jobRelated",
-    jobTitle: "",
+    category: "thandaTalks",
+    forWhichThanda: "tunikalaThanda",
+    title: "",
     deadlineDate: "",
-    modeOfJob: "indoor",
-    jobDescription: "",
+    modeOfJob: "",
+    description: "",
     image: "",
     accountName: accountName,
     phoneNumber: phoneNumber,
@@ -40,32 +37,28 @@ const PostJobInformation = () => {
 
   // const showImage = (event) => {
   //   setImageFile(URL.createObjectURL(event.target.files[0]));
-  //   setJobData({
-  //     ...jobData,
+  //   setThandaTalksData({
+  //     ...thandaTalksData,
   //     image: event.target.files[0],
   //   });
   // };
 
   const handleInputDataChange = (event) => {
     const { name, value } = event.target;
-    setJobData({
-      ...jobData,
+    setThandaTalksData({
+      ...thandaTalksData,
       [name]: value,
     });
   };
 
   const confirmUpload = (event) => {
     event.preventDefault();
-    const deadlineValidation = checkDeadlineDate();
-    if (!deadlineValidation) {
-      alert("Deadline date has passed");
-    } else {
-      const isConfirm = confirm("Are you sure you want to upload?");
-      if (isConfirm) {
-        setIsLoading(true);
-        uploadJobInfo();
-        // checkImageFile();
-      }
+
+    const isConfirm = confirm(t("confirmUpload"));
+    if (isConfirm) {
+      setIsLoading(true);
+      uploadThandaTalksInfo();
+      // checkImageFile();
     }
   };
 
@@ -74,44 +67,38 @@ const PostJobInformation = () => {
   //   if (File && File.size > 0) {
   //     uploadFile();
   //   } else {
-  //     uploadJobInfo();
+  //     uploadThandaTalksInfo();
   //   }
   // };
 
-  const checkDeadlineDate = () => {
-    if (jobData.deadlineDate >= localDate) {
-      return true;
-    }
-    return false;
-  };
-
-  const uploadJobInfo = async () => {
+  const uploadThandaTalksInfo = async () => {
     try {
-      const jobInformation = {
-        userId: jobData.userId,
-        informationTitle: jobData.informationTitle,
-        jobTitle: jobData.jobTitle,
-        deadlineDate: jobData.deadlineDate,
-        modeOfJob: jobData.modeOfJob,
-        jobDescription: jobData.jobDescription,
-        image: jobData.image,
-        accountName: jobData.accountName,
-        phoneNumber: jobData.phoneNumber,
+      const thandaTalksInformation = {
+        userId: thandaTalksData.userId,
+        category: thandaTalksData.category,
+        forWhichThanda: thandaTalksData.forWhichThanda,
+        title: thandaTalksData.title,
+        deadlineDate: thandaTalksData.deadlineDate,
+        modeOfJob: thandaTalksData.modeOfJob,
+        description: thandaTalksData.description,
+        image: thandaTalksData.image,
+        accountName: thandaTalksData.accountName,
+        phoneNumber: thandaTalksData.phoneNumber,
       };
 
-      const response = await postJobInformation(jobInformation);
+      const response = await postInformation(thandaTalksInformation);
 
       if (response.status === "Success") {
         setIsLoading(false);
         homePageStatus();
-        alert("Upload information is completed!");
+        alert(t("uploadCompleted"));
       } else {
         setIsLoading(false);
-        alert("Upload information is failed!");
+        alert(t("uploadFailed"));
       }
     } catch (error) {
       setIsLoading(false);
-      console.error("Error uploading information:", error);
+      console.error(t("errorUploading"), error);
     }
   };
 
@@ -119,7 +106,7 @@ const PostJobInformation = () => {
   //   const uploadImageFile = inputImageFile.current.files[0];
   //   const uploadFileName =
   //     userID + "_" + localDate + "_" + localTime + "_" + uploadImageFile.name;
-  //   jobData.image = uploadFileName;
+  //   thandaTalksData.image = uploadFileName;
 
   //   const s3Client = new S3Client({
   //     region: import.meta.env.VITE_APP_S3_REGION,
@@ -137,7 +124,7 @@ const PostJobInformation = () => {
 
   //   try {
   //     const result = await s3Client.send(new PutObjectCommand(S3Params));
-  //     uploadJobInfo();
+  //     uploadThandaTalksInfo();
   //   } catch (err) {
   //     console.log("Error", err);
   //   }
@@ -147,15 +134,13 @@ const PostJobInformation = () => {
     <>
       <div>
         <form onSubmit={confirmUpload}>
-          <h2 style={{ textAlign: "center" }}>Information Details</h2>
-
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Information Title</label>
+            <label>{t("forWhichThanda")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <select
-              name="informationTitle"
-              value={jobData.informationTitle}
+              name="forWhichThanda"
+              value={thandaTalksData.forWhichThanda}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -164,19 +149,18 @@ const PostJobInformation = () => {
                 borderRadius: "10px",
               }}
             >
-              <option value="jobRelated">Job Related</option>
+              <option value="tunikalaThanda">{t("tunikalaThanda")}</option>
             </select>
           </Box>
-
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Job Title</label>
+            <label>{t("title")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <input
               type="text"
-              name="jobTitle"
-              placeholder="Write job title"
-              value={jobData.jobTitle}
+              name="title"
+              placeholder={t("writeTitle")}
+              value={thandaTalksData.title}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -190,54 +174,14 @@ const PostJobInformation = () => {
           </Box>
 
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Deadline Date</label>
-          </div>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <input
-              type="date"
-              name="deadlineDate"
-              value={jobData.deadlineDate}
-              onChange={handleInputDataChange}
-              style={{
-                width: "86vw",
-                margin: "10px",
-                height: "5vh",
-                borderRadius: "10px",
-                borderWidth: "1px",
-              }}
-              required
-            />
-          </Box>
-
-          <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Mode of Job</label>
-          </div>
-          <Box display="flex" justifyContent="center" alignItems="center">
-            <select
-              name="modeOfJob"
-              value={jobData.modeOfJob}
-              onChange={handleInputDataChange}
-              style={{
-                width: "86vw",
-                margin: "10px",
-                height: "5vh",
-                borderRadius: "10px",
-              }}
-            >
-              <option value="indoor">Indoor Work</option>
-              <option value="outdoor">Outdoor Work</option>
-            </select>
-          </Box>
-
-          <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-            <label>Job Description</label>
+            <label>{t("description")}</label>
           </div>
           <Box display="flex" justifyContent="center" alignItems="center">
             <textarea
-              rows="4"
-              name="jobDescription"
-              placeholder="Write description of the job"
-              value={jobData.jobDescription}
+              rows="8"
+              name="description"
+              placeholder={t("writeDescription")}
+              value={thandaTalksData.description}
               onChange={handleInputDataChange}
               style={{
                 width: "86vw",
@@ -267,7 +211,7 @@ const PostJobInformation = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? "Upload now..." : "Upload"}
+              {isLoading ? t("uploadNow") : t("upload")}
             </button>
           </Box>
         </form>
@@ -276,4 +220,4 @@ const PostJobInformation = () => {
   );
 };
 
-export default PostJobInformation;
+export default ThandaTalks;

@@ -1,12 +1,13 @@
 import json
 import boto3
 import os
+from datetime import datetime, timedelta
 
 def lambda_handler(event, context):
-    print(event['headers']['X-Forwarded-For'])
-
     dynamodb_client = boto3.client('dynamodb')
+    dynamodb_resource=boto3.resource('dynamodb')
     post_information_table_name = os.environ.get('POSTINFORMATIONTABLE')
+    post_access_table_name = os.environ.get('ACCESSTABLE')
 
     query_params = {
         'TableName': post_information_table_name,
@@ -25,23 +26,58 @@ def lambda_handler(event, context):
         for pmd in item['PMD']['L']:
             pmd_list.append(pmd['S'])
 
+
         post_list.append({
             'PCT':pct,
             'PMD':pmd_list,
-            'PJD':item['PJD']['S'],
+            'PDE':item['PDE']['S'],
             'PTP':item['PTP']['S'],
             'PID':item['PID']['S'],
             'PMJ':item['PMJ']['S'],
             'PDD':item['PDD']['S'],
             'PST':item['PST']['BOOL'],
             'PUID':item['PUID']['S'],
-            'PJT':item['PJT']['S'],
+            'PTI':item['PTI']['S'],
             'PIT':item['PIT']['S'],
             'PAN':item['PAN']['S'],
             'PPN':item['PPN']['S'],
+            'PFT':item['PFT']['S'],
         })
 
     print(post_list)
+
+    ist_offset = timedelta(hours=5, minutes=30)
+    utc_datetime = datetime.utcnow()
+    india_datetime = utc_datetime + ist_offset
+    india_date = india_datetime.strftime('%Y-%m-%d')
+
+    partition_key_value = india_date
+    table=dynamodb_resource.Table(post_access_table_name)
+
+    response = dynamodb_client.query(
+        TableName=post_access_table_name,
+        KeyConditionExpression='ADT = :Date',
+        ExpressionAttributeValues={
+            ':Date': {'S': partition_key_value}
+        }
+    )
+
+
+    items = response['Items']
+    if items:
+        table.put_item(
+            Item = {
+                'ADT': india_date,
+                'APD': int(items[0]['APD']['N'])+1
+            })
+    else:
+        table.put_item(
+            Item = {
+                'ADT': india_date,
+                'APD': 1
+            })
+
+
 
     return {
         'statusCode': 200,

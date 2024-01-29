@@ -1,31 +1,34 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
-import checkLoginInformation from "./clients/checklogininformation.js";
+import generateLogInOtpCode from "./clients/generateloginotpcode.js";
 import Box from "@mui/material/Grid";
+import { useTranslation } from "react-i18next";
 
 const LogIn = () => {
+  const { t } = useTranslation();
   const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const nextAction = useSelector((state) => state.nextAction);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const dispatch = useDispatch();
 
-  const logInStatus = (userID) => {
-    let storePage = "";
-    if (nextAction == "PostJobInformation") {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "PostJobPage" };
+  const handleInputChange = (event) => {
+    setAccountName(event.target.value);
+    if (event.target.value.includes(" ")) {
+      setIsButtonDisabled(true);
     } else {
-      storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+      setIsButtonDisabled(false);
     }
+  };
 
-    const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
+  const logInStatus = (userID) => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
     const storeUserID = { type: "SET_USER_ID", payload: userID };
     const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
 
     dispatch(storePage);
-    dispatch(storeIsSignIn);
     dispatch(storeUserID);
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
@@ -43,25 +46,28 @@ const LogIn = () => {
       phoneNumber: phoneNumber,
     };
 
-    const result = await checkLoginInformation(logInInformation);
+    const storeClientPage = { type: "SET_CLIENT_PAGE", payload: "logIn" };
+    dispatch(storeClientPage);
+
+    const result = await generateLogInOtpCode(logInInformation);
     if (result.status == "Match") {
       setIsLoading(false);
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
-      alert("Account name or phone number is incorrect!");
+      alert(t("accountNameOrPhNoIsIncorrect"));
     } else {
       setIsLoading(false);
-      alert("Please Try Again!");
+      alert(t("tryAgain"));
     }
   };
 
   return (
     <>
       <div>
-        <h2 style={{ textAlign: "center" }}>Log In</h2>
+        <h2 style={{ textAlign: "center" }}>{t("logIn")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Account Name</label>
+          <label>{t("accountName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -69,7 +75,7 @@ const LogIn = () => {
               type="text"
               value={accountName}
               className="input"
-              onChange={(event) => setAccountName(event.target.value)}
+              onChange={handleInputChange}
               style={{
                 width: "86vw",
                 margin: "10px",
@@ -80,8 +86,24 @@ const LogIn = () => {
             ></input>
           </div>
         </Box>
+        {isButtonDisabled ? (
+          <Box>
+            <div
+              style={{
+                fontSize: "0.9em",
+                color: "red",
+                paddingLeft: "5vw",
+                marginBottom: "1vh",
+              }}
+            >
+              {t("includeSpaces")}
+            </div>
+          </Box>
+        ) : (
+          <Box></Box>
+        )}
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>Phone Number</label>
+          <label>{t("phoneNumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
@@ -101,17 +123,29 @@ const LogIn = () => {
           </div>
         </Box>
         <Box display="flex" justifyContent="center" alignItems="center">
-          <button
-            onClick={checkLogin}
-            disabled={isLoading}
-            style={{
-              margin: "10px",
-              backgroundColor: "#2F69F6",
-              color: "#e0f2f1",
-            }}
-          >
-            {isLoading ? "Log in now..." : "Log In"}
-          </button>
+          {isButtonDisabled ? (
+            <button
+              style={{
+                margin: "10px",
+                backgroundColor: "#b3b3b3b3",
+                color: "black",
+              }}
+            >
+              {t("logIn")}
+            </button>
+          ) : (
+            <button
+              onClick={checkLogin}
+              disabled={isLoading}
+              style={{
+                margin: "10px",
+                backgroundColor: "#2F69F6",
+                color: "#e0f2f1",
+              }}
+            >
+              {isLoading ? t("loginNow") : t("logIn")}
+            </button>
+          )}
         </Box>
         <div
           style={{
@@ -120,9 +154,9 @@ const LogIn = () => {
             alignItems: "center",
           }}
         >
-          <label style={{ marginRight: "5px" }}>Don't have an account?</label>
+          <label style={{ marginRight: "5px" }}>{t("dontHaveAnAccount")}</label>
           <Link underline="none" onClick={moveSignUpScreen}>
-            Sign up
+            {t("signUp")}
           </Link>
         </div>
       </div>

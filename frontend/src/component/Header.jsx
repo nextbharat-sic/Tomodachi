@@ -1,17 +1,23 @@
 import { useSelector, useDispatch } from "react-redux";
-import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { IoIosRefresh } from "react-icons/io";
+import { useTranslation } from "react-i18next";
 
 const Header = () => {
+  const { t, i18n } = useTranslation();
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
   const headerHeight = "6vh";
 
+  const changeLanguage = (event) => {
+    const lng = event.target.value;
+    i18n.changeLanguage(lng);
+  };
+
   const confirmSignOut = () => {
-    const isConfirm = confirm("Are you sure you want to log out?");
+    const isConfirm = confirm(t("confirmLogOut"));
     if (isConfirm) {
       signOut();
     }
@@ -22,7 +28,7 @@ const Header = () => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storeIsSignIn);
     dispatch(storePage);
-    alert("Log Out");
+    alert(t("logOut"));
   };
 
   const moveLogInScreen = () => {
@@ -45,60 +51,73 @@ const Header = () => {
   return (
     <>
       <Box height={headerHeight}>
-        <AppBar>
-          <Toolbar
-            position="static"
-            style={{
-              backgroundColor: "#631ACF",
-              height: headerHeight,
-              minHeight: "0",
-            }}
+        <Toolbar
+          position="static"
+          style={{
+            backgroundColor: "#631ACF",
+            height: headerHeight,
+            minHeight: "0",
+          }}
+        >
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
           >
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, display: "flex", alignItems: "center" }}
+            <div
+              style={{
+                height: headerHeight,
+                display: "flex",
+                alignItems: "center",
+              }}
             >
-              <div
+              <img height="90%" src="/logowhite.png" />
+            </div>
+            <div>
+              <select
+                onChange={changeLanguage}
+                value={i18n.language}
                 style={{
-                  height: headerHeight,
-                  display: "flex",
-                  alignItems: "center",
-                }}
-              >
-                <img height="90%" src="/logowhite.png" />
-              </div>
-              <span style={{ marginLeft: "4px" }}>Tomodachi</span>
-            </Typography>
-            <IoIosRefresh
-              onClick={refreshHome}
-              style={{ marginRight: "2vw", fontSize: "1.5em" }}
-            />
-            {signInStatus ? (
-              <span
-                onClick={confirmSignOut}
-                variant="outline"
-                style={{
+                  marginLeft: "4vw",
                   color: "#e0f2f1",
                   backgroundColor: "#631ACF",
+                  border: "none",
+                  fontSize: "4vw",
                 }}
               >
-                Log Out
-              </span>
-            ) : (
-              <span
-                variant="outline"
-                style={{
-                  color: "#e0f2f1",
-                  backgroundColor: "#631ACF",
-                }}
-                onClick={moveLogInScreen}
-              >
-                Log In
-              </span>
-            )}
-          </Toolbar>
-        </AppBar>
+                <option value="en">English</option>
+                <option value="te">తెలుగు</option>
+              </select>
+            </div>
+          </Typography>
+          <IoIosRefresh
+            onClick={refreshHome}
+            style={{ marginRight: "2vw", fontSize: "1.5em", color: "#e0f2f1" }}
+          />
+          {signInStatus ? (
+            <span
+              onClick={confirmSignOut}
+              variant="outline"
+              style={{
+                color: "#e0f2f1",
+                backgroundColor: "#631ACF",
+              }}
+            >
+              {t("logOut")}
+            </span>
+          ) : (
+            <span
+              variant="outline"
+              style={{
+                color: "#e0f2f1",
+                backgroundColor: "#631ACF",
+              }}
+              onClick={moveLogInScreen}
+            >
+              {t("logIn")}
+            </span>
+          )}
+        </Toolbar>
       </Box>
     </>
   );

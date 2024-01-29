@@ -1,21 +1,39 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import Box from "@mui/material/Grid";
 import Header from "./component/Header.jsx";
 import Footer from "./component/Footer.jsx";
 import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
 import LogIn from "./LogIn.jsx";
-import PostJobInformation from "./PostJobInformation.jsx";
+import SelectCategory from "./SelectCategory.jsx";
+import CheckOtp from "./CheckOtp.jsx";
+import Verified from "./Verified.jsx";
 import "./App.css";
 
-import Box from "@mui/material/Grid";
-
 function App() {
+  const checkForUpdates = async () => {
+    if ("serviceWorker" in navigator) {
+      try {
+        const registration = await navigator.serviceWorker.ready;
+        registration.active.postMessage({
+          type: "CHECK_FOR_UPDATES",
+        });
+      } catch (error) {
+        console.error("Error communicating with service worker:", error);
+      }
+    }
+  };
+
+  checkForUpdates();
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [displayPage, setDisplayPage] = useState("");
 
   const signInStatus = useSelector((state) => state.isSignIn);
   const pageStatus = useSelector((state) => state.pageStatus);
+
+  const contentHeight = pageStatus == "HomePage" ? "88vh" : "94vh";
 
   useEffect(() => {
     setIsSignUp(signInStatus);
@@ -26,7 +44,7 @@ function App() {
     <>
       <Box diplay="flex" flexDirection="column">
         {pageStatus == "HomePage" ? (
-          <Box height={Header.headerHeight}>
+          <Box>
             <Header />
           </Box>
         ) : (
@@ -39,20 +57,22 @@ function App() {
           alignItems="center"
           text-align="center"
           overflow="auto"
-          height="88vh"
+          height={contentHeight}
         >
           {pageStatus == "HomePage" ? <Home /> : ""}
           {pageStatus == "LogIn" ? <LogIn /> : ""}
           {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
-          {isSignUp && pageStatus == "PostJobPage" ? (
-            <PostJobInformation />
-          ) : (
-            ""
-          )}
+          {!isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
+          {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
+          {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
         </Box>
-        <Box height={Footer.footerHeight}>
-          <Footer />
-        </Box>
+        {pageStatus != "CheckOtpPage" && pageStatus != "OtpVerifiedPage" ? (
+          <Box>
+            <Footer />
+          </Box>
+        ) : (
+          ""
+        )}
       </Box>
     </>
   );

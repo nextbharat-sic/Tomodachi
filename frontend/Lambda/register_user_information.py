@@ -18,82 +18,6 @@ def lambda_handler(event, context):
 
     print(body)
 
-    # Validation check
-    if not isinstance(body['privacyPolicyCheck'], bool):
-        print('privacyPolicyCheckError')
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": json.dumps('Failed'),
-            })
-        }
-    if (len(body['phoneNumber']) != 10) or (not(str.isdecimal(body['phoneNumber']))):
-        print('phoneNumberError')
-        return {
-            'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": json.dumps('Failed'),
-            })
-        }
-
-    # Check account name
-    query_UAN_params = {
-        'TableName': user_table_name,
-        'IndexName': 'UAN-index',
-        'KeyConditionExpression': 'UAN = :accountName',
-        'ExpressionAttributeValues': {':accountName': {'S': body['accountName'] }},
-        }
-
-    UAN_response = dynamodb_client.query(**query_UAN_params)
-    if UAN_response['Items']:
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": "UAN Existed",
-            })
-        }
-
-    # Check phone number
-    query_UPN_params = {
-        'TableName': user_table_name,
-        'IndexName': 'UPN-index',
-        'KeyConditionExpression': 'UPN = :phoneNumber',
-        'ExpressionAttributeValues': {':phoneNumber': {'S': body['phoneNumber'] }},
-        }
-
-    UPN_response = dynamodb_client.query(**query_UPN_params)
-    if UPN_response['Items']:
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": "UPN Existed",
-            })
-        }
-
     # Get most recentry userId from CounterTable
     counter_res = dynamodb_client.get_item(
         TableName=counter_table_name,
@@ -152,28 +76,14 @@ def lambda_handler(event, context):
         )
         return {
             'statusCode': 200,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
+            'body': {
                 "status": "Success",
                 "userID": user_info["UID"]
-            })
+                }
         }
     except Exception as e:
         print(f"Transaction failed: {e}")
         return {
             'statusCode': 500,
-            'headers': {
-                'Content-Type': 'application/json',
-                "Access-Control-Allow-Headers" : "*",
-                "Access-Control-Allow-Origin": "*",
-                "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-            },
-            'body': json.dumps({
-                "status": "Failed",
-            })
+            'body': {"status": "Failed"}
         }
