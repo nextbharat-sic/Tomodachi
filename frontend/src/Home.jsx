@@ -1,10 +1,11 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
 import { useTranslation } from "react-i18next";
+import Card from "./Card.jsx";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -12,36 +13,6 @@ const Home = () => {
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
-  // const [dataFromS3, setDataFromS3] = useState(null);
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-
-  const replaceDate = (PCT) => {
-    const day = PCT.split("-")[2].split("/")[0];
-    const month = PCT.split("-")[1];
-    const time = PCT.split("-")[2].split("/")[1];
-    return (
-      day +
-      " " +
-      monthNames[Number(month) - 1] +
-      ", " +
-      time.split(":")[0] +
-      ":" +
-      time.split(":")[1]
-    );
-  };
 
   const movePostScreen = () => {
     const storeNextAction = {
@@ -58,243 +29,7 @@ const Home = () => {
     dispatch(storePage);
   };
 
-  const checkActive = (pdd) => {
-    let date = new Date();
-    let localDate =
-      date.getFullYear() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      date.getDate().toString().padStart(2, "0");
-    if (localDate <= pdd) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const renderLinkedText = (text) => {
-    const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{5}\s?\d{5}\b/g;
-
-    const matches = text.match(combinedRegex);
-    const parts = text.split(combinedRegex);
-
-    const renderLink = (match) => {
-      if (match.startsWith("http")) {
-        return (
-          <a key={match} href={match} target="_blank" rel="noopener noreferrer">
-            {match}
-          </a>
-        );
-      } else {
-        return (
-          <a key={match} href={`tel:${match}`}>
-            {match}
-          </a>
-        );
-      }
-    };
-
-    const renderParts = () =>
-      parts.map((part, index) => (
-        <Fragment key={index}>
-          {index > 0 && renderLink(matches[index - 1])}
-          {part}
-        </Fragment>
-      ));
-
-    return <>{renderParts()}</>;
-  };
-
-  const displayJobInformationList = (dataList) => {
-    return dataList.slice(0, visibleItemCount).map((jobData, index) => (
-      <div
-        key={index}
-        style={{
-          width: "92vw",
-          marginBottom: "1em",
-          borderRadius: "10px",
-          boxShadow:
-            "0.2em 0.2em 0em rgba(0, 0, 0, 0.1),-0.05em -0.2em 0.2em rgba(0, 0, 0, 0.1)",
-          backgroundColor: "#ffffff",
-          color: "#000000",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            width: "85vw",
-            marginLeft: "5vw",
-          }}
-        >
-          <div
-            style={{
-              overflowWrap: "break-word",
-              wordBreak: "break-word",
-              display: "flex",
-            }}
-          >
-            <img
-              width="48"
-              height="48"
-              src="https://img.icons8.com/fluency/48/test-account--v1.png"
-              alt="test-account--v1"
-            />
-            <div
-              style={{
-                fontFamily: "DM sans",
-                fontWeight: "Bold",
-                marginTop: "1.5vh",
-                marginLeft: "3vw",
-              }}
-            >
-              {jobData.PAN}
-            </div>
-            {jobData.PIT === "jobMarket" ? (
-              checkActive(jobData.PDD) ? (
-                <span
-                  style={{
-                    backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
-                    textAlign: "center",
-                    borderRadius: "0.5em",
-                    marginTop: "2vh",
-                    marginLeft: "auto",
-                    minWidth: "45px",
-                    maxHeight: "30px",
-                  }}
-                >
-                  {t("active")}
-                </span>
-              ) : (
-                <span
-                  style={{
-                    backgroundColor: "#696969",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
-                    textAlign: "center",
-                    borderRadius: "0.5em",
-                    marginTop: "2vh",
-                    marginLeft: "auto",
-                    minWidth: "45px",
-                    maxHeight: "30px",
-                  }}
-                >
-                  {t("close")}
-                </span>
-              )
-            ) : (
-              <span></span>
-            )}
-          </div>
-          <div style={{ display: "flex" }}>
-            <div
-              style={{
-                overflowWrap: "break-word",
-                maxWidth: "80vw",
-                fontFamily: "DM sans-serif",
-                fontSize: "120%",
-                fontWeight: "Bold",
-                marginLeft: "0.5em",
-              }}
-            >
-              {jobData.PTI}
-            </div>
-          </div>
-          <div>
-            <span
-              style={{
-                backgroundColor: "#f5f5f5",
-                border: "0.2em solid #f5f5f5",
-                borderRadius: "1em",
-                paddingRight: "0.3em",
-                paddingLeft: "0.3em",
-                marginLeft: "2vw",
-                fontSize: "0.9em",
-              }}
-            >
-              {jobData.PIT === "thandaTalks"
-                ? t("thandaTalks")
-                : jobData.PIT === "jobMarket"
-                  ? t("jobMarket")
-                  : jobData.PIT === "careerRelatedNews"
-                    ? t("careerRelatedNews")
-                    : ""}
-            </span>
-            {jobData.PIT === "thandaTalks" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {t("tunikalaThanda")}
-              </span>
-            ) : jobData.PIT === "jobMarket" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {jobData.PMJ === "indoor"
-                  ? t("indoor")
-                  : jobData.PMJ === "outdoor"
-                    ? t("outdoor")
-                    : ""}
-              </span>
-            ) : (
-              <span></span>
-            )}
-          </div>
-          <div
-            style={{
-              position: "relative",
-              overflowWrap: "break-word",
-              margin: "0.5em",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {renderLinkedText(jobData.PDE)}
-          </div>
-          {/* <div>
-            {dataFromS3 ? (
-              <img
-                src={dataFromS3}
-                alt="S3から取得した画像"
-                style={{ width: "10vw", height: "10vh" }}
-              />
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>*/}
-          <div
-            style={{
-              fontSize: "0.8em",
-              margin: "0.5em",
-              paddingBottom: "10px",
-            }}
-          >
-            {t("postedAt")} {replaceDate(String(jobData.PCT))}
-          </div>
-          {/* Add more details as needed */}
-        </div>
-      </div>
-    ));
-  };
-
-  const fetchAndDisplayJobInformation = async () => {
+  const fetchAndDisplayInformation = async () => {
     try {
       const uploadInformationResult = await getUploadInformation();
       setInformationResult(uploadInformationResult);
@@ -335,7 +70,7 @@ const Home = () => {
   // };
 
   useEffect(() => {
-    fetchAndDisplayJobInformation();
+    fetchAndDisplayInformation();
     // fetchS3Data();
   }, []);
 
@@ -431,9 +166,13 @@ const Home = () => {
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>
-          {/* Call displayJobInformationList directly in the JSX */}
+          {/* Call displayInformationList directly in the JSX */}
           {informationResult.length > 0 &&
-            displayJobInformationList(informationResult)}
+            informationResult
+              .slice(0, visibleItemCount)
+              .map((data, index) => (
+                <Card key={index} informationList={data} />
+              ))}
 
           {/* Show more button */}
           {informationResult.length > visibleItemCount && (
