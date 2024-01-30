@@ -21,6 +21,7 @@ const Home = () => {
   const [informationTitle, setInformationTitle] = useState("jobMarket");
 
   const pushCategoryButton = (categoryType) => {
+    setVisibleItemCount(5);
     setInformationTitle(categoryType);
   };
 
@@ -170,7 +171,7 @@ const Home = () => {
           <button
             className={"selectCategoryButton"}
             style={{
-              backgroundColor: "#b3b3b3b3",
+              borderWidth: "medium",
             }}
           >
             <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
@@ -190,7 +191,7 @@ const Home = () => {
           <button
             className={"selectCategoryButton"}
             style={{
-              backgroundColor: "#b3b3b3b3",
+              borderWidth: "medium",
             }}
           >
             <img
@@ -220,7 +221,7 @@ const Home = () => {
           <button
             className={"selectCategoryButton"}
             style={{
-              backgroundColor: "#b3b3b3b3",
+              borderWidth: "medium",
             }}
           >
             <img
@@ -246,7 +247,7 @@ const Home = () => {
           <button
             className={"selectCategoryButton"}
             style={{
-              backgroundColor: "#b3b3b3b3",
+              borderWidth: "medium",
             }}
           >
             <img
