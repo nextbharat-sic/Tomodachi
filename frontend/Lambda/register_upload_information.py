@@ -85,13 +85,7 @@ def lambda_handler(event, context):
     upload_info['PCT'] = create_date+"_"+ create_time
     upload_info['PDD'] = deadline_date
     upload_info['PDE'] = body['description']
-    
-    if body['category'] == 'contactBook':
-        upload_info['PTI'] = body['contactName']
-        upload_info['PCN'] = body['contactNumber']
-    else:
-        upload_info['PTI'] = body['title']
-    
+    upload_info['PTI'] = body['title']
     upload_info['PMJ'] = body['modeOfJob']
     upload_info['PST'] = True
     upload_info['PTP'] = 'Post'
