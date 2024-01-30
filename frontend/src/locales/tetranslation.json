@@ -74,5 +74,10 @@
   "done": "పూర్తయింది",
   "termsAndCondition": "నిబంధనలు మరియు షరతులు",
   "tunikalaThanda": "తునికల తండా",
-  "includeSpaces": "ఖాళీలు లేకుండా ఖాతా పేరును నమోదు చేయండి"
+  "includeSpaces": "ఖాళీలు లేకుండా ఖాతా పేరును నమోదు చేయండి",
+  "contactBook": "",
+  "contactName": "",
+  "writeContactName": "",
+  "contactNumber": "",
+  "writeContactNumber": ""
 }
