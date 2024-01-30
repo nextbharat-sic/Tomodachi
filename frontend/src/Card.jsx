@@ -235,6 +235,20 @@ const Card = (props) => {
                   ? t("outdoor")
                   : ""}
               </span>
+            ) : informationList.PIT === "contactBook" ? (
+              <span
+                style={{
+                  backgroundColor: "#f5f5f5",
+                  border: "0.2em solid #f5f5f5",
+                  borderRadius: "1em",
+                  paddingRight: "0.3em",
+                  paddingLeft: "0.3em",
+                  marginLeft: "2vw",
+                  fontSize: "0.9em",
+                }}
+              >
+                {renderLinkedText(informationList.PCN)}
+              </span>
             ) : (
               <span></span>
             )}

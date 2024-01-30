@@ -15,9 +15,13 @@ const ContactBook = () => {
   const [contactBookData, setContactData] = useState({
     userId: userID,
     category: "contactBook",
+    forWhichThanda: "",
     contactName: "",
     contactNumber: "",
+    deadlineDate: "",
+    modeOfJob: "",
     description: "",
+    image: "",
     accountName: accountName,
     phoneNumber: phoneNumber,
   });
@@ -50,9 +54,13 @@ const ContactBook = () => {
       const contactBookInformation = {
         userId: contactBookData.userId,
         category: contactBookData.category,
+        forWhichThanda: contactBookData.forWhichThanda,
         title: contactBookData.contactName,
+        deadlineDate: contactBookData.deadlineDate,
+        modeOfJob: contactBookData.modeOfJob,
         contactNumber: contactBookData.contactNumber,
         description: contactBookData.description,
+        image: contactBookData.image,
         accountName: contactBookData.accountName,
         phoneNumber: contactBookData.phoneNumber,
       };
