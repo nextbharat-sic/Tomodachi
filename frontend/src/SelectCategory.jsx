@@ -1,9 +1,10 @@
 import { useState } from "react";
 import JobMarket from "./JobMarket.jsx";
-import CareerRelatedNews from "./CareerRelatedNews.jsx";
-import ThandaTalks from "./ThandaTalks.jsx";
 import Box from "@mui/material/Grid";
 import { useTranslation } from "react-i18next";
+import CareerRelatedNews from "./CareerRelatedNews.jsx";
+import ThandaTalks from "./ThandaTalks.jsx";
+import ContactBook from "./ContactBook.jsx";
 
 const SelectCategory = () => {
   const { t } = useTranslation();
@@ -38,11 +39,13 @@ const SelectCategory = () => {
             <option value="jobMarket">{t("jobMarket")}</option>
             <option value="careerRelatedNews">{t("careerRelatedNews")}</option>
             <option value="thandaTalks">{t("thandaTalks")}</option>
+            <option value="contactBook">{t("contactBook")}</option>
           </select>
         </Box>
         {category == "jobMarket" ? <JobMarket /> : ""}
         {category == "careerRelatedNews" ? <CareerRelatedNews /> : ""}
         {category == "thandaTalks" ? <ThandaTalks /> : ""}
+        {category == "contactBook" ? <ContactBook /> : ""}
       </div>
     </>
   );
