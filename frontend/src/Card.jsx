@@ -1,5 +1,6 @@
 import { Fragment } from "react";
 import { useTranslation } from "react-i18next";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const Card = (props) => {
   const informationList = props.informationList;
@@ -109,21 +110,26 @@ const Card = (props) => {
               display: "flex",
             }}
           >
-            <img
-              width="48"
-              height="48"
-              src="https://img.icons8.com/fluency/48/test-account--v1.png"
-              alt="test-account--v1"
-            />
             <div
               style={{
-                fontFamily: "DM sans",
-                fontWeight: "Bold",
+                display: "flex",
+                alignItems: "center",
                 marginTop: "1.5vh",
-                marginLeft: "3vw",
               }}
             >
-              {informationList.PAN}
+              <AccountCircleIcon
+                sx={{ fontSize: 40 }}
+                style={{ color: "#000080" }}
+              />
+              <div
+                style={{
+                  fontFamily: "DM sans",
+                  fontWeight: "Bold",
+                  marginLeft: "3vw",
+                }}
+              >
+                {informationList.PAN}
+              </div>
             </div>
             {informationList.PIT === "jobMarket" ? (
               checkActive(informationList.PDD) ? (

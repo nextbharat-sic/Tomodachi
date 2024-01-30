@@ -10,6 +10,7 @@ import thandaTalksIcon from "./assets/thandaTalksIcon.png";
 import contactBookIcon from "./assets/contactBookIcon.png";
 import { useTranslation } from "react-i18next";
 import Card from "./Card.jsx";
+import "./Home.css";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -17,10 +18,10 @@ const Home = () => {
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
-  const [fetchCategoryType, setFetchCategoryType] = useState("jobMarket");
+  const [informationTitle, setInformationTitle] = useState("jobMarket");
 
   const pushCategoryButton = (categoryType) => {
-    setFetchCategoryType(categoryType);
+    setInformationTitle(categoryType);
   };
 
   const movePostScreen = () => {
@@ -40,8 +41,9 @@ const Home = () => {
 
   const fetchAndDisplayInformation = async () => {
     try {
-      const uploadInformationResult =
-        await getUploadInformation(fetchCategoryType);
+      const uploadInformationResult = await getUploadInformation({
+        informationTitle: informationTitle,
+      });
       setInformationResult(uploadInformationResult);
     } catch (error) {
       console.error(t("errorFetching"), error);
@@ -82,7 +84,7 @@ const Home = () => {
   useEffect(() => {
     fetchAndDisplayInformation();
     // fetchS3Data();
-  }, [fetchCategoryType]);
+  }, [informationTitle]);
 
   return (
     <>
@@ -164,172 +166,106 @@ const Home = () => {
         </div>
       </Box>
       <Box display="flex" style={{ margin: "2vh 2vw" }}>
-        {fetchCategoryType == "jobMarket" ? (
+        {informationTitle == "jobMarket" ? (
           <button
+            className={"selectCategoryButton"}
             style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${jobMarketIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundColor: "#b3b3b3b3",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
             }}
           >
-            Job market
+            <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
+            <div className={"selectCategoryButtonText"}>{t("jobMarket")}</div>
           </button>
         ) : (
           <button
             value="jobMarket"
             onClick={(event) => pushCategoryButton(event.target.value)}
-            style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${jobMarketIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
-            }}
+            className={"selectCategoryButton"}
           >
-            Job market
+            <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
+            <div className={"selectCategoryButtonText"}>{t("jobMarket")}</div>
           </button>
         )}
-        {fetchCategoryType == "careerRelatedNews" ? (
+        {informationTitle == "careerRelatedNews" ? (
           <button
+            className={"selectCategoryButton"}
             style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${careerRelatedNewsIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundColor: "#b3b3b3b3",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
             }}
           >
-            Career news
+            <img
+              src={careerRelatedNewsIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("careerRelatedNews")}
+            </div>
           </button>
         ) : (
           <button
             value="careerRelatedNews"
             onClick={(event) => pushCategoryButton(event.target.value)}
-            style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${careerRelatedNewsIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
-            }}
+            className={"selectCategoryButton"}
           >
-            Career news
+            <img
+              src={careerRelatedNewsIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("careerRelatedNews")}
+            </div>
           </button>
         )}
-        {fetchCategoryType == "thandaTalks" ? (
+        {informationTitle == "thandaTalks" ? (
           <button
+            className={"selectCategoryButton"}
             style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${thandaTalksIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundColor: "#b3b3b3b3",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
             }}
           >
-            Thanda talks
+            <img
+              src={thandaTalksIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>{t("thandaTalks")}</div>
           </button>
         ) : (
           <button
             value="thandaTalks"
             onClick={(event) => pushCategoryButton(event.target.value)}
-            style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${thandaTalksIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
-            }}
+            className={"selectCategoryButton"}
           >
-            Thanda talks
+            <img
+              src={thandaTalksIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>{t("thandaTalks")}</div>
           </button>
         )}
-        {fetchCategoryType == "contactBook" ? (
+        {informationTitle == "contactBook" ? (
           <button
+            className={"selectCategoryButton"}
             style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${contactBookIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
               backgroundColor: "#b3b3b3b3",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
             }}
           >
-            Contact book
+            <img
+              src={contactBookIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>{t("contactBook")}</div>
           </button>
         ) : (
           <button
             value="contactBook"
             onClick={(event) => pushCategoryButton(event.target.value)}
-            style={{
-              height: "12vh",
-              width: "22vw",
-              margin: "0vh 1vw",
-              backgroundImage: `url(${contactBookIcon})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "flex-end",
-              alignItems: "center",
-              whiteSpace: "nowrap",
-              fontSize: "40%",
-            }}
+            className={"selectCategoryButton"}
           >
-            Contact book
+            <img
+              src={contactBookIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>{t("contactBook")}</div>
           </button>
         )}
       </Box>
