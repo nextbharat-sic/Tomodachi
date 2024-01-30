@@ -49,6 +49,7 @@ def lambda_handler(event, context):
             'PAN':item['PAN']['S'],
             'PPN':item['PPN']['S'],
             'PFT':item['PFT']['S'],
+            'PCN':item['PCN']['S'],
         })
         
     print(post_list)
