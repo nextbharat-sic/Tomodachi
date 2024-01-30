@@ -85,7 +85,13 @@ def lambda_handler(event, context):
     upload_info['PCT'] = create_date+"_"+ create_time
     upload_info['PDD'] = deadline_date
     upload_info['PDE'] = body['description']
-    upload_info['PTI'] = body['title']
+    
+    if body['category'] == 'contactBook':
+        upload_info['PTI'] = body['contactName']
+        upload_info['PCN'] = body['contactNumber']
+    else:
+        upload_info['PTI'] = body['title']
+    
     upload_info['PMJ'] = body['modeOfJob']
     upload_info['PST'] = True
     upload_info['PTP'] = 'Post'
@@ -93,6 +99,7 @@ def lambda_handler(event, context):
     upload_info['PUT'] = create_date+"_"+ create_time
     upload_info['PAN'] = body['accountName']
     upload_info['PPN'] = body['phoneNumber']
+    upload_info['PCN'] = body['contactNumber']
 
     upload_media_list = []
     upload_media_list.append(body['image'])
@@ -125,6 +132,7 @@ def lambda_handler(event, context):
               'PMD' : {'L': create_upload_pmd(upload_media_list)},
               'PAN' : {'S': upload_info['PAN']},
               'PPN' : {'S': upload_info['PPN']},
+              'PCN' : {'S': upload_info['PCN']}
           },
       }
     }
