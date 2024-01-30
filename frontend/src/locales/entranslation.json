@@ -26,7 +26,7 @@
   "category": "Category",
   "selectCategory": "Select Category",
   "jobMarket": "Job Market",
-  "careerRelatedNews": "Career Related News",
+  "careerRelatedNews": "Career News",
   "thandaTalks": "Thanda Talks",
   "title": "Title",
   "deadlineDate": "Deadline Date",
@@ -74,5 +74,6 @@
   "done": "Done",
   "termsAndCondition": "Terms and Condition",
   "tunikalaThanda": "Tunikala Thanda",
-  "includeSpaces": "Enter Account Name without spaces!"
+  "includeSpaces": "Enter Account Name without spaces!",
+  "contactBook": "Contact Book"
 }

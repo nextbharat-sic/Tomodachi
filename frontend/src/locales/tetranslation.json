@@ -26,7 +26,7 @@
   "category": "క్యాటగిరి",
   "selectCategory": "క్యాటగిరి ఎంచుకోండి",
   "jobMarket": "ఉద్యోగ మార్కెట్",
-  "careerRelatedNews": "కెరీర్ సంబంధిత వార్తలు",
+  "careerRelatedNews": "not translated",
   "thandaTalks": "తాండ ముచ్చట్లు",
   "title": "శీర్షిక/పేరు",
   "deadlineDate": "గడువు తేదీ",
@@ -74,5 +74,6 @@
   "done": "పూర్తయింది",
   "termsAndCondition": "నిబంధనలు మరియు షరతులు",
   "tunikalaThanda": "తునికల తండా",
-  "includeSpaces": "ఖాళీలు లేకుండా ఖాతా పేరును నమోదు చేయండి"
+  "includeSpaces": "ఖాళీలు లేకుండా ఖాతా పేరును నమోదు చేయండి",
+  "contactBook": "not translated"
 }
