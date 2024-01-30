@@ -1,24 +1,54 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import Box from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import JobMarket from "./JobMarket.jsx";
 import CareerRelatedNews from "./CareerRelatedNews.jsx";
 import ThandaTalks from "./ThandaTalks.jsx";
-import Box from "@mui/material/Grid";
 import { useTranslation } from "react-i18next";
 
 const SelectCategory = () => {
   const { t } = useTranslation();
   const [category, setCategory] = useState("");
+  const dispatch = useDispatch();
 
   const categoryDataChange = (event) => {
     const value = event.target.value;
     setCategory(value);
   };
 
+  const backPage = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storePage);
+  };
+
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <ArrowBackIcon
+          onClick={backPage}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "2vw",
+            width: "10vw",
+          }}
+        />
+        <h2 style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {t("informationDetails")}
+        </h2>
+        <div
+          style={{
+            marginRight: "2vw",
+            width: "10vw",
+          }}
+        />
+      </div>
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("informationDetails")}</h2>
-
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("category")}</label>
         </div>

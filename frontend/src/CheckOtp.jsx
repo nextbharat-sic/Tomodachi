@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import checkOtpCode from "./clients/checkotpcode.js";
 import { useTranslation } from "react-i18next";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 const CheckOtp = () => {
   const { t } = useTranslation();

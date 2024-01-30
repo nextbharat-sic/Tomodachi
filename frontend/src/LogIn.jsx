@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
 import generateLogInOtpCode from "./clients/generateloginotpcode.js";
 import Box from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 
 const LogIn = () => {
@@ -62,10 +63,38 @@ const LogIn = () => {
     }
   };
 
+  const backPage = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storePage);
+  };
+
   return (
     <>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <ArrowBackIcon
+          onClick={backPage}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "2vw",
+            width: "10vw",
+          }}
+        />
+        <h2 style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {t("logIn")}
+        </h2>
+        <div
+          style={{
+            marginRight: "2vw",
+            width: "10vw",
+          }}
+        />
+      </div>
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("logIn")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("accountName")}</label>
         </div>

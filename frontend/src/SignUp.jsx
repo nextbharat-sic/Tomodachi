@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import generateSignUpOtpCode from "./clients/generatesignupotpcode.js";
 import Modal from "./component/Modal.jsx";
 import { useTranslation } from "react-i18next";
@@ -98,11 +99,39 @@ const SignUp = () => {
     return true;
   };
 
+  const backPage = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(storePage);
+  };
+
   return (
     <>
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <ArrowBackIcon
+          onClick={backPage}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "2vw",
+            width: "10vw",
+          }}
+        />
+        <h2 style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {t("signUp")}
+        </h2>
+        <div
+          style={{
+            marginRight: "2vw",
+            width: "10vw",
+          }}
+        />
+      </div>
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("signUp")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("accountName")}</label>
         </div>
