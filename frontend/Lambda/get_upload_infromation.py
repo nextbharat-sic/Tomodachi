@@ -20,7 +20,7 @@ def lambda_handler(event, context):
         'TableName': post_information_table_name,
         'IndexName': 'PIT-PCT-index',
         'KeyConditionExpression': 'PIT = :information_title',
-        'ExpressionAttributeValues': {':information_title': {'S': body['fetchCategoryType']}},
+        'ExpressionAttributeValues': {':information_title': {'S': body['informationTitle']}},
         'ScanIndexForward': False,
         }
     
