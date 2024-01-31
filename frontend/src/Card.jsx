@@ -1,6 +1,7 @@
 import { Fragment } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
+import postCallInformation from "./clients/postcallinformation.js";
 import { useTranslation } from "react-i18next";
 
 const Card = (props) => {
@@ -52,6 +53,14 @@ const Card = (props) => {
     }
   };
 
+  const phoneCount = (event) => {
+    console.log(event.currentTarget.textContent);
+    const callInformation = {
+      contactNumber: event.currentTarget.textContent,
+    };
+    postCallInformation(callInformation);
+  };
+
   const renderLinkedText = (text) => {
     const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{5}\s?\d{5}\b/g;
     const matches = text.match(combinedRegex);
@@ -66,7 +75,7 @@ const Card = (props) => {
         );
       } else {
         return (
-          <a key={match} href={`tel:${match}`}>
+          <a key={match} href={`tel:${match}`} onClick={phoneCount}>
             {match}
           </a>
         );
@@ -259,8 +268,8 @@ const Card = (props) => {
                 {informationList.PMJ === "indoor"
                   ? t("indoor")
                   : informationList.PMJ === "outdoor"
-                  ? t("outdoor")
-                  : ""}
+                    ? t("outdoor")
+                    : ""}
               </span>
             ) : informationList.PIT === "contactBook" ? (
               <div style={{ display: "flex", alignItems: "center" }}>
