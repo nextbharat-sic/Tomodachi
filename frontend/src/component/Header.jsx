@@ -16,18 +16,41 @@ const Header = () => {
     i18n.changeLanguage(lng);
   };
 
+  const refreshUserInformation = () => {
+    const storeUserID = { type: "SET_USER_ID", payload: "" };
+    const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: "" };
+    const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: "" };
+    const storePrivacyPolicyCheck = {
+      type: "SET_PRIVACY_POLICY_CHECK",
+      payload: false,
+    };
+    dispatch(storeUserID);
+    dispatch(storeAccountName);
+    dispatch(storePhoneNumber);
+    dispatch(storePrivacyPolicyCheck);
+  };
+
+  const refreshUserAction = () => {
+    const storeNextAction = { type: "SET_NEXT_ACTION", payload: "" };
+    const storeClientPage = { type: "SET_CLIENT_PAGE", payload: "" };
+    dispatch(storeNextAction);
+    dispatch(storeClientPage);
+  };
+
   const confirmSignOut = () => {
     const isConfirm = confirm(t("confirmLogOut"));
     if (isConfirm) {
-      signOut();
+      logOut();
     }
   };
 
-  const signOut = () => {
+  const logOut = () => {
     const storeIsSignIn = { type: "SIGNIN_STATE", payload: false };
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storeIsSignIn);
     dispatch(storePage);
+    refreshUserInformation();
+    refreshUserAction();
     alert(t("logOut"));
   };
 
