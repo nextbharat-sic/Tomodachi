@@ -56,7 +56,7 @@ const LogIn = () => {
       logInStatus(result.userID);
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
-      alert(t("accountNameOrPhNoIsIncorrect"));
+      alert(t("userNameOrPhNoIsIncorrect"));
     } else {
       setIsLoading(false);
       alert(t("tryAgain"));
@@ -96,7 +96,7 @@ const LogIn = () => {
       </div>
       <div>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("accountName")}</label>
+          <label>{t("userName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
