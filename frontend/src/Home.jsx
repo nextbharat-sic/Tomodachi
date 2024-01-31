@@ -25,6 +25,8 @@ const Home = () => {
   const [visibleItemCount, setVisibleItemCount] = useState(5);
   const [informationTitle, setInformationTitle] = useState("jobMarket");
   const [isLoadingScreen, setIsLoadingScreen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   const pushCategoryButton = (categoryType) => {
     setVisibleItemCount(5);
@@ -64,13 +66,13 @@ const Home = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
   };
 
-  const [isModalOpen, setModalIsOpen] = useState(false);
-  const handleOpen = () => {
-    setModalIsOpen(true);
+  const handleOpen = (modalType) => {
+    setModalType(modalType);
+    setIsModalOpen(true);
   };
 
   const handleClose = () => {
-    setModalIsOpen(false);
+    setIsModalOpen(false);
   };
 
   // const fetchS3Data = async () => {
@@ -108,7 +110,7 @@ const Home = () => {
   return (
     <>
       {isLoadingScreen ? <Loading /> : ""}
-      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} type={modalType} /> : ""}
       <Box display="flex">
         <div
           style={{
@@ -343,7 +345,7 @@ const Home = () => {
             >
               <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
                 <span
-                  onClick={handleOpen}
+                  onClick={() => handleOpen("privacy")}
                   style={{
                     color: "#e0f2f1",
                   }}
@@ -362,7 +364,14 @@ const Home = () => {
               justifyContent="center"
             >
               <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
-                {t("howToUse")}
+                <span
+                  onClick={() => handleOpen("howTo")}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("howToUse")}
+                </span>
               </Typography>
             </Grid>
             <Grid
