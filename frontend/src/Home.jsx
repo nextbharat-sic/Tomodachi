@@ -15,6 +15,7 @@ import contactBookIcon from "./assets/contactBookIcon.png";
 import { useTranslation } from "react-i18next";
 import Card from "./Card.jsx";
 import "./Home.css";
+import Loading from "./Loading.jsx";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -23,6 +24,7 @@ const Home = () => {
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
   const [informationTitle, setInformationTitle] = useState("jobMarket");
+  const [isLoadingScreen, setIsLoadingScreen] = useState(false);
 
   const pushCategoryButton = (categoryType) => {
     setVisibleItemCount(5);
@@ -46,12 +48,15 @@ const Home = () => {
 
   const fetchAndDisplayInformation = async () => {
     try {
+      setIsLoadingScreen(true);
       const uploadInformationResult = await getUploadInformation({
         informationTitle: informationTitle,
       });
       setInformationResult(uploadInformationResult);
+      setIsLoadingScreen(false);
     } catch (error) {
       console.error(t("errorFetching"), error);
+      setIsLoadingScreen(false);
     }
   };
 
@@ -102,6 +107,7 @@ const Home = () => {
 
   return (
     <>
+      {isLoadingScreen ? <Loading /> : ""}
       {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <Box display="flex">
         <div

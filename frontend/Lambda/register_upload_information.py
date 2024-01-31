@@ -93,6 +93,7 @@ def lambda_handler(event, context):
     upload_info['PUT'] = create_date+"_"+ create_time
     upload_info['PAN'] = body['accountName']
     upload_info['PPN'] = body['phoneNumber']
+    upload_info['PCN'] = body['contactNumber']
 
     upload_media_list = []
     upload_media_list.append(body['image'])
@@ -125,6 +126,7 @@ def lambda_handler(event, context):
               'PMD' : {'L': create_upload_pmd(upload_media_list)},
               'PAN' : {'S': upload_info['PAN']},
               'PPN' : {'S': upload_info['PPN']},
+              'PCN' : {'S': upload_info['PCN']}
           },
       }
     }
