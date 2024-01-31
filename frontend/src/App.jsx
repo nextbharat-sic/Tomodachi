@@ -34,22 +34,6 @@ function App() {
 
   const contentHeight = pageStatus == "HomePage" ? "94vh" : "100vh";
 
-  ///////////////////
-  //レビュー用
-  const test1 = useSelector((state) => state.nextAction);
-  const test2 = useSelector((state) => state.userID);
-  const test3 = useSelector((state) => state.accountName);
-  const test4 = useSelector((state) => state.phoneNumber);
-  const test5 = useSelector((state) => state.privacyPolicyCheck);
-  const test6 = useSelector((state) => state.clientPage);
-  console.log("nextAction : " + test1);
-  console.log("userID : " + test2);
-  console.log("accountName : " + test3);
-  console.log("phoneNumber : " + test4);
-  console.log("privacyPolicyCheck : " + test5);
-  console.log("clientPage : " + test6);
-  ///////////////////
-
   useEffect(() => {
     setIsSignUp(signInStatus);
     setDisplayPage(pageStatus);
