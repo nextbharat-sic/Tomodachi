@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Grid";
 import Header from "./component/Header.jsx";
-import Footer from "./component/Footer.jsx";
 import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
 import LogIn from "./LogIn.jsx";
@@ -33,7 +32,7 @@ function App() {
   const signInStatus = useSelector((state) => state.isSignIn);
   const pageStatus = useSelector((state) => state.pageStatus);
 
-  const contentHeight = pageStatus == "HomePage" ? "88vh" : "94vh";
+  const contentHeight = pageStatus == "HomePage" ? "94vh" : "100vh";
 
   useEffect(() => {
     setIsSignUp(signInStatus);
@@ -66,13 +65,6 @@ function App() {
           {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
           {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
         </Box>
-        {pageStatus != "CheckOtpPage" && pageStatus != "OtpVerifiedPage" ? (
-          <Box>
-            <Footer />
-          </Box>
-        ) : (
-          ""
-        )}
       </Box>
     </>
   );

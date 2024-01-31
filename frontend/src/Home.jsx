@@ -2,6 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Modal from "./component/Modal.jsx";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
 import jobMarketIcon from "./assets/jobMarketIcon.png";
@@ -60,6 +64,15 @@ const Home = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
   };
 
+  const [isModalOpen, setModalIsOpen] = useState(false);
+  const handleOpen = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalIsOpen(false);
+  };
+
   // const fetchS3Data = async () => {
   //   const s3Client = new S3Client({
   //     region: import.meta.env.VITE_APP_S3_REGION,
@@ -94,7 +107,8 @@ const Home = () => {
 
   return (
     <>
-      {isLoadingScreen == true ? <Loading /> : ""}
+      {isLoadingScreen ? <Loading /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <Box display="flex">
         <div
           style={{
@@ -307,6 +321,64 @@ const Home = () => {
             </button>
           )}
         </div>
+      </Box>
+      <Box>
+        <Toolbar
+          position="static"
+          style={{
+            backgroundColor: "#631ACF",
+            height: "6vh",
+            minHeight: "0",
+          }}
+        >
+          <Grid container>
+            <Grid
+              item
+              variant="h6"
+              component="div"
+              xs={4}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                <span
+                  onClick={handleOpen}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("privacyPolicy")}
+                </span>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              variant="h6"
+              component="div"
+              xs={4}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                {t("howToUse")}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              variant="h6"
+              xs={4}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography style={{ fontSize: "2vw", color: "#e0f2f1" }}>
+                {t("copyright")}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Toolbar>
       </Box>
     </>
   );
