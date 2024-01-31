@@ -63,6 +63,24 @@ def lambda_handler(event, context):
         },
     )
 
+    if body['category'] == "contactBook":
+        
+        if(len(body['contactNumber']) != 10) or (not(str.isdecimal(body['contactNumber']))):
+            print('contactNumberError')
+            return {
+                'statusCode': 500,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Headers" : "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                },
+                'body': json.dumps({
+                    "status": "Failed",
+                })
+            }
+
+
     next_upload_info_id = int(counter_res['Item']['CLI']['N']) + 1
 
     # Update number of user counter
@@ -93,6 +111,7 @@ def lambda_handler(event, context):
     upload_info['PUT'] = create_date+"_"+ create_time
     upload_info['PAN'] = body['accountName']
     upload_info['PPN'] = body['phoneNumber']
+    upload_info['PCN'] = body['contactNumber']
 
     upload_media_list = []
     upload_media_list.append(body['image'])
@@ -125,6 +144,7 @@ def lambda_handler(event, context):
               'PMD' : {'L': create_upload_pmd(upload_media_list)},
               'PAN' : {'S': upload_info['PAN']},
               'PPN' : {'S': upload_info['PPN']},
+              'PCN' : {'S': upload_info['PCN']}
           },
       }
     }

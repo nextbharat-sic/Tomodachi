@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import { useTranslation } from "react-i18next";
 import postInformation from "./clients/postinformation.js";
+import { useTranslation } from "react-i18next";
 
 const ContactBook = () => {
   const { t } = useTranslation();
@@ -45,7 +45,11 @@ const ContactBook = () => {
     const isConfirm = confirm(t("confirmUpload"));
     if (isConfirm) {
       setIsLoading(true);
-      uploadContactBookInfo();
+      if (isValidate()) {
+        uploadContactBookInfo();
+      } else {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -79,6 +83,17 @@ const ContactBook = () => {
       setIsLoading(false);
       console.error(t("errorUploading"), error);
     }
+  };
+
+  const isValidate = () => {
+    const formatter = /^[0-9]{10}$/;
+
+    if (!formatter.test(contactBookData.contactNumber)) {
+      alert(t("phoneNumberDigits"));
+      return false;
+    }
+
+    return true;
   };
 
   return (
@@ -140,7 +155,6 @@ const ContactBook = () => {
                 margin: "10px",
                 borderRadius: "10px",
               }}
-              required
             ></textarea>
           </Box>
           <Box display="flex" justifyContent="center" alignItems="center">

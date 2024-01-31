@@ -1,7 +1,7 @@
 import { Fragment } from "react";
-import { useTranslation } from "react-i18next";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
+import { useTranslation } from "react-i18next";
 
 const Card = (props) => {
   const informationList = props.informationList;
