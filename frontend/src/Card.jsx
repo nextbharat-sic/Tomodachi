@@ -54,7 +54,6 @@ const Card = (props) => {
   };
 
   const phoneCount = (event) => {
-    console.log(event.currentTarget.textContent);
     const callInformation = {
       contactNumber: event.currentTarget.textContent,
     };
