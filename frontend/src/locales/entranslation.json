@@ -76,5 +76,9 @@
   "tunikalaThanda": "Tunikala Thanda",
   "includeSpaces": "Enter Account Name without spaces!",
   "contactBook": "Contact Book",
+  "contactName": "Contact Name",
+  "writeContactName": "Write contact name",
+  "contactNumber": "Contact Number",
+  "writeContactNumber": "Write contact number",
   "howToUse": "How To Use/Get Help"
 }

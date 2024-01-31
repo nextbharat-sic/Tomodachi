@@ -63,6 +63,24 @@ def lambda_handler(event, context):
         },
     )
 
+    if body['category'] == "contactBook":
+        
+        if(len(body['contactNumber']) != 10) or (not(str.isdecimal(body['contactNumber']))):
+            print('contactNumberError')
+            return {
+                'statusCode': 500,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    "Access-Control-Allow-Headers" : "*",
+                    "Access-Control-Allow-Origin": "*",
+                    "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+                },
+                'body': json.dumps({
+                    "status": "Failed",
+                })
+            }
+
+
     next_upload_info_id = int(counter_res['Item']['CLI']['N']) + 1
 
     # Update number of user counter
