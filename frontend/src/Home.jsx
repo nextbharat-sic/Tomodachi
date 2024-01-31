@@ -2,6 +2,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Modal from "./component/Modal.jsx";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
 import jobMarketIcon from "./assets/jobMarketIcon.png";
@@ -11,6 +15,7 @@ import contactBookIcon from "./assets/contactBookIcon.png";
 import { useTranslation } from "react-i18next";
 import Card from "./Card.jsx";
 import "./Home.css";
+import Loading from "./Loading.jsx";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -19,6 +24,7 @@ const Home = () => {
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
   const [informationTitle, setInformationTitle] = useState("jobMarket");
+  const [isLoadingScreen, setIsLoadingScreen] = useState(false);
 
   const pushCategoryButton = (categoryType) => {
     setVisibleItemCount(5);
@@ -42,17 +48,29 @@ const Home = () => {
 
   const fetchAndDisplayInformation = async () => {
     try {
+      setIsLoadingScreen(true);
       const uploadInformationResult = await getUploadInformation({
         informationTitle: informationTitle,
       });
       setInformationResult(uploadInformationResult);
+      setIsLoadingScreen(false);
     } catch (error) {
       console.error(t("errorFetching"), error);
+      setIsLoadingScreen(false);
     }
   };
 
   const handleShowMore = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
+  };
+
+  const [isModalOpen, setModalIsOpen] = useState(false);
+  const handleOpen = () => {
+    setModalIsOpen(true);
+  };
+
+  const handleClose = () => {
+    setModalIsOpen(false);
   };
 
   // const fetchS3Data = async () => {
@@ -89,6 +107,8 @@ const Home = () => {
 
   return (
     <>
+      {isLoadingScreen ? <Loading /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
       <Box display="flex">
         <div
           style={{
@@ -301,6 +321,64 @@ const Home = () => {
             </button>
           )}
         </div>
+      </Box>
+      <Box>
+        <Toolbar
+          position="static"
+          style={{
+            backgroundColor: "#631ACF",
+            height: "6vh",
+            minHeight: "0",
+          }}
+        >
+          <Grid container>
+            <Grid
+              item
+              variant="h6"
+              component="div"
+              xs={4}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                <span
+                  onClick={handleOpen}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("privacyPolicy")}
+                </span>
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              variant="h6"
+              component="div"
+              xs={4}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                {t("howToUse")}
+              </Typography>
+            </Grid>
+            <Grid
+              item
+              variant="h6"
+              xs={4}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Typography style={{ fontSize: "2vw", color: "#e0f2f1" }}>
+                {t("copyright")}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Toolbar>
       </Box>
     </>
   );

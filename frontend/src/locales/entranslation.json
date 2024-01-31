@@ -79,5 +79,6 @@
   "contactName": "Contact Name",
   "writeContactName": "Write contact name",
   "contactNumber": "Contact Number",
-  "writeContactNumber": "Write contact number"
+  "writeContactNumber": "Write contact number",
+  "howToUse": "How To Use/Get Help"
 }
