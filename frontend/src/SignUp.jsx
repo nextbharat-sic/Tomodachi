@@ -106,7 +106,7 @@ const SignUp = () => {
 
   return (
     <>
-      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} type="privacy" /> : ""}
       <div
         style={{
           display: "flex",
