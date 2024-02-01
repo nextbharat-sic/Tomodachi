@@ -69,7 +69,7 @@ const SignUp = () => {
       signUpStatus(result.userID);
     } else if (result.status == "UAN Existed") {
       setIsLoading(false);
-      alert(t("accountNameExist"));
+      alert(t("userNameExist"));
     } else if (result.status == "UPN Existed") {
       setIsLoading(false);
       alert(t("phoneNumberExist"));
@@ -83,7 +83,7 @@ const SignUp = () => {
     const formatter = /^[0-9]{10}$/;
 
     if (accountName == "") {
-      alert(t("inputAccountName"));
+      alert(t("inputUserName"));
       return false;
     }
 
@@ -133,7 +133,7 @@ const SignUp = () => {
       </div>
       <div>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("accountName")}</label>
+          <label>{t("userName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>
