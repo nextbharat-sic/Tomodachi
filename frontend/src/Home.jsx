@@ -357,39 +357,24 @@ const Home = () => {
           position="static"
           style={{
             backgroundColor: "#631ACF",
-            height: "6vh",
+            height: "7vh",
             minHeight: "0",
+            padding: "0",
           }}
         >
-          <Grid container>
-            <Grid
-              item
-              variant="h6"
-              component="div"
-              xs={4}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
-                <span
-                  onClick={() => handleOpen("privacy")}
-                  style={{
-                    color: "#e0f2f1",
-                  }}
-                >
-                  {t("privacyPolicy")}
-                </span>
-              </Typography>
-            </Grid>
-            <Grid
-              item
-              variant="h6"
-              component="div"
-              xs={4}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              margin: "auto",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                width: "100vw",
+              }}
             >
               <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
                 <span
@@ -401,20 +386,35 @@ const Home = () => {
                   {t("howToUse")}
                 </span>
               </Typography>
-            </Grid>
-            <Grid
-              item
-              variant="h6"
-              xs={4}
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-            >
-              <Typography style={{ fontSize: "2vw", color: "#e0f2f1" }}>
-                {t("copyright")}
+              <Typography
+                style={{
+                  fontSize: "3vw",
+                  color: "#e0f2f1",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span
+                  onClick={() => handleOpen("privacy")}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("privacyPolicy")}
+                </span>
               </Typography>
-            </Grid>
-          </Grid>
+            </div>
+            <div style={{ margin: "auto" }}>
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                <span
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("copyright")}
+                </span>
+              </Typography>
+            </div>
+          </div>
         </Toolbar>
       </Box>
     </>
