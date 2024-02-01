@@ -192,12 +192,14 @@ const Home = () => {
         {informationTitle == "jobMarket" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
-            <div className={"selectCategoryButtonText"}>{t("jobMarket")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("job")}
+              <br />
+              {t("market")}
+            </div>
           </button>
         ) : (
           <button
@@ -206,22 +208,26 @@ const Home = () => {
             className={"selectCategoryButton"}
           >
             <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
-            <div className={"selectCategoryButtonText"}>{t("jobMarket")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("job")}
+              <br />
+              {t("market")}
+            </div>
           </button>
         )}
         {informationTitle == "careerRelatedNews" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img
               src={careerRelatedNewsIcon}
               className={"selectCategoryButtonImage"}
             />
             <div className={"selectCategoryButtonText"}>
-              {t("careerRelatedNews")}
+              {t("career")}
+              <br />
+              {t("news")}
             </div>
           </button>
         ) : (
@@ -235,22 +241,26 @@ const Home = () => {
               className={"selectCategoryButtonImage"}
             />
             <div className={"selectCategoryButtonText"}>
-              {t("careerRelatedNews")}
+              {t("career")}
+              <br />
+              {t("news")}
             </div>
           </button>
         )}
         {informationTitle == "thandaTalks" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img
               src={thandaTalksIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("thandaTalks")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("thanda")}
+              <br />
+              {t("talks")}
+            </div>
           </button>
         ) : (
           <button
@@ -262,21 +272,27 @@ const Home = () => {
               src={thandaTalksIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("thandaTalks")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("thanda")}
+              <br />
+              {t("talks")}
+            </div>
           </button>
         )}
         {informationTitle == "contactBook" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img
               src={contactBookIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("contactBook")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("contact")}
+              <br />
+              {t("book")}
+            </div>
           </button>
         ) : (
           <button
@@ -288,7 +304,11 @@ const Home = () => {
               src={contactBookIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("contactBook")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("contact")}
+              <br />
+              {t("book")}
+            </div>
           </button>
         )}
       </Box>
