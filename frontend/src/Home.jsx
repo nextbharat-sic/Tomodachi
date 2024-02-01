@@ -321,7 +321,15 @@ const Home = () => {
           marginLeft: "5vw",
         }}
       >
-        {t("recentPost")}
+        {informationTitle == "jobMarket"
+          ? t("jobMarket")
+          : informationTitle == "careerRelatedNews"
+            ? t("careerRelatedNews")
+            : informationTitle == "thandaTalks"
+              ? t("thandaTalks")
+              : informationTitle == "contactBook"
+                ? t("contactBook")
+                : ""}
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>
