@@ -20,12 +20,13 @@
 }
 
 .selectCategoryButtonImage {
-  height: 6vh;
+  height: 4vh;
   pointer-events: none;
+  margin: 0.5vh 1vw;
 }
 
 .selectCategoryButtonText {
-  font-size: 11px;
+  font-size: 13px;
   margin: 0vh 0.5vw;
   height: 6vh;
   display: flex;
