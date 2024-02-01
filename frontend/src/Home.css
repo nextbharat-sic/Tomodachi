@@ -1,25 +1,34 @@
-.selectCategoryButton{
-    height: 12vh;
-    width: 22vw;
-    margin: 0vh 1vw;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    border-color: #8a2be2;
+.selectCategoryButton {
+  height: 12vh;
+  width: 22vw;
+  margin: 0vh 1vw;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-color: #8a2be2;
 }
 
-.selectCategoryButtonImage{
-   height: 6vh;
-   pointer-events: none;
+.selectCategoryButton:hover {
+  border-color: #8a2be2;
 }
 
-.selectCategoryButtonText{
-    font-size: xx-small;
-    margin: 0vh 0.5vw;
-    height: 6vh;
-    display: flex;
-    align-items: center;
-    pointer-events: none;
+.selectCategoryButton:focus,
+.selectCategoryButton:focus-visible {
+  outline: none;
+}
+
+.selectCategoryButtonImage {
+  height: 6vh;
+  pointer-events: none;
+}
+
+.selectCategoryButtonText {
+  font-size: x-small;
+  margin: 0vh 0.5vw;
+  height: 6vh;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
 }

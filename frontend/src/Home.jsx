@@ -25,6 +25,8 @@ const Home = () => {
   const [visibleItemCount, setVisibleItemCount] = useState(5);
   const [informationTitle, setInformationTitle] = useState("jobMarket");
   const [isLoadingScreen, setIsLoadingScreen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
 
   const pushCategoryButton = (categoryType) => {
     setVisibleItemCount(5);
@@ -64,13 +66,13 @@ const Home = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
   };
 
-  const [isModalOpen, setModalIsOpen] = useState(false);
-  const handleOpen = () => {
-    setModalIsOpen(true);
+  const handleOpen = (modalType) => {
+    setModalType(modalType);
+    setIsModalOpen(true);
   };
 
   const handleClose = () => {
-    setModalIsOpen(false);
+    setIsModalOpen(false);
   };
 
   // const fetchS3Data = async () => {
@@ -108,7 +110,7 @@ const Home = () => {
   return (
     <>
       {isLoadingScreen ? <Loading /> : ""}
-      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} type={modalType} /> : ""}
       <Box display="flex">
         <div
           style={{
@@ -190,12 +192,14 @@ const Home = () => {
         {informationTitle == "jobMarket" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
-            <div className={"selectCategoryButtonText"}>{t("jobMarket")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("job")}
+              <br />
+              {t("market")}
+            </div>
           </button>
         ) : (
           <button
@@ -204,22 +208,26 @@ const Home = () => {
             className={"selectCategoryButton"}
           >
             <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
-            <div className={"selectCategoryButtonText"}>{t("jobMarket")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("job")}
+              <br />
+              {t("market")}
+            </div>
           </button>
         )}
         {informationTitle == "careerRelatedNews" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img
               src={careerRelatedNewsIcon}
               className={"selectCategoryButtonImage"}
             />
             <div className={"selectCategoryButtonText"}>
-              {t("careerRelatedNews")}
+              {t("career")}
+              <br />
+              {t("news")}
             </div>
           </button>
         ) : (
@@ -233,22 +241,26 @@ const Home = () => {
               className={"selectCategoryButtonImage"}
             />
             <div className={"selectCategoryButtonText"}>
-              {t("careerRelatedNews")}
+              {t("career")}
+              <br />
+              {t("news")}
             </div>
           </button>
         )}
         {informationTitle == "thandaTalks" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img
               src={thandaTalksIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("thandaTalks")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("thanda")}
+              <br />
+              {t("talks")}
+            </div>
           </button>
         ) : (
           <button
@@ -260,21 +272,27 @@ const Home = () => {
               src={thandaTalksIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("thandaTalks")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("thanda")}
+              <br />
+              {t("talks")}
+            </div>
           </button>
         )}
         {informationTitle == "contactBook" ? (
           <button
             className={"selectCategoryButton"}
-            style={{
-              borderWidth: "medium",
-            }}
+            style={{ borderWidth: "medium" }}
           >
             <img
               src={contactBookIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("contactBook")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("contact")}
+              <br />
+              {t("book")}
+            </div>
           </button>
         ) : (
           <button
@@ -286,7 +304,11 @@ const Home = () => {
               src={contactBookIcon}
               className={"selectCategoryButtonImage"}
             />
-            <div className={"selectCategoryButtonText"}>{t("contactBook")}</div>
+            <div className={"selectCategoryButtonText"}>
+              {t("contact")}
+              <br />
+              {t("book")}
+            </div>
           </button>
         )}
       </Box>
@@ -343,7 +365,7 @@ const Home = () => {
             >
               <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
                 <span
-                  onClick={handleOpen}
+                  onClick={() => handleOpen("privacy")}
                   style={{
                     color: "#e0f2f1",
                   }}
@@ -362,7 +384,14 @@ const Home = () => {
               justifyContent="center"
             >
               <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
-                {t("howToUse")}
+                <span
+                  onClick={() => handleOpen("howTo")}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("howToUse")}
+                </span>
               </Typography>
             </Grid>
             <Grid
