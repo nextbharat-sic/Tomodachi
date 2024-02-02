@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import generateSignUpOtpCode from "./clients/generatesignupotpcode.js";
 import Modal from "./component/Modal.jsx";
 import { useTranslation } from "react-i18next";
@@ -68,7 +69,7 @@ const SignUp = () => {
       signUpStatus(result.userID);
     } else if (result.status == "UAN Existed") {
       setIsLoading(false);
-      alert(t("accountNameExist"));
+      alert(t("userNameExist"));
     } else if (result.status == "UPN Existed") {
       setIsLoading(false);
       alert(t("phoneNumberExist"));
@@ -82,7 +83,7 @@ const SignUp = () => {
     const formatter = /^[0-9]{10}$/;
 
     if (accountName == "") {
-      alert(t("inputAccountName"));
+      alert(t("inputUserName"));
       return false;
     }
 
@@ -98,13 +99,41 @@ const SignUp = () => {
     return true;
   };
 
+  const backPage = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "LogIn" };
+    dispatch(storePage);
+  };
+
   return (
     <>
-      {isModalOpen ? <Modal onClose={handleClose} /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} type="privacy" /> : ""}
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <ArrowBackIcon
+          onClick={backPage}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "2vw",
+            width: "10vw",
+          }}
+        />
+        <h2 style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {t("signUp")}
+        </h2>
+        <div
+          style={{
+            marginRight: "2vw",
+            width: "10vw",
+          }}
+        />
+      </div>
       <div>
-        <h2 style={{ textAlign: "center" }}>{t("signUp")}</h2>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("accountName")}</label>
+          <label>{t("userName")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
           <div>

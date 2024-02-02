@@ -2,20 +2,35 @@ import { useState } from "react";
 import "./Modal.css";
 import mammoth from "mammoth";
 import { useTranslation } from "react-i18next";
+import HowToUseImage from "../assets/howToUse.png";
 
 const Modal = (props) => {
   const { t } = useTranslation();
-  const [privacyPolicy, setprivacyPolicy] = useState("");
-  fetch("/privacypolicy.docx")
-    .then((response) => response.arrayBuffer())
-    .then((buffer) => {
-      mammoth
-        .convertToHtml({ arrayBuffer: buffer })
-        .then((result) => {
-          setprivacyPolicy(result.value);
-        })
-        .done();
-    });
+  const [modalDisplay, setModalDisplay] = useState("");
+  if (props.type == "privacy") {
+    fetch("/privacypolicy.docx")
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => {
+        mammoth
+          .convertToHtml({ arrayBuffer: buffer })
+          .then((result) => {
+            setModalDisplay(result.value);
+          })
+          .done();
+      });
+  }
+  if (props.type == "howTo") {
+    fetch("/howToUse.docx")
+      .then((response) => response.arrayBuffer())
+      .then((buffer) => {
+        mammoth
+          .convertToHtml({ arrayBuffer: buffer })
+          .then((result) => {
+            setModalDisplay(result.value);
+          })
+          .done();
+      });
+  }
 
   return (
     <div className="modal__backdrop">
@@ -24,9 +39,10 @@ const Modal = (props) => {
           <h4
             style={{
               textAlign: "center",
+              color: "black",
             }}
           >
-            {t("termsAndCondition")}
+            {props.type === "privacy" ? t("termsAndCondition") : t("howToUse")}
           </h4>
           <div
             style={{
@@ -39,7 +55,7 @@ const Modal = (props) => {
             }}
             className="modal__content"
           >
-            <div dangerouslySetInnerHTML={{ __html: privacyPolicy }} />
+            <div dangerouslySetInnerHTML={{ __html: modalDisplay }} />
           </div>
           <span
             onClick={props.onClose}

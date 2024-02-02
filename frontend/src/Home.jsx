@@ -1,10 +1,21 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useState, useEffect, Fragment } from "react";
+import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Modal from "./component/Modal.jsx";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
+import jobMarketIcon from "./assets/jobMarketIcon.png";
+import careerRelatedNewsIcon from "./assets/careerRelatedNewsIcon.png";
+import thandaTalksIcon from "./assets/thandaTalksIcon.png";
+import contactBookIcon from "./assets/contactBookIcon.png";
 import { useTranslation } from "react-i18next";
+import Card from "./Card.jsx";
+import "./Home.css";
+import Loading from "./Loading.jsx";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -12,35 +23,14 @@ const Home = () => {
   const signInStatus = useSelector((state) => state.isSignIn);
   const [informationResult, setInformationResult] = useState([]);
   const [visibleItemCount, setVisibleItemCount] = useState(5);
-  // const [dataFromS3, setDataFromS3] = useState(null);
-  const monthNames = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
+  const [informationTitle, setInformationTitle] = useState("jobMarket");
+  const [isLoadingScreen, setIsLoadingScreen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalType, setModalType] = useState("");
 
-  const replaceDate = (PCT) => {
-    const day = PCT.split("-")[2].split("/")[0];
-    const month = PCT.split("-")[1];
-    const time = PCT.split("-")[2].split("/")[1];
-    return (
-      day +
-      " " +
-      monthNames[Number(month) - 1] +
-      ", " +
-      time.split(":")[0] +
-      ":" +
-      time.split(":")[1]
-    );
+  const pushCategoryButton = (categoryType) => {
+    setVisibleItemCount(5);
+    setInformationTitle(categoryType);
   };
 
   const movePostScreen = () => {
@@ -58,253 +48,31 @@ const Home = () => {
     dispatch(storePage);
   };
 
-  const checkActive = (pdd) => {
-    let date = new Date();
-    let localDate =
-      date.getFullYear() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      date.getDate().toString().padStart(2, "0");
-    if (localDate <= pdd) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const renderLinkedText = (text) => {
-    const combinedRegex = /(?:https?|ftp):\/\/\S+|\b\d{5}\s?\d{5}\b/g;
-
-    const matches = text.match(combinedRegex);
-    const parts = text.split(combinedRegex);
-
-    const renderLink = (match) => {
-      if (match.startsWith("http")) {
-        return (
-          <a key={match} href={match} target="_blank" rel="noopener noreferrer">
-            {match}
-          </a>
-        );
-      } else {
-        return (
-          <a key={match} href={`tel:${match}`}>
-            {match}
-          </a>
-        );
-      }
-    };
-
-    const renderParts = () =>
-      parts.map((part, index) => (
-        <Fragment key={index}>
-          {index > 0 && renderLink(matches[index - 1])}
-          {part}
-        </Fragment>
-      ));
-
-    return <>{renderParts()}</>;
-  };
-
-  const displayJobInformationList = (dataList) => {
-    return dataList.slice(0, visibleItemCount).map((jobData, index) => (
-      <div
-        key={index}
-        style={{
-          width: "92vw",
-          marginBottom: "1em",
-          borderRadius: "10px",
-          boxShadow:
-            "0.2em 0.2em 0em rgba(0, 0, 0, 0.1),-0.05em -0.2em 0.2em rgba(0, 0, 0, 0.1)",
-          backgroundColor: "#ffffff",
-          color: "#000000",
-        }}
-      >
-        <div
-          style={{
-            position: "relative",
-            width: "85vw",
-            marginLeft: "5vw",
-          }}
-        >
-          <div
-            style={{
-              overflowWrap: "break-word",
-              wordBreak: "break-word",
-              display: "flex",
-            }}
-          >
-            <img
-              width="48"
-              height="48"
-              src="https://img.icons8.com/fluency/48/test-account--v1.png"
-              alt="test-account--v1"
-            />
-            <div
-              style={{
-                fontFamily: "DM sans",
-                fontWeight: "Bold",
-                marginTop: "1.5vh",
-                marginLeft: "3vw",
-              }}
-            >
-              {jobData.PAN}
-            </div>
-            {jobData.PIT === "jobMarket" ? (
-              checkActive(jobData.PDD) ? (
-                <span
-                  style={{
-                    backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
-                    textAlign: "center",
-                    borderRadius: "0.5em",
-                    marginTop: "2vh",
-                    marginLeft: "auto",
-                    minWidth: "45px",
-                    maxHeight: "30px",
-                  }}
-                >
-                  {t("active")}
-                </span>
-              ) : (
-                <span
-                  style={{
-                    backgroundColor: "#696969",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
-                    textAlign: "center",
-                    borderRadius: "0.5em",
-                    marginTop: "2vh",
-                    marginLeft: "auto",
-                    minWidth: "45px",
-                    maxHeight: "30px",
-                  }}
-                >
-                  {t("close")}
-                </span>
-              )
-            ) : (
-              <span></span>
-            )}
-          </div>
-          <div style={{ display: "flex" }}>
-            <div
-              style={{
-                overflowWrap: "break-word",
-                maxWidth: "80vw",
-                fontFamily: "DM sans-serif",
-                fontSize: "120%",
-                fontWeight: "Bold",
-                marginLeft: "0.5em",
-              }}
-            >
-              {jobData.PTI}
-            </div>
-          </div>
-          <div>
-            <span
-              style={{
-                backgroundColor: "#f5f5f5",
-                border: "0.2em solid #f5f5f5",
-                borderRadius: "1em",
-                paddingRight: "0.3em",
-                paddingLeft: "0.3em",
-                marginLeft: "2vw",
-                fontSize: "0.9em",
-              }}
-            >
-              {jobData.PIT === "thandaTalks"
-                ? t("thandaTalks")
-                : jobData.PIT === "jobMarket"
-                  ? t("jobMarket")
-                  : jobData.PIT === "careerRelatedNews"
-                    ? t("careerRelatedNews")
-                    : ""}
-            </span>
-            {jobData.PIT === "thandaTalks" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {t("tunikalaThanda")}
-              </span>
-            ) : jobData.PIT === "jobMarket" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {jobData.PMJ === "indoor"
-                  ? t("indoor")
-                  : jobData.PMJ === "outdoor"
-                    ? t("outdoor")
-                    : ""}
-              </span>
-            ) : (
-              <span></span>
-            )}
-          </div>
-          <div
-            style={{
-              position: "relative",
-              overflowWrap: "break-word",
-              margin: "0.5em",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {renderLinkedText(jobData.PDE)}
-          </div>
-          {/* <div>
-            {dataFromS3 ? (
-              <img
-                src={dataFromS3}
-                alt="S3から取得した画像"
-                style={{ width: "10vw", height: "10vh" }}
-              />
-            ) : (
-              <p>Loading...</p>
-            )}
-          </div>*/}
-          <div
-            style={{
-              fontSize: "0.8em",
-              margin: "0.5em",
-              paddingBottom: "10px",
-            }}
-          >
-            {t("postedAt")} {replaceDate(String(jobData.PCT))}
-          </div>
-          {/* Add more details as needed */}
-        </div>
-      </div>
-    ));
-  };
-
-  const fetchAndDisplayJobInformation = async () => {
+  const fetchAndDisplayInformation = async () => {
     try {
-      const uploadInformationResult = await getUploadInformation();
+      setIsLoadingScreen(true);
+      const uploadInformationResult = await getUploadInformation({
+        informationTitle: informationTitle,
+      });
       setInformationResult(uploadInformationResult);
+      setIsLoadingScreen(false);
     } catch (error) {
       console.error(t("errorFetching"), error);
+      setIsLoadingScreen(false);
     }
   };
 
   const handleShowMore = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
+  };
+
+  const handleOpen = (modalType) => {
+    setModalType(modalType);
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
   };
 
   // const fetchS3Data = async () => {
@@ -335,12 +103,14 @@ const Home = () => {
   // };
 
   useEffect(() => {
-    fetchAndDisplayJobInformation();
+    fetchAndDisplayInformation();
     // fetchS3Data();
-  }, []);
+  }, [informationTitle]);
 
   return (
     <>
+      {isLoadingScreen ? <Loading /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} type={modalType} /> : ""}
       <Box display="flex">
         <div
           style={{
@@ -418,6 +188,130 @@ const Home = () => {
           </div>
         </div>
       </Box>
+      <Box display="flex" style={{ margin: "2vh 2vw" }}>
+        {informationTitle == "jobMarket" ? (
+          <button
+            className={"selectCategoryButton"}
+            style={{ borderWidth: "medium" }}
+          >
+            <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
+            <div className={"selectCategoryButtonText"}>
+              {t("job")}
+              <br />
+              {t("market")}
+            </div>
+          </button>
+        ) : (
+          <button
+            value="jobMarket"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            className={"selectCategoryButton"}
+          >
+            <img src={jobMarketIcon} className={"selectCategoryButtonImage"} />
+            <div className={"selectCategoryButtonText"}>
+              {t("job")}
+              <br />
+              {t("market")}
+            </div>
+          </button>
+        )}
+        {informationTitle == "careerRelatedNews" ? (
+          <button
+            className={"selectCategoryButton"}
+            style={{ borderWidth: "medium" }}
+          >
+            <img
+              src={careerRelatedNewsIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("career")}
+              <br />
+              {t("news")}
+            </div>
+          </button>
+        ) : (
+          <button
+            value="careerRelatedNews"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            className={"selectCategoryButton"}
+          >
+            <img
+              src={careerRelatedNewsIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("career")}
+              <br />
+              {t("news")}
+            </div>
+          </button>
+        )}
+        {informationTitle == "thandaTalks" ? (
+          <button
+            className={"selectCategoryButton"}
+            style={{ borderWidth: "medium" }}
+          >
+            <img
+              src={thandaTalksIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("thanda")}
+              <br />
+              {t("talks")}
+            </div>
+          </button>
+        ) : (
+          <button
+            value="thandaTalks"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            className={"selectCategoryButton"}
+          >
+            <img
+              src={thandaTalksIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("thanda")}
+              <br />
+              {t("talks")}
+            </div>
+          </button>
+        )}
+        {informationTitle == "contactBook" ? (
+          <button
+            className={"selectCategoryButton"}
+            style={{ borderWidth: "medium" }}
+          >
+            <img
+              src={contactBookIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("contact")}
+              <br />
+              {t("book")}
+            </div>
+          </button>
+        ) : (
+          <button
+            value="contactBook"
+            onClick={(event) => pushCategoryButton(event.target.value)}
+            className={"selectCategoryButton"}
+          >
+            <img
+              src={contactBookIcon}
+              className={"selectCategoryButtonImage"}
+            />
+            <div className={"selectCategoryButtonText"}>
+              {t("contact")}
+              <br />
+              {t("book")}
+            </div>
+          </button>
+        )}
+      </Box>
       <div
         style={{
           marginTop: "2vh",
@@ -427,13 +321,25 @@ const Home = () => {
           marginLeft: "5vw",
         }}
       >
-        {t("recentPost")}
+        {informationTitle == "jobMarket"
+          ? t("jobMarket")
+          : informationTitle == "careerRelatedNews"
+            ? t("careerRelatedNews")
+            : informationTitle == "thandaTalks"
+              ? t("thandaTalks")
+              : informationTitle == "contactBook"
+                ? t("contactBook")
+                : ""}
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>
-          {/* Call displayJobInformationList directly in the JSX */}
+          {/* Call displayInformationList directly in the JSX */}
           {informationResult.length > 0 &&
-            displayJobInformationList(informationResult)}
+            informationResult
+              .slice(0, visibleItemCount)
+              .map((data, index) => (
+                <Card key={index} informationList={data} />
+              ))}
 
           {/* Show more button */}
           {informationResult.length > visibleItemCount && (
@@ -445,6 +351,71 @@ const Home = () => {
             </button>
           )}
         </div>
+      </Box>
+      <Box>
+        <Toolbar
+          position="static"
+          style={{
+            backgroundColor: "#631ACF",
+            height: "7vh",
+            minHeight: "0",
+            padding: "0",
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              margin: "auto",
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-around",
+                width: "100vw",
+              }}
+            >
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                <span
+                  onClick={() => handleOpen("howTo")}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("howToUse")}
+                </span>
+              </Typography>
+              <Typography
+                style={{
+                  fontSize: "3vw",
+                  color: "#e0f2f1",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                <span
+                  onClick={() => handleOpen("privacy")}
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("privacyPolicy")}
+                </span>
+              </Typography>
+            </div>
+            <div style={{ margin: "auto" }}>
+              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+                <span
+                  style={{
+                    color: "#e0f2f1",
+                  }}
+                >
+                  {t("copyright")}
+                </span>
+              </Typography>
+            </div>
+          </div>
+        </Toolbar>
       </Box>
     </>
   );
