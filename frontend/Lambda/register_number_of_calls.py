@@ -4,38 +4,40 @@ import os
 from datetime import datetime, timedelta
 
 def lambda_handler(event, context):
-    
+
     if 'body' in event:
         body = json.loads(event['body'])
     else:
         body = event
     print(body)
-    
+
     dynamodb = boto3.resource('dynamodb')
     number_of_calls = os.environ.get('NUMBEROFCALLS')
     table = dynamodb.Table(number_of_calls)
-    
+
     ist_offset = timedelta(hours=5, minutes=30)
     utc_datetime = datetime.utcnow()
     india_datetime = utc_datetime + ist_offset
     india_date = india_datetime.strftime('%Y-%m-%d')
-    
+
     dynamodb_client = boto3.client('dynamodb')
     query_params = {
         'TableName': number_of_calls,
-        'KeyConditionExpression': 'NCN = :contactNumber',
-        'ExpressionAttributeValues': {':contactNumber': {'S': body['contactNumber'] }},
+        'KeyConditionExpression': 'NCN = :contactNumber AND NCD = :callingDate',
+        'ExpressionAttributeValues': {':contactNumber': {'S': body['contactNumber'] } ,':callingDate': {'S': india_date }},
         }
-    
+
     response = dynamodb_client.query(**query_params)
-    
+
+    print(response)
+
     items = response['Items']
     if items:
         NNC = int(items[0]['NNC']['N'])+1
-        
+
     else:
         NNC = 1
-    
+
     table.put_item(
         Item = {
             'NCN': body['contactNumber'],
@@ -43,7 +45,7 @@ def lambda_handler(event, context):
             'NNC': NNC
             }
         )
-    
+
     return {
         'statusCode': 200,
         'headers': {
