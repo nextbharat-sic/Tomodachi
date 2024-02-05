@@ -12,12 +12,20 @@ const LogIn = () => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const logInStatus = (userID) => {
+  const logInStatus = (userInformation) => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
-    const storeUserID = { type: "SET_USER_ID", payload: userID };
+    const storeAccoutnName = {
+      type: "SET_ACCOUNT_NAME",
+      payload: userInformation.userName,
+    };
+    const storeUserID = {
+      type: "SET_USER_ID",
+      payload: userInformation.userID,
+    };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
 
     dispatch(storePage);
+    dispatch(storeAccoutnName);
     dispatch(storeUserID);
     dispatch(storePhoneNumber);
   };
@@ -39,7 +47,7 @@ const LogIn = () => {
     const result = await generateLogInOtpCode(logInInformation);
     if (result.status == "Match") {
       setIsLoading(false);
-      logInStatus(result.userID);
+      logInStatus(result);
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
       alert(t("PhoneNumberIsIncorrect"));
