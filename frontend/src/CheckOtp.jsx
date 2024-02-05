@@ -126,11 +126,8 @@ const CheckOtp = () => {
         }}
         TextFieldsProps={{
           inputProps: {
-            //ISP-253
             type: "tel",
-            pattern: "\\d*",
             inputMode: "numeric",
-            //ISP-253
             style: {
               color: isDarkMode ? "white" : "black",
               padding: "1vh 0",
