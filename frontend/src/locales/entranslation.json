@@ -54,7 +54,7 @@
   "phoneNumberDigits": "Phone Number must be 10 digits!",
   "needToCheckPrivacyPolicy": "You need to check privacy policy!",
   "errorFetching": "Error fetching upload information: ",
-  "userNameOrPhNoIsIncorrect": "User Name or Phone Number is incorrect!",
+  "PhoneNumberIsIncorrect": "Phone Number is incorrect!",
   "tryAgain": "Please try again!",
   "confirmLogOut": "Are you sure you want to log out?",
   "confirmUpload": "Are you sure you want to upload?",

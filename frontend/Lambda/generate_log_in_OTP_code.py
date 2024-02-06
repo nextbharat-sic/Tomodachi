@@ -11,7 +11,7 @@ def lambda_handler(event, context):
         body = event
     print(body)
     
-    # check acocunt name and phone number
+    # check phone number
     dynamodb_client = boto3.client('dynamodb')
     user_table_name = os.environ.get('USERTABLE')
     
@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     response = dynamodb_client.query(**query_params)    
 
     if len(response['Items']) == 1:
-        data_account_name = response['Items'][0]['UAN']['S']
+        data_user_name = response['Items'][0]['UAN']['S']
         data_phone_number = response['Items'][0]['UPN']['S']
         data_userID = response['Items'][0]['UID']['S']
 
@@ -42,7 +42,7 @@ def lambda_handler(event, context):
             })
         }
     
-    if body['accountName'] == data_account_name and body['phoneNumber'] == data_phone_number:
+    if body['phoneNumber'] == data_phone_number:
         # generate otp code
         dynamodb = boto3.resource('dynamodb')
         totp = pyotp.TOTP(pyotp.random_base32())
@@ -79,6 +79,7 @@ def lambda_handler(event, context):
             'body': json.dumps({
                 "status": "Match",
                 "userID": data_userID,
+                "userName": data_user_name
             })
         }
         

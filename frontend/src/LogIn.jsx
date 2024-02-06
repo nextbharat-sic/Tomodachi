@@ -8,30 +8,25 @@ import { useTranslation } from "react-i18next";
 
 const LogIn = () => {
   const { t } = useTranslation();
-  const [accountName, setAccountName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const dispatch = useDispatch();
 
-  const handleInputChange = (event) => {
-    setAccountName(event.target.value);
-    if (event.target.value.includes(" ")) {
-      setIsButtonDisabled(true);
-    } else {
-      setIsButtonDisabled(false);
-    }
-  };
-
-  const logInStatus = (userID) => {
+  const logInStatus = (userInformation) => {
     const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
-    const storeUserID = { type: "SET_USER_ID", payload: userID };
-    const storeAccountName = { type: "SET_ACCOUNT_NAME", payload: accountName };
+    const storeAccoutnName = {
+      type: "SET_ACCOUNT_NAME",
+      payload: userInformation.userName,
+    };
+    const storeUserID = {
+      type: "SET_USER_ID",
+      payload: userInformation.userID,
+    };
     const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
 
     dispatch(storePage);
+    dispatch(storeAccoutnName);
     dispatch(storeUserID);
-    dispatch(storeAccountName);
     dispatch(storePhoneNumber);
   };
 
@@ -43,7 +38,6 @@ const LogIn = () => {
   const checkLogin = async () => {
     setIsLoading(true);
     const logInInformation = {
-      accountName: accountName,
       phoneNumber: phoneNumber,
     };
 
@@ -53,10 +47,10 @@ const LogIn = () => {
     const result = await generateLogInOtpCode(logInInformation);
     if (result.status == "Match") {
       setIsLoading(false);
-      logInStatus(result.userID);
+      logInStatus(result);
     } else if (result.status == "Unmatch") {
       setIsLoading(false);
-      alert(t("userNameOrPhNoIsIncorrect"));
+      alert(t("PhoneNumberIsIncorrect"));
     } else {
       setIsLoading(false);
       alert(t("tryAgain"));
@@ -96,42 +90,6 @@ const LogIn = () => {
       </div>
       <div>
         <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
-          <label>{t("userName")}</label>
-        </div>
-        <Box display="flex" justifyContent="center" alignItems="center">
-          <div>
-            <input
-              type="text"
-              value={accountName}
-              className="input"
-              onChange={handleInputChange}
-              style={{
-                width: "86vw",
-                margin: "10px",
-                height: "5vh",
-                borderRadius: "10px",
-                borderWidth: "1px",
-              }}
-            ></input>
-          </div>
-        </Box>
-        {isButtonDisabled ? (
-          <Box>
-            <div
-              style={{
-                fontSize: "0.9em",
-                color: "red",
-                paddingLeft: "5vw",
-                marginBottom: "1vh",
-              }}
-            >
-              {t("includeSpaces")}
-            </div>
-          </Box>
-        ) : (
-          <Box></Box>
-        )}
-        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
           <label>{t("phoneNumber")}</label>
         </div>
         <Box display="flex" justifyContent="center" alignItems="center">
@@ -152,29 +110,17 @@ const LogIn = () => {
           </div>
         </Box>
         <Box display="flex" justifyContent="center" alignItems="center">
-          {isButtonDisabled ? (
-            <button
-              style={{
-                margin: "10px",
-                backgroundColor: "#b3b3b3b3",
-                color: "black",
-              }}
-            >
-              {t("logIn")}
-            </button>
-          ) : (
-            <button
-              onClick={checkLogin}
-              disabled={isLoading}
-              style={{
-                margin: "10px",
-                backgroundColor: "#2F69F6",
-                color: "#e0f2f1",
-              }}
-            >
-              {isLoading ? t("loginNow") : t("logIn")}
-            </button>
-          )}
+          <button
+            onClick={checkLogin}
+            disabled={isLoading}
+            style={{
+              margin: "10px",
+              backgroundColor: "#2F69F6",
+              color: "#e0f2f1",
+            }}
+          >
+            {isLoading ? t("loginNow") : t("logIn")}
+          </button>
         </Box>
         <div
           style={{
