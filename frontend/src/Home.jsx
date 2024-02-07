@@ -5,6 +5,7 @@ import Box from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import crypto from "crypto-js";
 import Modal from "./component/Modal.jsx";
 import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
@@ -105,6 +106,38 @@ const Home = () => {
   useEffect(() => {
     fetchAndDisplayInformation();
     // fetchS3Data();
+    if (localStorage.getItem("isLoggedIn")) {
+      const encryptionkey = import.meta.env.VITE_APP_ENCRPTION_KEY;
+      const decryptionUserID = crypto.AES.decrypt(
+        localStorage.getItem("userID"),
+        encryptionkey,
+      ).toString(crypto.enc.Utf8);
+      const decryptionPhoneNumber = crypto.AES.decrypt(
+        localStorage.getItem("phoneNumber"),
+        encryptionkey,
+      ).toString(crypto.enc.Utf8);
+      const decryptionAccoutnName = crypto.AES.decrypt(
+        localStorage.getItem("accoutnName"),
+        encryptionkey,
+      ).toString(crypto.enc.Utf8);
+      const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
+      const storeAccoutnName = {
+        type: "SET_ACCOUNT_NAME",
+        payload: decryptionAccoutnName,
+      };
+      const storeUserID = {
+        type: "SET_USER_ID",
+        payload: decryptionUserID,
+      };
+      const storePhoneNumber = {
+        type: "SET_PHONE_NUMBER",
+        payload: decryptionPhoneNumber,
+      };
+      dispatch(storeIsSignIn);
+      dispatch(storeAccoutnName);
+      dispatch(storeUserID);
+      dispatch(storePhoneNumber);
+    }
   }, [informationTitle]);
 
   return (

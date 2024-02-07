@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { MuiOtpInput } from "mui-one-time-password-input";
 import Box from "@mui/material/Grid";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import crypto from "crypto-js";
 import checkOtpCode from "./clients/checkotpcode.js";
 import { useTranslation } from "react-i18next";
 
@@ -21,6 +22,7 @@ const CheckOtp = () => {
   const accountName = useSelector((state) => state.accountName);
   const privacyPolicyCheck = useSelector((state) => state.privacyPolicyCheck);
   const clientPage = useSelector((state) => state.clientPage);
+  const userID = useSelector((state) => state.userID);
   const otpInformation = {
     userName: userName,
     phoneNumber: phoneNumber,
@@ -59,6 +61,19 @@ const CheckOtp = () => {
     }
     dispatch(storePage);
     dispatch(storeIsSignIn);
+    const encryptionkey = import.meta.env.VITE_APP_ENCRPTION_KEY;
+    const encryptedPhoneNumber = crypto.AES.encrypt(phoneNumber, encryptionkey);
+    const encryptedAccountName = crypto.AES.encrypt(accountName, encryptionkey);
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("phoneNumber", encryptedPhoneNumber);
+    localStorage.setItem("accoutnName", encryptedAccountName);
+    let encryptedUserID;
+    if (clientPage === "signUp") {
+      encryptedUserID = crypto.AES.encrypt(payload.userID, encryptionkey);
+    } else {
+      encryptedUserID = crypto.AES.encrypt(userID, encryptionkey);
+    }
+    localStorage.setItem("userID", encryptedUserID);
   };
 
   const otpChecking = async () => {
