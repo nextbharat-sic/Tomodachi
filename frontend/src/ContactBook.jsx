@@ -39,16 +39,14 @@ const ContactBook = () => {
     });
   };
 
-  const confirmUpload = (event) => {
+  const checkValidateAndUpload = (event) => {
     event.preventDefault();
 
-    const isConfirm = confirm(t("confirmUpload"));
-    if (isConfirm) {
-      setIsLoading(true);
-      if (isValidate()) {
+    if (isValidate()) {
+      const isConfirm = confirm(t("confirmUpload"));
+      if (isConfirm) {
+        setIsLoading(true);
         uploadContactBookInfo();
-      } else {
-        setIsLoading(false);
       }
     }
   };
@@ -99,7 +97,7 @@ const ContactBook = () => {
   return (
     <>
       <div>
-        <form onSubmit={confirmUpload}>
+        <form onSubmit={checkValidateAndUpload}>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
             <label>{t("contactName")}</label>
           </div>
