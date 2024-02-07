@@ -28,6 +28,10 @@ const Header = () => {
     dispatch(storeAccountName);
     dispatch(storePhoneNumber);
     dispatch(storePrivacyPolicyCheck);
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userID");
+    localStorage.removeItem("phoneNumber");
+    localStorage.removeItem("accountName");
   };
 
   const refreshUserAction = () => {
