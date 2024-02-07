@@ -116,14 +116,14 @@ const Home = () => {
         localStorage.getItem("phoneNumber"),
         encryptionkey,
       ).toString(crypto.enc.Utf8);
-      const decryptionAccoutnName = crypto.AES.decrypt(
-        localStorage.getItem("accoutnName"),
+      const decryptionAccountName = crypto.AES.decrypt(
+        localStorage.getItem("accountName"),
         encryptionkey,
       ).toString(crypto.enc.Utf8);
       const storeIsSignIn = { type: "SIGNIN_STATE", payload: true };
-      const storeAccoutnName = {
+      const storeAccountName = {
         type: "SET_ACCOUNT_NAME",
-        payload: decryptionAccoutnName,
+        payload: decryptionAccountName,
       };
       const storeUserID = {
         type: "SET_USER_ID",
@@ -134,7 +134,7 @@ const Home = () => {
         payload: decryptionPhoneNumber,
       };
       dispatch(storeIsSignIn);
-      dispatch(storeAccoutnName);
+      dispatch(storeAccountName);
       dispatch(storeUserID);
       dispatch(storePhoneNumber);
     }
@@ -357,12 +357,12 @@ const Home = () => {
         {informationTitle == "jobMarket"
           ? t("jobMarket")
           : informationTitle == "careerRelatedNews"
-            ? t("careerRelatedNews")
-            : informationTitle == "thandaTalks"
-              ? t("thandaTalks")
-              : informationTitle == "contactBook"
-                ? t("contactBook")
-                : ""}
+          ? t("careerRelatedNews")
+          : informationTitle == "thandaTalks"
+          ? t("thandaTalks")
+          : informationTitle == "contactBook"
+          ? t("contactBook")
+          : ""}
       </div>
       <Box display="flex" justifyContent="center" alignItems="center">
         <div>

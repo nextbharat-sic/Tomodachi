@@ -66,7 +66,7 @@ const CheckOtp = () => {
     const encryptedAccountName = crypto.AES.encrypt(accountName, encryptionkey);
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("phoneNumber", encryptedPhoneNumber);
-    localStorage.setItem("accoutnName", encryptedAccountName);
+    localStorage.setItem("accountName", encryptedAccountName);
     let encryptedUserID;
     if (clientPage === "signUp") {
       encryptedUserID = crypto.AES.encrypt(payload.userID, encryptionkey);

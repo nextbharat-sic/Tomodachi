@@ -31,7 +31,7 @@ const Header = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("userID");
     localStorage.removeItem("phoneNumber");
-    localStorage.removeItem("accoutnName");
+    localStorage.removeItem("accountName");
   };
 
   const refreshUserAction = () => {
