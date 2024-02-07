@@ -3,12 +3,12 @@ import { useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
 import postCallInformation from "./clients/postcallinformation.js";
+import DeadlineDateModal from "./DeadlineDateModal.jsx";
 import { useTranslation } from "react-i18next";
 
 const Card = (props) => {
   const informationList = props.informationList;
   const [isShowDeallineModal, setIsShowDeallineModal] = useState(false);
-  const [deadlineDate, setDeadlineDate] = useState("");
   // const [dataFromS3, setDataFromS3] = useState(null);
   const { t } = useTranslation();
   const monthNames = [
@@ -57,33 +57,14 @@ const Card = (props) => {
   };
 
   const changeToActive = () => {
-    const isConfirm = confirm(
-      "Are you sure you want to close recruitment information?",
-    );
+    const isConfirm = confirm(t("changeToActive"));
     if (isConfirm) {
       setIsShowDeallineModal(true);
     }
   };
 
-  const handleDeadlineDate = (event) => {
-    setDeadlineDate(event.target.value);
-  };
-
   const closeModal = () => {
     setIsShowDeallineModal(false);
-  };
-
-  const updateDeadlineDate = () => {
-    const isConfirm = confirm("Are you sure you want to update deadline Date?");
-    if (isConfirm) {
-      const deadlineInformation = {
-        postId: informationList.PID,
-        deadlineDate: deadlineDate,
-      };
-      console.log(deadlineInformation);
-      // postDeadlineDate()
-      closeModal();
-    }
   };
 
   const phoneCount = (event) => {
@@ -129,55 +110,10 @@ const Card = (props) => {
     <>
       <div>
         {isShowDeallineModal ? (
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              background: "rgba(0, 0, 0, 0.65)",
-              bottom: 0,
-              left: 0,
-              position: "fixed",
-              right: 0,
-              top: 0,
-              zIndex: "1",
-            }}
-          >
-            <div
-              style={{
-                background: "white",
-                borderRadius: "5px",
-                padding: "3vw",
-                height: "20vh",
-              }}
-            >
-              <div
-                style={{
-                  textAlign: "left",
-                  paddingLeft: "4vw",
-                  color: "black",
-                }}
-              >
-                <label>Please select Deadline date</label>
-              </div>
-              <input
-                type="date"
-                name="deadlineDate"
-                value={deadlineDate}
-                onChange={handleDeadlineDate}
-                style={{
-                  width: "86vw",
-                  margin: "10px",
-                  height: "5vh",
-                  borderRadius: "10px",
-                  borderWidth: "1px",
-                }}
-                required
-              />
-              <button onClick={closeModal}>Cancel</button>
-              <button onClick={updateDeadlineDate}>OK</button>
-            </div>
-          </div>
+          <DeadlineDateModal
+            postId={informationList.PID}
+            closeModal={closeModal}
+          />
         ) : (
           ""
         )}
