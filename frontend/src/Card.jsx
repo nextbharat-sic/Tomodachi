@@ -42,15 +42,15 @@ const Card = (props) => {
     );
   };
 
-  let date = new Date();
-  let localDate =
+  const date = new Date();
+  const localDate =
     date.getFullYear() +
     "-" +
     (date.getMonth() + 1).toString().padStart(2, "0") +
     "-" +
     date.getDate().toString().padStart(2, "0");
 
-  let pastDate =
+  const pastDate =
     date.getFullYear() -
     1 +
     "-" +
