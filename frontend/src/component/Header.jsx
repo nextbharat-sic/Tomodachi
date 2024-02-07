@@ -1,12 +1,23 @@
+import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import Drawer from "@mui/material/Drawer";
+import { IconContext } from "react-icons";
 import { IoIosRefresh } from "react-icons/io";
+import { GoHome } from "react-icons/go";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { CiLogin } from "react-icons/ci";
+import { CiLogout } from "react-icons/ci";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
 import { useTranslation } from "react-i18next";
+import "./Header.css";
 
 const Header = () => {
   const { t, i18n } = useTranslation();
+  const [isHamburgerOpen, setIsHamburgerOpen] = useState(false);
   const dispatch = useDispatch();
   const signInStatus = useSelector((state) => state.isSignIn);
   const headerHeight = "6vh";
@@ -144,6 +155,54 @@ const Header = () => {
               {t("logIn")}
             </span>
           )}
+          <MenuIcon
+            onClick={() => setIsHamburgerOpen(true)}
+            style={{
+              color: "#ffffff",
+            }}
+          />
+          <Drawer
+            anchor={"right"}
+            open={isHamburgerOpen}
+            onClose={() => setIsHamburgerOpen(false)}
+            PaperProps={{ style: { height: "90%", width: "70%" } }}
+          >
+            <div className={"hamburgerListHeader"}>
+              <div
+                className={"hamburgerListText"}
+                style={{
+                  color: "#2f69f6",
+                }}
+              >
+                Tomodachi
+              </div>
+              <CloseIcon
+                onClick={() => setIsHamburgerOpen(false)}
+                className={"closeIcon"}
+                style={{ height: "8vh", width: "8vh" }}
+              />
+            </div>
+            <IconContext.Provider value={{ color: "#2f69f6", size: "5vh" }}>
+              <div className={"hamburgerListComponent"}>
+                <div className={"hamburgerListText"}>Home</div>
+                <div className={"hamburgerListIconStorage"}>
+                  <GoHome className={"hamburgerListIcon"} />
+                </div>
+              </div>
+              <div className={"hamburgerListComponent"}>
+                <div className={"hamburgerListText"}>My Posts</div>
+                <div className={"hamburgerListIconStorage"}>
+                  <IoDocumentTextOutline />
+                </div>
+              </div>
+              <div className={"hamburgerListComponent"}>
+                <div className={"hamburgerListText"}>Log In</div>{" "}
+                <div className={"hamburgerListIconStorage"}>
+                  <CiLogin />
+                </div>
+              </div>
+            </IconContext.Provider>
+          </Drawer>
         </Toolbar>
       </Box>
     </>
