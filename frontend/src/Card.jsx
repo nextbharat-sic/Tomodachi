@@ -1,16 +1,17 @@
 import { Fragment } from "react";
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
 import postCallInformation from "./clients/postcallinformation.js";
-import DeadlineDateModal from "./DeadlineDateModal.jsx";
+import postdeadlinedate from "./clients/postdeadlinedate.js";
 import { useTranslation } from "react-i18next";
 
 const Card = (props) => {
   const informationList = props.informationList;
-  const [isShowDeallineModal, setIsShowDeallineModal] = useState(false);
+  const userId = useSelector((state) => state.userID);
   // const [dataFromS3, setDataFromS3] = useState(null);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const monthNames = [
     "Jan",
     "Feb",
@@ -41,14 +42,23 @@ const Card = (props) => {
     );
   };
 
+  let date = new Date();
+  let localDate =
+    date.getFullYear() +
+    "-" +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    date.getDate().toString().padStart(2, "0");
+
+  let pastDate =
+    date.getFullYear() -
+    1 +
+    "-" +
+    (date.getMonth() + 1).toString().padStart(2, "0") +
+    "-" +
+    date.getDate().toString().padStart(2, "0");
+
   const checkActive = (pdd) => {
-    let date = new Date();
-    let localDate =
-      date.getFullYear() +
-      "-" +
-      (date.getMonth() + 1).toString().padStart(2, "0") +
-      "-" +
-      date.getDate().toString().padStart(2, "0");
     if (localDate <= pdd) {
       return true;
     } else {
@@ -56,15 +66,48 @@ const Card = (props) => {
     }
   };
 
-  const changeToActive = () => {
-    const isConfirm = confirm(t("changeToActive"));
-    if (isConfirm) {
-      setIsShowDeallineModal(true);
+  const checkDeadlineDate = () => {
+    if (pastDate < localDate) {
+      return true;
+    }
+    return false;
+  };
+
+  const refreshHome = async () => {
+    const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
+    await dispatch(storeInitialPage);
+    const storeHomePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storeHomePage);
+  };
+
+  const changeToClose = async () => {
+    if (checkDeadlineDate()) {
+      const isConfirm = confirm(t("changeToClose"));
+      if (isConfirm) {
+        const deadlineInformation = {
+          postId: informationList.PID,
+          informationTitle: informationList.PIT,
+          postUserId: informationList.PUID,
+          deadlineDate: pastDate,
+        };
+        const response = await postdeadlinedate(deadlineInformation);
+        if (response.status == "Success") {
+          alert(t("recruitmentHasClosed"));
+          refreshHome();
+        } else {
+          alert(t("updateFailed"));
+        }
+      }
+    } else {
+      alert(t("updateFailed"));
     }
   };
 
-  const closeModal = () => {
-    setIsShowDeallineModal(false);
+  const isRecruiter = () => {
+    if (informationList.PUID == userId) {
+      return true;
+    }
+    return false;
   };
 
   const phoneCount = (event) => {
@@ -108,16 +151,6 @@ const Card = (props) => {
 
   return (
     <>
-      <div>
-        {isShowDeallineModal ? (
-          <DeadlineDateModal
-            postId={informationList.PID}
-            closeModal={closeModal}
-          />
-        ) : (
-          ""
-        )}
-      </div>
       <div
         style={{
           width: "92vw",
@@ -133,7 +166,6 @@ const Card = (props) => {
           style={{
             position: "relative",
             width: "85vw",
-            marginLeft: "5vw",
           }}
         >
           <div
@@ -141,6 +173,8 @@ const Card = (props) => {
               overflowWrap: "break-word",
               wordBreak: "break-word",
               display: "flex",
+              width: "92vw",
+              borderBottom: "0.2vh solid #BDCDF8",
             }}
           >
             <div
@@ -148,6 +182,8 @@ const Card = (props) => {
                 display: "flex",
                 alignItems: "center",
                 marginTop: "1.5vh",
+                marginLeft: "5vw",
+                marginBottom: "1.5vh",
               }}
             >
               <AccountCircleIcon
@@ -164,46 +200,91 @@ const Card = (props) => {
                 {informationList.PAN}
               </div>
             </div>
-            {informationList.PIT === "jobMarket" ? (
+            {informationList.PIT === "jobMarket" && !isRecruiter() ? (
+              checkActive(informationList.PDD) ? (
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                    backgroundColor: "#E4EBFF",
+                    padding: "0.3em 0.5em",
+                    color: "black",
+                    borderRadius: "0.5em",
+                    marginTop: "1vh",
+                    height: "3vh",
+                    marginLeft: "auto",
+                    marginRight: "2vw",
+                  }}
+                >
+                  {t("active")}
+                </span>
+              ) : (
+                <span
+                  style={{
+                    display: "inline-flex",
+                    alignItems: "center",
+                    textAlign: "center",
+                    backgroundColor: "#DCDCDC",
+                    padding: "0.3em 0.5em",
+                    color: "black",
+                    borderRadius: "0.5em",
+                    marginTop: "1vh",
+                    height: "3vh",
+                    marginLeft: "auto",
+                    marginRight: "2vw",
+                  }}
+                >
+                  {t("close")}
+                </span>
+              )
+            ) : (
+              <span></span>
+            )}
+            {informationList.PIT === "jobMarket" && isRecruiter() ? (
               checkActive(informationList.PDD) ? (
                 <button
+                  onClick={changeToClose}
                   style={{
-                    backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
+                    display: "inline-flex",
+                    alignItems: "center",
                     textAlign: "center",
+                    backgroundColor: "#E4EBFF",
+                    padding: "0.3em 0.5em",
+                    color: "black",
                     borderRadius: "0.5em",
-                    marginTop: "2vh",
+                    marginTop: "1vh",
+                    height: "4vh",
                     marginLeft: "auto",
-                    minWidth: "45px",
-                    maxHeight: "30px",
+                    marginRight: "2vw",
                   }}
                 >
                   {t("active")}
                 </button>
               ) : (
-                <button
-                  onClick={changeToActive}
+                <span
                   style={{
-                    backgroundColor: "#696969",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
+                    display: "inline-flex",
+                    alignItems: "center",
                     textAlign: "center",
+                    backgroundColor: "#DCDCDC",
+                    padding: "0.3em 0.5em",
+                    color: "black",
                     borderRadius: "0.5em",
-                    marginTop: "2vh",
+                    marginTop: "1vh",
+                    height: "3vh",
                     marginLeft: "auto",
-                    minWidth: "45px",
-                    maxHeight: "30px",
+                    marginRight: "2vw",
                   }}
                 >
                   {t("close")}
-                </button>
+                </span>
               )
             ) : (
               <span></span>
             )}
           </div>
-          <div style={{ display: "flex" }}>
+          <div style={{ display: "flex", marginTop: "0.5vh" }}>
             <div
               style={{
                 overflowWrap: "break-word",
@@ -217,7 +298,7 @@ const Card = (props) => {
               {informationList.PTI}
             </div>
           </div>
-          <div>
+          <div style={{ marginTop: "0.5vh" }}>
             {informationList.PIT === "thandaTalks" ? (
               <span
                 style={{

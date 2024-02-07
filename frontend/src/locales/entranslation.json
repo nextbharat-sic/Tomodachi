@@ -89,9 +89,7 @@
   "contactNumber": "Contact Number",
   "writeContactNumber": "Write contact number",
   "howToUse": "How To Use",
-  "changeToActive": "Are you sure you want to re-open recruitment information?",
-  "updateDeadlineDate":"Are you sure you want to update deadline Date?",
-  "selectDeadlineDate":"Please select Deadline date",
-  "updateCompleted":"Deadline data has been updated",
-  "updateFailed":"Update Failed! Try again"
+  "changeToClose": "Are you sure you want to close recruitment information?",
+  "updateFailed":"Update Failed! Try again",
+  "recruitmentHasClosed":"Recruitment information has closed"
 }

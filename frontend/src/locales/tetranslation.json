@@ -89,9 +89,7 @@
   "contactNumber": "కాంటాక్ట్ నెంబర్",
   "writeContactNumber": "కాంటాక్ట్ నెంబర్ రాయండి",
   "howToUse": "ఎలా ఉపయోగించాలి",
-  "changeToActive": "not translated",
-  "updateDeadlineDate":"not translated",
-  "selectDeadlineDate":"not translated",
-  "updateCompleted":"not translated",
-  "updateFailed":"not translated"
+  "changeToClose":"not translated",
+  "updateFailed":"not translated",
+  "recruitmentHasClosed":"not translated"
 }

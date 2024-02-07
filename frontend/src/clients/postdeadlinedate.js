@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export default async function postdeadlinedate(deadlineInfo) {
-  const postInfoURL = "";
+  const postInfoURL = import.meta.env.VITE_APP_CHANGE_DEADLINE_DATE;
   const header = { "Content-Type": "application/json" };
   try {
     const response = await axios.post(postInfoURL, deadlineInfo, {
