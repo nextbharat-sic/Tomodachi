@@ -43,34 +43,18 @@ const Card = (props) => {
   };
 
   const date = new Date();
-  const localDate =
-    date.getFullYear() +
-    "-" +
-    (date.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    date.getDate().toString().padStart(2, "0");
-
-  const pastDate =
-    date.getFullYear() -
-    1 +
-    "-" +
-    (date.getMonth() + 1).toString().padStart(2, "0") +
-    "-" +
-    date.getDate().toString().padStart(2, "0");
-
   const checkActive = (pdd) => {
+    const localDate =
+      date.getFullYear() +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate().toString().padStart(2, "0");
     if (localDate <= pdd) {
       return true;
     } else {
       return false;
     }
-  };
-
-  const checkDeadlineDate = () => {
-    if (pastDate < localDate) {
-      return true;
-    }
-    return false;
   };
 
   const refreshHome = async () => {
@@ -81,25 +65,28 @@ const Card = (props) => {
   };
 
   const changeToClose = async () => {
-    if (checkDeadlineDate()) {
-      const isConfirm = confirm(t("changeToClose"));
-      if (isConfirm) {
-        const deadlineInformation = {
-          postId: informationList.PID,
-          informationTitle: informationList.PIT,
-          postUserId: informationList.PUID,
-          deadlineDate: pastDate,
-        };
-        const response = await postdeadlinedate(deadlineInformation);
-        if (response.status == "Success") {
-          alert(t("recruitmentHasClosed"));
-          refreshHome();
-        } else {
-          alert(t("updateFailed"));
-        }
+    const pastDate =
+      date.getFullYear() -
+      1 +
+      "-" +
+      (date.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      date.getDate().toString().padStart(2, "0");
+    const isConfirm = confirm(t("changeToClose"));
+    if (isConfirm) {
+      const deadlineInformation = {
+        postId: informationList.PID,
+        informationTitle: informationList.PIT,
+        postUserId: informationList.PUID,
+        deadlineDate: pastDate,
+      };
+      const response = await postdeadlinedate(deadlineInformation);
+      if (response.status == "Success") {
+        alert(t("recruitmentHasClosed"));
+        refreshHome();
+      } else {
+        alert(t("updateFailed"));
       }
-    } else {
-      alert(t("updateFailed"));
     }
   };
 
