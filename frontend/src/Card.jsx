@@ -322,6 +322,23 @@ const Card = (props) => {
             {t("postedAt")} {replaceDate(String(informationList.PCT))}
             {pageStatus == "MyPostPage" ? (
               <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                {/*<button
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "60px",
+                    maxHeight: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  {t("edit")}
+                </button>*/}
                 <button
                   style={{
                     backgroundColor: "#2f69f6",
@@ -337,25 +354,8 @@ const Card = (props) => {
                     justifyContent: "center",
                   }}
                 >
-                  edit
+                  {t("delete")}
                 </button>
-                {/*<button
-                  style={{
-                    backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
-                    textAlign: "center",
-                    borderRadius: "0.5em",
-                    marginTop: "2vh",
-                    marginLeft: "3vw",
-                    minWidth: "60px",
-                    maxHeight: "30px",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  delete
-                </button>*/}
               </div>
             ) : (
               ""

@@ -89,5 +89,7 @@
   "contactNumber": "Contact Number",
   "writeContactNumber": "Write contact number",
   "howToUse": "How To Use",
-  "myPost": "My Posts"
+  "myPost": "My Posts",
+  "edit": "edit",
+  "delete": "delete"
 }
