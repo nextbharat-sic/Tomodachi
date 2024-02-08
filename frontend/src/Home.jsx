@@ -3,20 +3,18 @@ import { useState, useEffect } from "react";
 // import { S3Client, GetObjectCommand } from "@aws-sdk/client-s3";
 import Box from "@mui/material/Grid";
 import Toolbar from "@mui/material/Toolbar";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import crypto from "crypto-js";
-import Modal from "./component/Modal.jsx";
-import getUploadInformation from "./clients/getuploadinformation.js";
 import homeImage from "./assets/home_img.png";
 import jobMarketIcon from "./assets/jobMarketIcon.png";
 import careerRelatedNewsIcon from "./assets/careerRelatedNewsIcon.png";
 import thandaTalksIcon from "./assets/thandaTalksIcon.png";
 import contactBookIcon from "./assets/contactBookIcon.png";
-import { useTranslation } from "react-i18next";
+import getUploadInformation from "./clients/getuploadinformation.js";
 import Card from "./Card.jsx";
-import "./Home.css";
 import Loading from "./Loading.jsx";
+import "./Home.css";
+import { useTranslation } from "react-i18next";
 
 const Home = () => {
   const { t } = useTranslation();
@@ -26,8 +24,6 @@ const Home = () => {
   const [visibleItemCount, setVisibleItemCount] = useState(5);
   const [informationTitle, setInformationTitle] = useState("jobMarket");
   const [isLoadingScreen, setIsLoadingScreen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState("");
 
   const pushCategoryButton = (categoryType) => {
     setVisibleItemCount(5);
@@ -65,15 +61,6 @@ const Home = () => {
 
   const handleShowMore = () => {
     setVisibleItemCount((prevCount) => prevCount + 5);
-  };
-
-  const handleOpen = (modalType) => {
-    setModalType(modalType);
-    setIsModalOpen(true);
-  };
-
-  const handleClose = () => {
-    setIsModalOpen(false);
   };
 
   // const fetchS3Data = async () => {
@@ -143,7 +130,6 @@ const Home = () => {
   return (
     <>
       {isLoadingScreen ? <Loading /> : ""}
-      {isModalOpen ? <Modal onClose={handleClose} type={modalType} /> : ""}
       <Box display="flex">
         <div
           style={{
@@ -390,63 +376,21 @@ const Home = () => {
           position="static"
           style={{
             backgroundColor: "#631ACF",
-            height: "7vh",
+            height: "4vh",
             minHeight: "0",
             padding: "0",
           }}
         >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              margin: "auto",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-around",
-                width: "100vw",
-              }}
-            >
-              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
-                <span
-                  onClick={() => handleOpen("howTo")}
-                  style={{
-                    color: "#e0f2f1",
-                  }}
-                >
-                  {t("howToUse")}
-                </span>
-              </Typography>
-              <Typography
+          <div style={{ margin: "auto" }}>
+            <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+              <span
                 style={{
-                  fontSize: "3vw",
                   color: "#e0f2f1",
-                  whiteSpace: "nowrap",
                 }}
               >
-                <span
-                  onClick={() => handleOpen("privacy")}
-                  style={{
-                    color: "#e0f2f1",
-                  }}
-                >
-                  {t("privacyPolicy")}
-                </span>
-              </Typography>
-            </div>
-            <div style={{ margin: "auto" }}>
-              <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
-                <span
-                  style={{
-                    color: "#e0f2f1",
-                  }}
-                >
-                  {t("copyright")}
-                </span>
-              </Typography>
-            </div>
+                {t("copyright")}
+              </span>
+            </Typography>
           </div>
         </Toolbar>
       </Box>

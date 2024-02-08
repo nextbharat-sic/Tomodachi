@@ -8,6 +8,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
 import getUserPosts from "./clients/getuserposts.js";
 import Card from "./Card.jsx";
+import Loading from "./Loading.jsx";
 
 const MyPost = () => {
   const { t } = useTranslation();
@@ -47,6 +48,7 @@ const MyPost = () => {
 
   return (
     <>
+      {isLoadingScreen ? <Loading /> : ""}
       <div
         style={{
           display: "flex",

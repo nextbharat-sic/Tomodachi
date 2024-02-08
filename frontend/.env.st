@@ -6,5 +6,6 @@ VITE_APP_GENERATE_SIGN_UP_OTP_CODE = "https://yum21t7qvk.execute-api.ap-south-1.
 VITE_APP_GENERATE_LOG_IN_OTP_CODE="https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/generate_log_in_OTP_code"
 VITE_APP_CHECK_OTP_CODE = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/check_OTP_code"
 VITE_APP_POST_CALL = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/numberofcalls"
+VITE_APP_CHANGE_DEADLINE_DATE = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/changedeadlinedate"
 VITE_APP_GET_USER_POSTS = "https://yum21t7qvk.execute-api.ap-south-1.amazonaws.com/ST/isp/getuserposts"
 VITE_APP_ENCRPTION_KEY = "tomodachiStKey"
