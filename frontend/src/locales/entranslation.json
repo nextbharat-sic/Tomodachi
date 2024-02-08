@@ -89,5 +89,8 @@
   "contactNumber": "Contact Number",
   "writeContactNumber": "Write contact number",
   "howToUse": "How To Use",
-  "myPosts": "My Posts"
+  "myPosts": "My Posts",
+  "changeToClose": "Are you sure you want to close recruitment information?",
+  "updateFailed":"Update Failed! Try again",
+  "recruitmentHasClosed":"Recruitment information has closed"
 }
