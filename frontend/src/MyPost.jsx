@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
-import getUserPosts from "./clients/getuserposts.js";
 import Box from "@mui/material/Grid";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { useTranslation } from "react-i18next";
+import getUserPosts from "./clients/getuserposts.js";
 import Card from "./Card.jsx";
 
 const MyPost = () => {
@@ -89,6 +91,29 @@ const MyPost = () => {
             </button>
           )}
         </div>
+      </Box>
+      <Box>
+        <Toolbar
+          position="static"
+          style={{
+            backgroundColor: "#631ACF",
+            height: "4vh",
+            minHeight: "0",
+            padding: "0",
+          }}
+        >
+          <div style={{ margin: "auto" }}>
+            <Typography style={{ fontSize: "3vw", color: "#e0f2f1" }}>
+              <span
+                style={{
+                  color: "#e0f2f1",
+                }}
+              >
+                {t("copyright")}
+              </span>
+            </Typography>
+          </div>
+        </Toolbar>
       </Box>
     </>
   );
