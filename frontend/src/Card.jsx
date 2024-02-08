@@ -250,11 +250,11 @@ const Card = (props) => {
                     alignItems: "center",
                     textAlign: "center",
                     backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.5em",
+                    padding: "0.3em 0.4em",
                     color: "#e0f2f1",
                     borderRadius: "0.5em",
                     marginTop: "1vh",
-                    height: "4vh",
+                    height: "4.5vh",
                     marginLeft: "auto",
                     marginRight: "2vw",
                   }}
