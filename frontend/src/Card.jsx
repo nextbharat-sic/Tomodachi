@@ -1,4 +1,5 @@
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
 import postCallInformation from "./clients/postcallinformation.js";
@@ -6,6 +7,7 @@ import { useTranslation } from "react-i18next";
 
 const Card = (props) => {
   const informationList = props.informationList;
+  const pageStatus = useSelector((state) => state.pageStatus);
   // const [dataFromS3, setDataFromS3] = useState(null);
   const { t } = useTranslation();
   const monthNames = [
@@ -313,9 +315,51 @@ const Card = (props) => {
               fontSize: "0.8em",
               margin: "0.5em",
               paddingBottom: "10px",
+              overflowWrap: "break-word",
+              wordBreak: "break-word",
             }}
           >
             {t("postedAt")} {replaceDate(String(informationList.PCT))}
+            {pageStatus == "MyPostPage" ? (
+              <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                <button
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "60px",
+                    maxHeight: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  edit
+                </button>
+                {/*<button
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "3vw",
+                    minWidth: "60px",
+                    maxHeight: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  delete
+                </button>*/}
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           {/* Add more details as needed */}
         </div>
