@@ -153,7 +153,6 @@ const Card = (props) => {
         <div
           style={{
             position: "relative",
-            width: "85vw",
           }}
         >
           <div
@@ -361,8 +360,8 @@ const Card = (props) => {
                 {informationList.PMJ === "indoor"
                   ? t("indoor")
                   : informationList.PMJ === "outdoor"
-                    ? t("outdoor")
-                    : ""}
+                  ? t("outdoor")
+                  : ""}
               </span>
             ) : informationList.PIT === "contactBook" ? (
               <div style={{ display: "flex", alignItems: "center" }}>
