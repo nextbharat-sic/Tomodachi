@@ -1,15 +1,17 @@
-import { Fragment } from "react";
+import { useState, Fragment } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
 import postCallInformation from "./clients/postcallinformation.js";
 import postdeadlinedate from "./clients/postdeadlinedate.js";
 import { useTranslation } from "react-i18next";
+import Modal from "./component/UpdateModal.jsx";
 
 const Card = (props) => {
   const informationList = props.informationList;
   const userId = useSelector((state) => state.userID);
   const pageStatus = useSelector((state) => state.pageStatus);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   // const [dataFromS3, setDataFromS3] = useState(null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -63,6 +65,19 @@ const Card = (props) => {
     await dispatch(storeInitialPage);
     const storeHomePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     dispatch(storeHomePage);
+  };
+
+  const openEditPage = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostUpdatePage" };
+    dispatch(storePage);
+  };
+
+  const handleOpen = (modalType) => {
+    setIsModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
   };
 
   const changeToClose = async () => {
@@ -139,6 +154,11 @@ const Card = (props) => {
 
   return (
     <>
+      {isModalOpen ? (
+        <Modal onClose={handleClose} data={informationList} />
+      ) : (
+        ""
+      )}
       <div
         style={{
           width: "92vw",
@@ -361,8 +381,8 @@ const Card = (props) => {
                   {informationList.PMJ === "indoor"
                     ? t("indoor")
                     : informationList.PMJ === "outdoor"
-                    ? t("outdoor")
-                    : ""}
+                      ? t("outdoor")
+                      : ""}
                 </span>
               ) : informationList.PIT === "contactBook" ? (
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -413,6 +433,7 @@ const Card = (props) => {
               {pageStatus == "MyPostPage" ? (
                 <div style={{ display: "flex", justifyContent: "flexEnd" }}>
                   <button
+                    onClick={() => handleOpen("privacy")}
                     style={{
                       backgroundColor: "#2f69f6",
                       padding: "0.3em 0.5em",

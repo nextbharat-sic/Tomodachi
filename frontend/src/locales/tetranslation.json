@@ -94,5 +94,10 @@
   "updateFailed":"not translated",
   "recruitmentHasClosed":"not translated",
   "edit": "No translate",
-  "delete": "No translate"
+  "delete": "No translate",
+  "update": "No translate",
+  "updateNow": "No translate",
+  "updateCompleted": "No translate",
+  "confirmUpdate": "No translate",
+  "updateFailed": "No translate"
 }
