@@ -271,126 +271,127 @@ const Card = (props) => {
               <span></span>
             )}
           </div>
-          <div style={{ display: "flex", marginTop: "0.5vh" }}>
-            <div
-              style={{
-                overflowWrap: "break-word",
-                maxWidth: "80vw",
-                fontFamily: "DM sans-serif",
-                fontSize: "120%",
-                fontWeight: "Bold",
-                marginLeft: "0.5em",
-              }}
-            >
-              {informationList.PTI}
+          <div style={{ marginLeft: "5vw" }}>
+            <div style={{ display: "flex", marginTop: "0.5vh" }}>
+              <div
+                style={{
+                  overflowWrap: "break-word",
+                  maxWidth: "80vw",
+                  fontFamily: "DM sans-serif",
+                  fontSize: "120%",
+                  fontWeight: "Bold",
+                  marginLeft: "0.5em",
+                }}
+              >
+                {informationList.PTI}
+              </div>
             </div>
-          </div>
-          <div style={{ marginTop: "0.5vh" }}>
-            {informationList.PIT === "thandaTalks" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {t("thandaTalks")}
-              </span>
-            ) : informationList.PIT === "jobMarket" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {t("jobMarket")}
-              </span>
-            ) : informationList.PIT === "careerRelatedNews" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {t("careerRelatedNews")}
-              </span>
-            ) : (
-              <span></span>
-            )}
-            {informationList.PIT === "thandaTalks" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {t("tunikalaThanda")}
-              </span>
-            ) : informationList.PIT === "jobMarket" ? (
-              <span
-                style={{
-                  backgroundColor: "#f5f5f5",
-                  border: "0.2em solid #f5f5f5",
-                  borderRadius: "1em",
-                  paddingRight: "0.3em",
-                  paddingLeft: "0.3em",
-                  marginLeft: "2vw",
-                  fontSize: "0.9em",
-                }}
-              >
-                {informationList.PMJ === "indoor"
-                  ? t("indoor")
-                  : informationList.PMJ === "outdoor"
-                  ? t("outdoor")
-                  : ""}
-              </span>
-            ) : informationList.PIT === "contactBook" ? (
-              <div style={{ display: "flex", alignItems: "center" }}>
-                <PhoneIcon />
+            <div style={{ marginTop: "0.5vh" }}>
+              {informationList.PIT === "thandaTalks" ? (
                 <span
                   style={{
+                    backgroundColor: "#f5f5f5",
+                    border: "0.2em solid #f5f5f5",
+                    borderRadius: "1em",
                     paddingRight: "0.3em",
                     paddingLeft: "0.3em",
-                    fontSize: "1em",
+                    marginLeft: "2vw",
+                    fontSize: "0.9em",
                   }}
                 >
-                  {renderLinkedText(informationList.PCN)}
+                  {t("thandaTalks")}
                 </span>
-              </div>
-            ) : (
-              <span></span>
-            )}
-          </div>
-          <div
-            style={{
-              position: "relative",
-              overflowWrap: "break-word",
-              margin: "0.5em",
-              whiteSpace: "pre-wrap",
-            }}
-          >
-            {renderLinkedText(informationList.PDE)}
-          </div>
-          {/* <div>
+              ) : informationList.PIT === "jobMarket" ? (
+                <span
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    border: "0.2em solid #f5f5f5",
+                    borderRadius: "1em",
+                    paddingRight: "0.3em",
+                    paddingLeft: "0.3em",
+                    marginLeft: "2vw",
+                    fontSize: "0.9em",
+                  }}
+                >
+                  {t("jobMarket")}
+                </span>
+              ) : informationList.PIT === "careerRelatedNews" ? (
+                <span
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    border: "0.2em solid #f5f5f5",
+                    borderRadius: "1em",
+                    paddingRight: "0.3em",
+                    paddingLeft: "0.3em",
+                    marginLeft: "2vw",
+                    fontSize: "0.9em",
+                  }}
+                >
+                  {t("careerRelatedNews")}
+                </span>
+              ) : (
+                <span></span>
+              )}
+              {informationList.PIT === "thandaTalks" ? (
+                <span
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    border: "0.2em solid #f5f5f5",
+                    borderRadius: "1em",
+                    paddingRight: "0.3em",
+                    paddingLeft: "0.3em",
+                    marginLeft: "2vw",
+                    fontSize: "0.9em",
+                  }}
+                >
+                  {t("tunikalaThanda")}
+                </span>
+              ) : informationList.PIT === "jobMarket" ? (
+                <span
+                  style={{
+                    backgroundColor: "#f5f5f5",
+                    border: "0.2em solid #f5f5f5",
+                    borderRadius: "1em",
+                    paddingRight: "0.3em",
+                    paddingLeft: "0.3em",
+                    marginLeft: "2vw",
+                    fontSize: "0.9em",
+                  }}
+                >
+                  {informationList.PMJ === "indoor"
+                    ? t("indoor")
+                    : informationList.PMJ === "outdoor"
+                    ? t("outdoor")
+                    : ""}
+                </span>
+              ) : informationList.PIT === "contactBook" ? (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <PhoneIcon />
+                  <span
+                    style={{
+                      paddingRight: "0.3em",
+                      paddingLeft: "0.3em",
+                      fontSize: "1em",
+                    }}
+                  >
+                    {renderLinkedText(informationList.PCN)}
+                  </span>
+                </div>
+              ) : (
+                <span></span>
+              )}
+            </div>
+            <div
+              style={{
+                position: "relative",
+                overflowWrap: "break-word",
+                margin: "0.5em",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {renderLinkedText(informationList.PDE)}
+            </div>
+            {/* <div>
                     {dataFromS3 ? (
                       <img
                         src={dataFromS3}
@@ -401,14 +402,15 @@ const Card = (props) => {
                       <p>Loading...</p>
                     )}
                   </div>*/}
-          <div
-            style={{
-              fontSize: "0.8em",
-              margin: "0.5em",
-              paddingBottom: "10px",
-            }}
-          >
-            {t("postedAt")} {replaceDate(String(informationList.PCT))}
+            <div
+              style={{
+                fontSize: "0.8em",
+                margin: "0.5em",
+                paddingBottom: "10px",
+              }}
+            >
+              {t("postedAt")} {replaceDate(String(informationList.PCT))}
+            </div>
           </div>
           {/* Add more details as needed */}
         </div>
