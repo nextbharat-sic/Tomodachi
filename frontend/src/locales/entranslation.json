@@ -94,5 +94,8 @@
   "updateFailed":"Update Failed! Try again",
   "recruitmentHasClosed":"Recruitment information has closed",
   "edit": "edit",
-  "delete": "delete"
+  "delete": "delete",
+  "confirmDelete": "Are you sure you want to delete?",
+  "updateCompleted": "Update information is completed!",
+  "errorUpdating": "Error updating information: "
 }
