@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 const Card = (props) => {
   const informationList = props.informationList;
   const userId = useSelector((state) => state.userID);
+  const pageStatus = useSelector((state) => state.pageStatus);
   // const [dataFromS3, setDataFromS3] = useState(null);
   const { t } = useTranslation();
   const dispatch = useDispatch();
@@ -152,7 +153,6 @@ const Card = (props) => {
         <div
           style={{
             position: "relative",
-            width: "85vw",
           }}
         >
           <div
@@ -406,9 +406,51 @@ const Card = (props) => {
               fontSize: "0.8em",
               margin: "0.5em",
               paddingBottom: "10px",
+              overflowWrap: "break-word",
+              wordBreak: "break-word",
             }}
           >
             {t("postedAt")} {replaceDate(String(informationList.PCT))}
+            {pageStatus == "MyPostPage" ? (
+              <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                {/*<button
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "60px",
+                    maxHeight: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  {t("edit")}
+                </button>*/}
+                <button
+                  style={{
+                    backgroundColor: "#2f69f6",
+                    padding: "0.3em 0.5em",
+                    color: "#e0f2f1",
+                    textAlign: "center",
+                    borderRadius: "0.5em",
+                    marginTop: "2vh",
+                    marginLeft: "auto",
+                    minWidth: "60px",
+                    maxHeight: "30px",
+                    display: "flex",
+                    justifyContent: "center",
+                  }}
+                >
+                  {t("delete")}
+                </button>
+              </div>
+            ) : (
+              ""
+            )}
           </div>
           {/* Add more details as needed */}
         </div>

@@ -6,9 +6,9 @@ import Home from "./Home.jsx";
 import SignUp from "./SignUp.jsx";
 import LogIn from "./LogIn.jsx";
 import SelectCategory from "./SelectCategory.jsx";
-import MyPosts from "./MyPosts.jsx";
 import CheckOtp from "./CheckOtp.jsx";
 import Verified from "./Verified.jsx";
+import MyPost from "./MyPost.jsx";
 import "./App.css";
 
 function App() {
@@ -64,8 +64,8 @@ function App() {
           {!isSignUp && pageStatus == "SignUpPage" ? <SignUp /> : ""}
           {!isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
           {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
-          {isSignUp && pageStatus == "MyPostPage" ? <MyPosts /> : ""}
           {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
+          {pageStatus == "MyPostPage" ? <MyPost /> : ""}
         </Box>
       </Box>
     </>

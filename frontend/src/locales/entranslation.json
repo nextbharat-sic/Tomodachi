@@ -92,5 +92,7 @@
   "myPosts": "My Posts",
   "changeToClose": "Are you sure you want to close recruitment information?",
   "updateFailed":"Update Failed! Try again",
-  "recruitmentHasClosed":"Recruitment information has closed"
+  "recruitmentHasClosed":"Recruitment information has closed",
+  "edit": "edit",
+  "delete": "delete"
 }
