@@ -6,7 +6,7 @@ import UpdateCareerRelatedNews from "../update_component/UpdateCareerRelatedNews
 import UpdateThandaTalks from "../update_component/UpdateThandaTalks.jsx";
 import UpdateContactBook from "../update_component/UpdateContactBook.jsx";
 
-const Modal = (props) => {
+const UpdateModal = (props) => {
   const informationTitle = props.data.PIT;
   const targetData = props.data;
   const { t } = useTranslation();
@@ -83,4 +83,4 @@ const Modal = (props) => {
   );
 };
 
-export default Modal;
+export default UpdateModal;

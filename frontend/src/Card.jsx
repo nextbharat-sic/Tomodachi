@@ -6,7 +6,7 @@ import postCallInformation from "./clients/postcallinformation.js";
 import postdeadlinedate from "./clients/postdeadlinedate.js";
 import deleteInformation from "./clients/deleteuploadinformation.js";
 import { useTranslation } from "react-i18next";
-import Modal from "./component/UpdateModal.jsx";
+import UpdateModal from "./component/UpdateModal.jsx";
 
 const Card = (props) => {
   const informationList = props.informationList;
@@ -186,7 +186,7 @@ const Card = (props) => {
   return (
     <>
       {isModalOpen ? (
-        <Modal onClose={handleClose} data={informationList} />
+        <UpdateModal onClose={handleClose} data={informationList} />
       ) : (
         ""
       )}
