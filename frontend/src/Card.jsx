@@ -4,6 +4,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import PhoneIcon from "@mui/icons-material/Phone";
 import postCallInformation from "./clients/postcallinformation.js";
 import postdeadlinedate from "./clients/postdeadlinedate.js";
+import deleteInformation from "./clients/deleteuploadinformation.js";
 import { useTranslation } from "react-i18next";
 import Modal from "./component/UpdateModal.jsx";
 
@@ -60,11 +61,19 @@ const Card = (props) => {
     }
   };
 
-  const refreshHome = async () => {
+  const refreshPage = async () => {
     const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
     await dispatch(storeInitialPage);
-    const storeHomePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
-    dispatch(storeHomePage);
+    if (pageStatus == "HomePage") {
+      const storeHomePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+      dispatch(storeHomePage);
+    } else if (pageStatus == "MyPostPage") {
+      const storeMyPostPage = {
+        type: "CHANGE_PAGE_STATE",
+        payload: "MyPostPage",
+      };
+      dispatch(storeMyPostPage);
+    }
   };
 
   const openEditPage = () => {
@@ -99,7 +108,7 @@ const Card = (props) => {
       const response = await postdeadlinedate(deadlineInformation);
       if (response.status == "Success") {
         alert(t("recruitmentHasClosed"));
-        refreshHome();
+        refreshPage();
       } else {
         alert(t("updateFailed"));
       }
@@ -150,6 +159,33 @@ const Card = (props) => {
       ));
 
     return <>{renderParts()}</>;
+  };
+
+  const deleteUploadInformation = () => {
+    const isConfirm = confirm(t("confirmDelete"));
+    if (isConfirm) {
+      deleteUploadInfo();
+    }
+  };
+
+  const deleteUploadInfo = async () => {
+    try {
+      const myPostsInformation = {
+        postId: informationList.PID,
+        informationTitle: informationList.PIT,
+      };
+
+      const response = await deleteInformation(myPostsInformation);
+
+      if (response.status === "Success") {
+        refreshPage();
+        alert(t("updateCompleted"));
+      } else {
+        alert(t("updateFailed"));
+      }
+    } catch (error) {
+      console.error(t("errorUpdating"), error);
+    }
   };
 
   return (
@@ -451,6 +487,7 @@ const Card = (props) => {
                     {t("edit")}
                   </button>
                   <button
+                    onClick={deleteUploadInformation}
                     style={{
                       backgroundColor: "#2f69f6",
                       padding: "0.3em 0.5em",
