@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
 import updateInformation from "../clients/updateinformation.js";
 import { useTranslation } from "react-i18next";
@@ -7,9 +7,6 @@ import { useTranslation } from "react-i18next";
 const UpdateContactBook = (props) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const userID = useSelector((state) => state.userID);
-  const accountName = useSelector((state) => state.accountName);
-  const phoneNumber = useSelector((state) => state.phoneNumber);
   const dispatch = useDispatch();
 
   const [contactBookData, setContactData] = useState({
