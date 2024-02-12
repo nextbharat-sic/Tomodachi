@@ -97,5 +97,9 @@
   "delete": "No translate",
   "confirmDelete": "No translate",
   "updateCompleted": "No translate",
-  "errorUpdating": "No translate"
+  "errorUpdating": "No translate",
+  "update": "No translate",
+  "updateNow": "No translate",
+  "confirmUpdate": "No translate",
+  "updateFailed": "No translate"
 }
