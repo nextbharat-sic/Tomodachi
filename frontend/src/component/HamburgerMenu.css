@@ -24,6 +24,9 @@
 .closeIcon {
     color: #ffffff;
     background-color: #2f69f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .hamburgerListText {

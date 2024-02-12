@@ -84,7 +84,7 @@ const MyPost = () => {
           {informationResult.length > visibleItemCount && (
             <button
               onClick={handleShowMore}
-              style={{ display: "block", margin: "auto" }}
+              style={{ display: "block", margin: "auto", marginBottom: "2vh" }}
             >
               {t("showMore")}
             </button>

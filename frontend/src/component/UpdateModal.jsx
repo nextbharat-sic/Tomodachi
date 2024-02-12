@@ -41,20 +41,24 @@ const UpdateModal = (props) => {
               }}
             >
               <CloseIcon
-                style={{ height: "5vh", width: "5vh", marginLeft: "auto" }}
+                style={{
+                  height: "5vh",
+                  width: "5vh",
+                  marginLeft: "auto",
+                  color: "black",
+                }}
               />
             </span>
           </div>
           <div
             style={{
               width: "80vw",
-              height: "60vh",
+              height: "70vh",
               overflowX: "hidden",
               overflowY: "auto",
               textAlign: "justify",
               color: "black",
             }}
-            className="modal__content"
           >
             {informationTitle == "jobMarket" ? (
               <UpdateJobMarket data={targetData} />

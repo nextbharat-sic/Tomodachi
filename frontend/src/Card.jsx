@@ -211,6 +211,7 @@ const Card = (props) => {
               overflowWrap: "break-word",
               wordBreak: "break-word",
               display: "flex",
+              justifyContent: "space-between",
               width: "92vw",
               borderBottom: "0.2vh solid #BDCDF8",
             }}
@@ -238,89 +239,92 @@ const Card = (props) => {
                 {informationList.PAN}
               </div>
             </div>
-            {informationList.PIT === "jobMarket" && !isRecruiter() ? (
-              checkActive(informationList.PDD) ? (
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    textAlign: "center",
-                    backgroundColor: "#E4EBFF",
-                    padding: "0.3em 0.5em",
-                    color: "black",
-                    borderRadius: "0.5em",
-                    marginTop: "1vh",
-                    height: "3vh",
-                    marginLeft: "auto",
-                    marginRight: "2vw",
-                  }}
-                >
-                  {t("active")}
-                </span>
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+              }}
+            >
+              {informationList.PIT === "jobMarket" && !isRecruiter() ? (
+                checkActive(informationList.PDD) ? (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      backgroundColor: "#E4EBFF",
+                      padding: "0.3em 0.5em",
+                      color: "black",
+                      borderRadius: "0.5em",
+                      height: "3vh",
+                      marginLeft: "auto",
+                      marginRight: "2vw",
+                    }}
+                  >
+                    {t("active")}
+                  </span>
+                ) : (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      backgroundColor: "#DCDCDC",
+                      padding: "0.3em 0.5em",
+                      color: "black",
+                      borderRadius: "0.5em",
+                      height: "3vh",
+                      marginLeft: "auto",
+                      marginRight: "2vw",
+                    }}
+                  >
+                    {t("close")}
+                  </span>
+                )
               ) : (
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    textAlign: "center",
-                    backgroundColor: "#DCDCDC",
-                    padding: "0.3em 0.5em",
-                    color: "black",
-                    borderRadius: "0.5em",
-                    marginTop: "1vh",
-                    height: "3vh",
-                    marginLeft: "auto",
-                    marginRight: "2vw",
-                  }}
-                >
-                  {t("close")}
-                </span>
-              )
-            ) : (
-              <span></span>
-            )}
-            {informationList.PIT === "jobMarket" && isRecruiter() ? (
-              checkActive(informationList.PDD) ? (
-                <button
-                  onClick={changeToClose}
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    textAlign: "center",
-                    backgroundColor: "#2f69f6",
-                    padding: "0.3em 0.4em",
-                    color: "#e0f2f1",
-                    borderRadius: "0.5em",
-                    marginTop: "1vh",
-                    height: "4.5vh",
-                    marginLeft: "auto",
-                    marginRight: "2vw",
-                  }}
-                >
-                  {t("active")}
-                </button>
+                <span></span>
+              )}
+              {informationList.PIT === "jobMarket" && isRecruiter() ? (
+                checkActive(informationList.PDD) ? (
+                  <button
+                    onClick={changeToClose}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      backgroundColor: "#2f69f6",
+                      padding: "0.3em 0.4em",
+                      color: "#e0f2f1",
+                      borderRadius: "0.5em",
+                      height: "4.5vh",
+                      marginLeft: "auto",
+                      marginRight: "2vw",
+                    }}
+                  >
+                    {t("active")}
+                  </button>
+                ) : (
+                  <span
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      textAlign: "center",
+                      backgroundColor: "#696969",
+                      padding: "0.3em 0.5em",
+                      color: "#e0f2f1",
+                      borderRadius: "0.5em",
+                      height: "3vh",
+                      marginLeft: "auto",
+                      marginRight: "2vw",
+                    }}
+                  >
+                    {t("close")}
+                  </span>
+                )
               ) : (
-                <span
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    textAlign: "center",
-                    backgroundColor: "#696969",
-                    padding: "0.3em 0.5em",
-                    color: "#e0f2f1",
-                    borderRadius: "0.5em",
-                    marginTop: "1vh",
-                    height: "3vh",
-                    marginLeft: "auto",
-                    marginRight: "2vw",
-                  }}
-                >
-                  {t("close")}
-                </span>
-              )
-            ) : (
-              <span></span>
-            )}
+                <span></span>
+              )}
+            </div>
           </div>
           <div style={{ marginLeft: "5vw" }}>
             <div style={{ display: "flex", marginTop: "0.5vh" }}>
@@ -412,8 +416,8 @@ const Card = (props) => {
                   {informationList.PMJ === "indoor"
                     ? t("indoor")
                     : informationList.PMJ === "outdoor"
-                      ? t("outdoor")
-                      : ""}
+                    ? t("outdoor")
+                    : ""}
                 </span>
               ) : informationList.PIT === "contactBook" ? (
                 <div style={{ display: "flex", alignItems: "center" }}>
@@ -462,21 +466,22 @@ const Card = (props) => {
             >
               {t("postedAt")} {replaceDate(String(informationList.PCT))}
               {pageStatus == "MyPostPage" ? (
-                <div style={{ display: "flex", justifyContent: "flexEnd" }}>
+                <div style={{ display: "flex" }}>
                   <button
                     onClick={() => handleOpen()}
                     style={{
                       backgroundColor: "#2f69f6",
                       padding: "0.3em 0.5em",
                       color: "#e0f2f1",
+                      fontSize: "medium",
                       textAlign: "center",
                       borderRadius: "0.5em",
                       marginTop: "2vh",
                       marginLeft: "auto",
                       minWidth: "60px",
-                      maxHeight: "30px",
                       display: "flex",
                       justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     {t("edit")}
@@ -484,17 +489,18 @@ const Card = (props) => {
                   <button
                     onClick={deleteUploadInformation}
                     style={{
-                      backgroundColor: "#2f69f6",
+                      backgroundColor: "#dc143c",
                       padding: "0.3em 0.5em",
                       color: "#e0f2f1",
+                      fontSize: "medium",
                       textAlign: "center",
                       borderRadius: "0.5em",
                       marginTop: "2vh",
                       marginLeft: "5vw",
                       minWidth: "60px",
-                      maxHeight: "30px",
                       display: "flex",
                       justifyContent: "center",
+                      alignItems: "center",
                     }}
                   >
                     {t("delete")}
