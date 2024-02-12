@@ -76,12 +76,7 @@ const Card = (props) => {
     }
   };
 
-  const openEditPage = () => {
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "PostUpdatePage" };
-    dispatch(storePage);
-  };
-
-  const handleOpen = (modalType) => {
+  const handleOpen = () => {
     setIsModalOpen(true);
   };
 
@@ -469,7 +464,7 @@ const Card = (props) => {
               {pageStatus == "MyPostPage" ? (
                 <div style={{ display: "flex", justifyContent: "flexEnd" }}>
                   <button
-                    onClick={() => handleOpen("privacy")}
+                    onClick={() => handleOpen()}
                     style={{
                       backgroundColor: "#2f69f6",
                       padding: "0.3em 0.5em",

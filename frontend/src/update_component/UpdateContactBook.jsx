@@ -27,8 +27,10 @@ const UpdateContactBook = (props) => {
     phoneNumber: props.data.PPN,
   });
 
-  const homePageStatus = () => {
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+  const refreshPage = async () => {
+    const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
+    await dispatch(storeInitialPage);
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "MyPostPage" };
     dispatch(storePage);
   };
 
@@ -73,7 +75,7 @@ const UpdateContactBook = (props) => {
 
       if (response.status === "Success") {
         setIsLoading(false);
-        homePageStatus();
+        refreshPage();
         alert(t("updateCompleted"));
       } else {
         setIsLoading(false);

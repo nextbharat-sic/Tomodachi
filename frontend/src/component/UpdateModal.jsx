@@ -1,7 +1,5 @@
-import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import "./Modal.css";
-import mammoth from "mammoth";
 import { useTranslation } from "react-i18next";
 import UpdateJobMarket from "../update_component/UpdateJobMarket.jsx";
 import UpdateCareerRelatedNews from "../update_component/UpdateCareerRelatedNews.jsx";
@@ -11,8 +9,7 @@ import UpdateContactBook from "../update_component/UpdateContactBook.jsx";
 const Modal = (props) => {
   const informationTitle = props.data.PIT;
   const targetData = props.data;
-  const { t, i18n } = useTranslation();
-  const [modalDisplay, setModalDisplay] = useState("");
+  const { t } = useTranslation();
 
   return (
     <div className="modal__backdrop">

@@ -1,5 +1,5 @@
-import { useState, useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import updateInformation from "../clients/updateinformation.js";
 import Box from "@mui/material/Grid";
 import { useTranslation } from "react-i18next";
@@ -7,9 +7,6 @@ import { useTranslation } from "react-i18next";
 const UpdateJobMarket = (props) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const userID = useSelector((state) => state.userID);
-  const accountName = useSelector((state) => state.accountName);
-  const phoneNumber = useSelector((state) => state.phoneNumber);
   const dispatch = useDispatch();
   let date = new Date();
   let localDate =
@@ -34,8 +31,10 @@ const UpdateJobMarket = (props) => {
     phoneNumber: props.data.PPN,
   });
 
-  const homePageStatus = () => {
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+  const refreshPage = async () => {
+    const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
+    await dispatch(storeInitialPage);
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "MyPostPage" };
     dispatch(storePage);
   };
 
@@ -89,7 +88,7 @@ const UpdateJobMarket = (props) => {
 
       if (response.status === "Success") {
         setIsLoading(false);
-        homePageStatus();
+        refreshPage();
         alert(t("updateCompleted"));
       } else {
         setIsLoading(false);
