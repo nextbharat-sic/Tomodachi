@@ -92,5 +92,14 @@
   "myPosts": "not translated",
   "changeToClose":"not translated",
   "updateFailed":"not translated",
-  "recruitmentHasClosed":"not translated"
+  "recruitmentHasClosed":"not translated",
+  "edit": "No translate",
+  "delete": "No translate",
+  "confirmDelete": "No translate",
+  "updateCompleted": "No translate",
+  "errorUpdating": "No translate",
+  "update": "No translate",
+  "updateNow": "No translate",
+  "confirmUpdate": "No translate",
+  "updateFailed": "No translate"
 }
