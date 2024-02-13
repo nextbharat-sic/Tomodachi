@@ -90,8 +90,7 @@ const HamburgerMenu = () => {
     dispatch(storePage);
   };
 
-
- const handleOpen = (modalType) => {
+  const handleOpen = (modalType) => {
     setModalType(modalType);
     setIsHamburgerOpen(false);
     setIsModalOpen(true);
@@ -103,7 +102,7 @@ const HamburgerMenu = () => {
 
   return (
     <>
-    {isModalOpen ? <Modal onClose={handleClose} type={modalType} /> : ""}
+      {isModalOpen ? <Modal onClose={handleClose} type={modalType} /> : ""}
       <MenuIcon
         onClick={() => setIsHamburgerOpen(true)}
         style={{
@@ -126,42 +125,50 @@ const HamburgerMenu = () => {
           >
             Tomodachi
           </div>
-          <CloseIcon
+          <div
             onClick={() => setIsHamburgerOpen(false)}
             className={"closeIcon"}
             style={{ height: "8vh", width: "8vh" }}
-          />
+          >
+            <CloseIcon style={{ height: "4vh", width: "4vh" }} />
+          </div>
         </div>
-        <IconContext.Provider value={{ color: "#2f69f6", size: "5vh" }}>
-        {/*Home menu*/}
+        <IconContext.Provider value={{ color: "#2f69f6", size: "3vh" }}>
+          {/*Home menu*/}
           {/*  <div className={"hamburgerListComponent"}>
                 <div className={"hamburgerListText"}>Home</div>
                 <div className={"hamburgerListIconStorage"}>
                   <GoHome className={"hamburgerListIcon"} />
                 </div>
               </div> */}
-        {/*My Posts menu*/}
+          {/*My Posts menu*/}
           <div className={"hamburgerListComponent"} onClick={moveMyPostsScreen}>
             <div className={"hamburgerListText"}>{t("myPosts")}</div>
             <div className={"hamburgerListIconStorage"}>
               <IoDocumentTextOutline />
             </div>
           </div>
-        {/*How To Use menu*/}
-          <div className={"hamburgerListComponent"} onClick={() => handleOpen("howTo")}>
+          {/*How To Use menu*/}
+          <div
+            className={"hamburgerListComponent"}
+            onClick={() => handleOpen("howTo")}
+          >
             <div className={"hamburgerListText"}>{t("howToUse")}</div>
             <div className={"hamburgerListIconStorage"}>
               <IoIosHelpCircleOutline />
             </div>
           </div>
-        {/*Privacy Policy menu*/}
-          <div className={"hamburgerListComponent"} onClick={() => handleOpen("privacy")}>
+          {/*Privacy Policy menu*/}
+          <div
+            className={"hamburgerListComponent"}
+            onClick={() => handleOpen("privacy")}
+          >
             <div className={"hamburgerListText"}>{t("privacyPolicy")}</div>
             <div className={"hamburgerListIconStorage"}>
               <MdOutlinePrivacyTip />
             </div>
           </div>
-        {/*LogIN/LogOut menu*/}
+          {/*LogIN/LogOut menu*/}
           {signInStatus ? (
             <div className={"hamburgerListComponent"} onClick={confirmSignOut}>
               <div className={"hamburgerListText"}>{t("logOut")}</div>
