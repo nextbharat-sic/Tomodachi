@@ -8,6 +8,7 @@ import LogIn from "./LogIn.jsx";
 import SelectCategory from "./SelectCategory.jsx";
 import CheckOtp from "./CheckOtp.jsx";
 import Verified from "./Verified.jsx";
+import MyPost from "./MyPost.jsx";
 import "./App.css";
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
           {!isSignUp && pageStatus == "CheckOtpPage" ? <CheckOtp /> : ""}
           {isSignUp && pageStatus == "PostPage" ? <SelectCategory /> : ""}
           {pageStatus == "OtpVerifiedPage" ? <Verified /> : ""}
+          {pageStatus == "MyPostPage" ? <MyPost /> : ""}
         </Box>
       </Box>
     </>

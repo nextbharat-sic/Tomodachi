@@ -1,33 +1,33 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import Box from "@mui/material/Grid";
-import postInformation from "./clients/postinformation.js";
+import updateInformation from "../clients/updateinformation.js";
 import { useTranslation } from "react-i18next";
 
-const ContactBook = () => {
+const UpdateContactBook = (props) => {
   const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState(false);
-  const userID = useSelector((state) => state.userID);
-  const accountName = useSelector((state) => state.accountName);
-  const phoneNumber = useSelector((state) => state.phoneNumber);
   const dispatch = useDispatch();
 
   const [contactBookData, setContactData] = useState({
-    userId: userID,
-    category: "contactBook",
-    forWhichThanda: "",
-    contactName: "",
-    contactNumber: "",
-    deadlineDate: "",
-    modeOfJob: "",
-    description: "",
+    postId: props.data.PID,
+    userId: props.data.PUID,
+    category: props.data.PIT,
+    forWhichThanda: props.data.PFT,
+    contactName: props.data.PTI,
+    contactNumber: props.data.PCN,
+    deadlineDate: props.data.PDD,
+    modeOfJob: props.data.PMJ,
+    description: props.data.PDE,
     image: "",
-    accountName: accountName,
-    phoneNumber: phoneNumber,
+    accountName: props.data.PAN,
+    phoneNumber: props.data.PPN,
   });
 
-  const homePageStatus = () => {
-    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+  const refreshPage = async () => {
+    const storeInitialPage = { type: "CHANGE_PAGE_STATE", payload: "" };
+    await dispatch(storeInitialPage);
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "MyPostPage" };
     dispatch(storePage);
   };
 
@@ -39,21 +39,22 @@ const ContactBook = () => {
     });
   };
 
-  const checkValidateAndUpload = (event) => {
+  const checkValidateAndUpdate = (event) => {
     event.preventDefault();
 
     if (isValidate()) {
-      const isConfirm = confirm(t("confirmUpload"));
+      const isConfirm = confirm(t("confirmUpdate"));
       if (isConfirm) {
         setIsLoading(true);
-        uploadContactBookInfo();
+        updateContactBookInfo();
       }
     }
   };
 
-  const uploadContactBookInfo = async () => {
+  const updateContactBookInfo = async () => {
     try {
       const contactBookInformation = {
+        postId: props.data.PID,
         userId: contactBookData.userId,
         category: contactBookData.category,
         forWhichThanda: contactBookData.forWhichThanda,
@@ -67,15 +68,15 @@ const ContactBook = () => {
         phoneNumber: contactBookData.phoneNumber,
       };
 
-      const response = await postInformation(contactBookInformation);
+      const response = await updateInformation(contactBookInformation);
 
       if (response.status === "Success") {
         setIsLoading(false);
-        homePageStatus();
-        alert(t("uploadCompleted"));
+        refreshPage();
+        alert(t("updateCompleted"));
       } else {
         setIsLoading(false);
-        alert(t("uploadFailed"));
+        alert(t("updateFailed"));
       }
     } catch (error) {
       setIsLoading(false);
@@ -97,7 +98,7 @@ const ContactBook = () => {
   return (
     <>
       <div>
-        <form onSubmit={checkValidateAndUpload}>
+        <form onSubmit={checkValidateAndUpdate}>
           <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
             <label>{t("contactName")}</label>
           </div>
@@ -164,7 +165,7 @@ const ContactBook = () => {
                 color: "#e0f2f1",
               }}
             >
-              {isLoading ? t("uploadNow") : t("upload")}
+              {isLoading ? t("updateNow") : t("update")}
             </button>
           </Box>
         </form>
@@ -173,4 +174,4 @@ const ContactBook = () => {
   );
 };
 
-export default ContactBook;
+export default UpdateContactBook;

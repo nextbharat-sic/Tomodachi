@@ -12,6 +12,8 @@ const Verified = () => {
     let storePage = "";
     if (nextAction == "PostInformation") {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "PostPage" };
+    } else if (nextAction == "CheckMyPosts") {
+      storePage = { type: "CHANGE_PAGE_STATE", payload: "MyPostPage" };
     } else {
       storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
     }

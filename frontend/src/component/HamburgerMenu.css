@@ -1,0 +1,48 @@
+.hamburgerListHeader{
+    height: 8vh;
+    background-color: #ffffff;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: solid;
+    border-bottom-color: #2f69f6;
+    border-width:1px;
+}
+
+.hamburgerListComponent{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 8vh;
+    color: #000000;
+    border-bottom: solid;
+    border-bottom-color: #2f69f6;
+    border-width:1px;
+}
+
+.closeIcon {
+    color: #ffffff;
+    background-color: #2f69f6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.hamburgerListText {
+    margin-left: 6vw;
+    font-size: large;
+    font-weight: bold;
+}
+
+.hamburgerListIconStorage {
+    height: 8vh;
+    width: 8vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hamburgerListIcon{
+    size: auto;
+}

@@ -2,10 +2,9 @@ import { useState } from "react";
 import "./Modal.css";
 import mammoth from "mammoth";
 import { useTranslation } from "react-i18next";
-import HowToUseImage from "../assets/howToUse.png";
 
 const Modal = (props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [modalDisplay, setModalDisplay] = useState("");
   if (props.type == "privacy") {
     fetch("/privacypolicy.docx")
@@ -20,7 +19,17 @@ const Modal = (props) => {
       });
   }
   if (props.type == "howTo") {
-    fetch("/howToUse.docx")
+    let howToUseUrl;
+    switch (i18n.language) {
+      case "en":
+        howToUseUrl = "/howToUse_en.docx";
+        break;
+      case "te":
+        howToUseUrl = "/howToUse_te.docx";
+        break;
+    }
+
+    fetch(howToUseUrl)
       .then((response) => response.arrayBuffer())
       .then((buffer) => {
         mammoth

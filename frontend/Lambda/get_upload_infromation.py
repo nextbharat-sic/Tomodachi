@@ -26,38 +26,51 @@ def lambda_handler(event, context):
     
     response = dynamodb_client.query(**query_params)
     
-    post_list = []
-    for item in response['Items']:
-        pct = item['PCT']['S'].split('_')[0] + '/' + item['PCT']['S'].split('_')[1]
-        pmd_list = []
-        for pmd in item['PMD']['L']:
-            pmd_list.append(pmd['S'])
-        
-
-        post_list.append({
-            'PCT':pct,
-            'PMD':pmd_list,
-            'PDE':item['PDE']['S'],
-            'PTP':item['PTP']['S'],
-            'PID':item['PID']['S'],
-            'PMJ':item['PMJ']['S'],
-            'PDD':item['PDD']['S'],
-            'PST':item['PST']['BOOL'],
-            'PUID':item['PUID']['S'],
-            'PTI':item['PTI']['S'],
-            'PIT':item['PIT']['S'],
-            'PAN':item['PAN']['S'],
-            'PPN':item['PPN']['S'],
-            'PFT':item['PFT']['S'],
-            'PCN':item['PCN']['S'],
-        })
-        
-    print(post_list)
-    
     ist_offset = timedelta(hours=5, minutes=30)
     utc_datetime = datetime.utcnow()
     india_datetime = utc_datetime + ist_offset
     india_date = india_datetime.strftime('%Y-%m-%d')
+    
+    post_list = []
+    non_job_market_list = []
+    active_list = []
+    close_list = []
+    
+    for item in response['Items']:
+        if not item['PDD']['S']:
+            non_job_market_list.append(item)
+        elif item['PDD']['S'] >= india_date:
+            active_list.append(item)
+        elif item['PDD']['S'] < india_date:
+            close_list.append(item)
+    upload_data_list = non_job_market_list + active_list + close_list
+    
+    for upload_item in upload_data_list:
+        pct = upload_item['PCT']['S'].split('_')[0] + '/' + upload_item['PCT']['S'].split('_')[1]
+        pmd_list = []
+        for pmd in upload_item['PMD']['L']:
+            pmd_list.append(pmd['S'])
+    
+
+        post_list.append({
+            'PCT':pct,
+            'PMD':pmd_list,
+            'PDE':upload_item['PDE']['S'],
+            'PTP':upload_item['PTP']['S'],
+            'PID':upload_item['PID']['S'],
+            'PMJ':upload_item['PMJ']['S'],
+            'PDD':upload_item['PDD']['S'],
+            'PST':upload_item['PST']['BOOL'],
+            'PUID':upload_item['PUID']['S'],
+            'PTI':upload_item['PTI']['S'],
+            'PIT':upload_item['PIT']['S'],
+            'PAN':upload_item['PAN']['S'],
+            'PPN':upload_item['PPN']['S'],
+            'PFT':upload_item['PFT']['S'],
+            'PCN':upload_item['PCN']['S'],
+        })
+        
+    print(post_list)
  
     partition_key_value = india_date
     table=dynamodb_resource.Table(post_access_table_name)
