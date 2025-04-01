@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 const cacheName = "tomodachi-cache-v4.0.1";
 
 // Processing during installation
