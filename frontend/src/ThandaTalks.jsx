@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 // import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
