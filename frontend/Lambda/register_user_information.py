@@ -1,3 +1,4 @@
+# Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import boto3
 import json
 from datetime import datetime
