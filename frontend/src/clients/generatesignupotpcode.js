@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import axios from "axios";
 
 export default async function generateSignUpOtpCode(userInformation) {
