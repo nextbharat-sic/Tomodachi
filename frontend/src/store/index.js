@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import { createStore } from 'redux';
 import rootReducer from './reducer';
 
