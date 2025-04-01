@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import { useDispatch } from "react-redux";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
