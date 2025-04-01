@@ -1,3 +1,4 @@
+# Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import json
 import pyotp
 import boto3
