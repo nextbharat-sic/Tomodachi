@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Box from "@mui/material/Grid";
