@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import Link from "@mui/material/Link";
