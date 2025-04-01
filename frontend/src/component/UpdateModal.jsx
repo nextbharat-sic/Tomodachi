@@ -1,3 +1,4 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
 import CloseIcon from "@mui/icons-material/Close";
 import "./Modal.css";
 import { useTranslation } from "react-i18next";
