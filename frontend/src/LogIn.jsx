@@ -1,0 +1,143 @@
+// Copyright © 2025 Suzuki Motor Corporation All Rights Reserved
+import { useState } from "react";
+import { useDispatch } from "react-redux";
+import Link from "@mui/material/Link";
+import generateLogInOtpCode from "./clients/generateloginotpcode.js";
+import Box from "@mui/material/Grid";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useTranslation } from "react-i18next";
+
+const LogIn = () => {
+  const { t } = useTranslation();
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+
+  const logInStatus = (userInformation) => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "CheckOtpPage" };
+    const storeAccoutnName = {
+      type: "SET_ACCOUNT_NAME",
+      payload: userInformation.userName,
+    };
+    const storeUserID = {
+      type: "SET_USER_ID",
+      payload: userInformation.userID,
+    };
+    const storePhoneNumber = { type: "SET_PHONE_NUMBER", payload: phoneNumber };
+
+    dispatch(storePage);
+    dispatch(storeAccoutnName);
+    dispatch(storeUserID);
+    dispatch(storePhoneNumber);
+  };
+
+  const moveSignUpScreen = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "SignUpPage" };
+    dispatch(storePage);
+  };
+
+  const checkLogin = async () => {
+    setIsLoading(true);
+    const logInInformation = {
+      phoneNumber: phoneNumber,
+    };
+
+    const storeClientPage = { type: "SET_CLIENT_PAGE", payload: "logIn" };
+    dispatch(storeClientPage);
+
+    const result = await generateLogInOtpCode(logInInformation);
+    if (result.status == "Match") {
+      setIsLoading(false);
+      logInStatus(result);
+    } else if (result.status == "Unmatch") {
+      setIsLoading(false);
+      alert(t("PhoneNumberIsIncorrect"));
+    } else {
+      setIsLoading(false);
+      alert(t("tryAgain"));
+    }
+  };
+
+  const backPage = () => {
+    const storePage = { type: "CHANGE_PAGE_STATE", payload: "HomePage" };
+    dispatch(storePage);
+  };
+
+  return (
+    <>
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        <ArrowBackIcon
+          onClick={backPage}
+          style={{
+            marginTop: "auto",
+            marginBottom: "auto",
+            marginLeft: "2vw",
+            width: "10vw",
+          }}
+        />
+        <h2 style={{ marginLeft: "auto", marginRight: "auto" }}>
+          {t("logIn")}
+        </h2>
+        <div
+          style={{
+            marginRight: "2vw",
+            width: "10vw",
+          }}
+        />
+      </div>
+      <div>
+        <div style={{ textAlign: "left", paddingLeft: "3vw" }}>
+          <label>{t("phoneNumber")}</label>
+        </div>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <div>
+            <input
+              type="text"
+              value={phoneNumber}
+              className="input"
+              onChange={(event) => setPhoneNumber(event.target.value)}
+              style={{
+                width: "86vw",
+                margin: "10px",
+                height: "5vh",
+                borderRadius: "10px",
+                borderWidth: "1px",
+              }}
+            ></input>
+          </div>
+        </Box>
+        <Box display="flex" justifyContent="center" alignItems="center">
+          <button
+            onClick={checkLogin}
+            disabled={isLoading}
+            style={{
+              margin: "10px",
+              backgroundColor: "#2F69F6",
+              color: "#e0f2f1",
+            }}
+          >
+            {isLoading ? t("loginNow") : t("logIn")}
+          </button>
+        </Box>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <label style={{ marginRight: "5px" }}>{t("dontHaveAnAccount")}</label>
+          <Link underline="none" onClick={moveSignUpScreen}>
+            {t("signUp")}
+          </Link>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default LogIn;
