@@ -1,5 +1,5 @@
 # ISP-01
-This is the frontend repository for  "Information Sharing Platform (ISP)".
+This is the frontend repository for Information Sharing Platform "Tomodachi".
 
 # Backend
 The backend code for this application is written in AWS Lambda.
